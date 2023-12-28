@@ -1,0 +1,38 @@
+{
+    "name": "htmx",
+    "package": "htmx",
+    "index": "public/index.html",
+    "selectors": {
+        "div.content > h2": {
+            "type": "Section",
+            "regexp": "^#",
+            "replacement": ""
+        },
+        "h1 > code": {
+            "type": "Attribute",
+            "requiretext": "^hx-"
+        },
+        "#classes + div.info-table td > code": "Class",
+        "#request_headers + div.info-table td code": "Protocol",
+        "#response_headers + div.info-table td code": "Protocol",
+        "#events + div.info-table td a code": "Event",
+        "#api + div.info-table td a code": "Function",
+        "#config + div.info-table td code": "Setting"
+
+    },
+    "ignore": [
+        "#Usage",
+        "#Conclusion",
+        "#Notes",
+        "#Install",
+        "#Demo",
+        "Usage",
+        "Conclusion",
+        "Notes",
+        "Install",
+        "🔗Demo"
+    ],
+    "icon32x32": "",
+    "allowJS": false,
+    "ExternalURL": ""
+}
