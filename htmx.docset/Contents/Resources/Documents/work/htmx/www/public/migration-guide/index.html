@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ intercooler.js &rarr; htmx Migration Guide</title>
+    <link rel="canonical" href="https://htmx.org/migration-guide/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>intercooler.js &rarr; htmx Migration Guide</h1>
+  <p>The purpose of this guide is to:</p>
+<ul>
+<li><em>map</em> the equivalent htmx attributes, headers, events, methods, etc. that are available in Intercooler</li>
+<li><em>provide workarounds</em> to achieve the same/similar outcome in the cases where there is no direct equivalent in htmx core (usually via an htmx extension or via <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript</a>)</li>
+<li><em>highlight gaps</em> which can&rsquo;t (yet) be elegantly solved via core htmx, any of the existing extensions or <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-78"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Before%20you%20begin"></a><h2 id="before-you-begin"><a class="zola-anchor" href="#before-you-begin" aria-label="Anchor link for: before-you-begin">#</a>Before you begin</h2>
+<p>It is worth noting the difference in approach between what Intercooler set out to do and what htmx is doing.</p>
+<p><strong>Intercooler</strong> tried to provide custom html attributes for most of it&rsquo;s functionality. This is evident in it&rsquo;s longer list of attributes, many of which could be described as convenience or client-side-focused in nature.</p>
+<p><strong>htmx</strong> follows the approach of trying to keep the core small, with a smaller set of available attributes that are mostly focused on content loading and swapping. </p>
+<p>This capability is augmented in primarily 2 ways:</p>
+<ol>
+<li>
+<p><a href="https://htmx.org/extensions/#reference">Extensions</a>. The htmx extension framework allows for custom extensions/plugins to achieve specific functionality. An example  of this is the dependencies mechanism baked into Intercooler, which is not present in htmx core. but available via <a href="https://htmx.org/extensions/path-deps/">an extension</a>. There are also other extensions which enables new behavior that Intercooler was not capable of out the box, e.g. the <a href="https://htmx.org/extensions/preload/"><code>preload</code> extension</a></p>
+</li>
+<li>
+<p>Using the htmx events system with vanilla javascript, <a rel="noopener" target="_blank" href="https://github.com/alpinejs/alpine/">alpine.js</a> or <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript</a>.  Hyperscript is a small, open scripting language designed to be embedded in HTML, inspired by HyperTalk and is a companion project of htmx.</p>
+</li>
+</ol>
+<p>htmx also contains functionality which is not present in Intercooler. That is outside of the scope of this guide.<br/></p>
+<p>Finally, it&rsquo;s worth noting that this is still a work in progress and is liable to change over time.</p>
+<a class="dashingAutolink" name="autolink-79"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Migration%20Information"></a><h2 id="migration-information"><a class="zola-anchor" href="#migration-information" aria-label="Anchor link for: migration-information">#</a>Migration Information</h2>
+<p>The rest of this guide is laid out as a set of tables, each of which attempts to map the following common functional areas of Intercooler onto the htmx equivalents:</p>
+<ul>
+<li><a href="https://htmx.org/migration-guide/#attributes">Attributes</a></li>
+<li><a href="https://htmx.org/migration-guide/#request-parameters">Request Parameters</a></li>
+<li><a href="https://htmx.org/migration-guide/#request-headers">Request Headers</a></li>
+<li><a href="https://htmx.org/migration-guide/#response-headers">Response Headers</a></li>
+<li><a href="https://htmx.org/migration-guide/#events">Events</a></li>
+<li><a href="https://htmx.org/migration-guide/#methods">Javascript API Methods</a></li>
+<li><a href="https://htmx.org/migration-guide/#meta-tags">Meta Tags</a></li>
+</ul>
+<h4 id="attributes"><a class="zola-anchor" href="#attributes" aria-label="Anchor link for: attributes">#</a>Attributes</h4>
+<p><strong>Note</strong>: For certain Intercooler attributes (mostly client-side specific attributes, e.g. the ic-action and associated attributes) there are no direct htmx equivalents. Instead, there is a small, expressive language available called hyperscript, (see http://hyperscript.org), which is designed to be embedded in HTML and acts as a seamless companion to htmx. It allows you to achieve the same behavior as some of especially the <em>client-side focused</em> Intercooler attributes, but in a more flexible and open manner.</p>
+<p>See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> for practical examples, as well as more on the philosophy behind hyperscipt.</p>
+<table><thead><tr><th>Intercooler</th><th>htmx</th></tr></thead><tbody>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-action.html"><code>ic-action</code></a></td><td>None. Use <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a>, e.g. <code>&lt;button _=&#34;on click add .clicked&#34;&gt;Add The &#34;clicked&#34; Class To Me&lt;/button&gt;</code>. See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> and <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript documentation</a>for more examples</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-action-target.html"><code>ic-action-target</code></a></td><td>None. Use the <a rel="noopener" target="_blank" href="https://hyperscript.org/expressions/target/">Hyperscript target expression</a>, e.g. <code>&lt;div _=&#34;on click set .button.style.color to &#39;red&#39;&#34;&gt;Set All Buttons To Red&lt;/div&gt;</code></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-add-class.html"><code>ic-add-class</code></a></td><td>None. Use <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a>, e.g. <code>&lt;button _=&#34;on click add .clicked&#34;&gt;Add The &#34;clicked&#34; Class To Me&lt;/button&gt;</code>. See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> and <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript documentation</a> for more examples</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-append-from.html"><code>ic-append-from</code></a></td><td>None. Equivalent functionality can be achieved by using for example <a href="https://htmx.org/attributes/hx-get/"><code>hx-get</code></a> and <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a> with value <code>beforeend</code></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-attr-src.html"><code>ic-attr-src</code></a></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-confirm.html"><code>ic-confirm</code></a></td><td><a href="https://htmx.org/attributes/hx-confirm/"><code>hx-confirm</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-delete-from.html"><code>ic-delete-from</code></a></td><td><a href="https://htmx.org/attributes/hx-delete/"><code>hx-delete</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-deps.html"><code>ic-deps</code></a></td><td><code>hx-trigger=&#34;path-deps&#34;</code> along with <code>path-deps=&#34;/foo/bar&#34;</code>. (Requires the <a href="https://htmx.org/extensions/path-deps/"><code>path-deps</code> extension</a>)</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-disable-when-doc-hidden.html"><code>ic-disable-when-doc-hidden</code></a></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-disable-when-doc-inactive.html"><code>ic-disable-when-doc-inactive</code></a></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-enhance.html"><code>ic-enhance</code></a></td><td><a href="https://htmx.org/attributes/hx-boost/"><code>hx-boost</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-fix-ids.html"><code>ic-fix-ids</code></a></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-get-from.html"><code>ic-get-from</code></a></td><td><a href="https://htmx.org/attributes/hx-get/"><code>hx-get</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-global-include.html"><code>ic-global-include</code></a></td><td>None. <a href="https://htmx.org/attributes/hx-include/"><code>hx-include</code></a> can be used to achieve similar functionality</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-global-indicator.html"><code>ic-global-indicator</code></a></td><td>None. <a href="https://htmx.org/attributes/hx-indicator/"><code>hx-indicator</code></a> can be used to achieve similar functionality</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-history-elt.html"><code>ic-history-elt</code></a></td><td><a href="https://htmx.org/attributes/hx-history-elt/"><code>hx-history-elt</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-include.html"><code>ic-include</code></a></td><td><a href="https://htmx.org/attributes/hx-include/"><code>hx-include</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-indicator.html"><code>ic-indicator</code></a></td><td><a href="https://htmx.org/attributes/hx-indicator/"><code>hx-indicator</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-limit-children.html"><code>ic-limit-children</code></a></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-local-vars.html"><code>ic-local-vars</code></a></td><td>No direct equivalent. <a href="https://htmx.org/attributes/hx-vars/"><code>hx-vars</code></a> could be used to facilitate.</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-on-beforeSend.html"><code>ic-on-beforeSend</code></a></td><td>None. Use <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a> in conjunction with events (e.g. <a href="https://htmx.org/events/#htmx:beforeRequest"><code>htmx:beforeRequest</code></a>). See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> and <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript documentation</a> for more examples</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-on-beforeTrigger.html"><code>ic-on-beforeTrigger</code></a></td><td>None. Use <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a> in conjunction with events (e.g. <a href="https://htmx.org/events/#htmx:beforeRequest"><code>htmx:beforeRequest</code></a>). See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> and <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript documentation</a> for more examples</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-on-complete.html"><code>ic-on-complete</code></a></td><td>None. Use <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a> in conjunction with events (e.g. <a href="https://htmx.org/events/#htmx:afterRequest"><code>htmx:afterRequest</code></a>). See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> and <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript documentation</a> for more examples</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-on-error.html"><code>ic-on-error</code></a></td><td>None. Use <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a> in conjunction with events (e.g. <a href="https://htmx.org/events/#htmx:afterRequest"><code>htmx:afterRequest</code></a>). See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> and <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript documentation</a> for more examples</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-on-success.html"><code>ic-on-success</code></a></td><td>None. Use <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a> in conjunction with events (e.g. <a href="https://htmx.org/events/#htmx:afterRequest"><code>htmx:afterRequest</code></a>). See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> and <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript documentation</a> for more examples</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-patch-to.html"><code>ic-patch-to</code></a></td><td><a href="https://htmx.org/attributes/hx-patch/"><code>hx-patch</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-pause-polling.html"><code>ic-pause-polling</code></a></td><td>None. Techniques like <a href="https://htmx.org/docs/#load_polling"><code>load polling</code></a> could be used</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-poll.html"><code>ic-poll</code></a></td><td>None. The equivalent can be achieved by triggering a load on schedule, e.g. <code>&lt;div hx-get=&#34;/news&#34; hx-trigger=&#34;every 2s&#34;&gt;&lt;/div&gt;</code>. See the <a href="https://htmx.org/docs/#polling">documentation on polling</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-poll-repeats.html"><code>ic-poll-repeats</code></a></td><td>None. The equivalent can be achieved by triggering a load on schedule, e.g. <code>&lt;div hx-get=&#34;/news&#34; hx-trigger=&#34;every 2s&#34;&gt;&lt;/div&gt;</code>. See the <a href="https://htmx.org/docs/#polling">documentation on polling</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-post-errors-to.html"><code>ic-post-errors-to</code></a></td><td>None. Errors can be trapped via events and logged via the <a href="https://htmx.org/docs/#events"><code>htmx.logger</code> mechanism</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-post-to.html"><code>ic-post-to</code></a></td><td><a href="https://htmx.org/attributes/hx-post/"><code>hx-post</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-prepend-from.html"><code>ic-prepend-from</code></a></td><td>The <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code> attribute</a> with value set to <code>beforeend</code> could be used to achieve the same outcome</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-prompt.html"><code>ic-prompt</code></a></td><td><a href="https://htmx.org/attributes/hx-prompt/"><code>hx-prompt</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-push-url.html"><code>ic-push-url</code></a></td><td><a href="https://htmx.org/attributes/hx-push-url/"><code>hx-push-url</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-push-params.html"><code>ic-push-params</code></a></td><td>Parameters are automatically pushed in the case of a <code>GET</code> in htmx</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-put-to.html"><code>ic-put-to</code></a></td><td><a href="https://htmx.org/attributes/hx-put/"><code>hx-put</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-remove-after.html"><code>ic-remove-after</code></a></td><td>None. See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> for an example on how to implement it using <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-remove-class.html"><code>ic-remove-class</code></a></td><td>None. Use <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a>, e.g. <code>&lt;button class=&#34;red&#34; _=&#34;on click remove .red&#34;&gt;Remove The &#34;red&#34; class from me&lt;/button&gt;</code>. See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on hyperscript</a> and <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript documentation</a>for more examples</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-replace-target.html"><code>ic-replace-target</code></a></td><td>The <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code> attribute</a> with value set to <code>outerHTML</code> could be used to achieve the same outcome</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-scroll-offset.html"><code>ic-scroll-offset</code></a></td><td>None. No direct equivalent functionality exists</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-scroll-to-target.html"><code>ic-scroll-to-target</code></a></td><td>See the <code>scroll</code> and <code>show</code> modifiers on the <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a> attribute</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-select-from-response.html"><code>ic-select-from-response</code></a></td><td><a href="https://htmx.org/attributes/hx-select/"><code>hx-select</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-src.html"><code>ic-src</code></a></td><td>None. Use <a href="https://htmx.org/attributes/hx-get/"><code>hx-get</code></a> in conjunction with triggers or the <a href="https://htmx.org/extensions/path-deps/"><code>path-deps</code> extension</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-sse-src.html"><code>ic-sse-src</code></a></td><td><a href="https://htmx.org/attributes/hx-sse/"><code>hx-sse</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-style-src.html"><code>ic-style-src</code></a></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-swap-style.html"><code>ic-swap-style</code></a></td><td><a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-switch-class.html"><code>ic-switch-class</code></a></td><td>None. See the <a rel="noopener" target="_blank" href="https://hyperscript.org">htmx documentation on _hyperscript</a> for an example on how to implement it using <a rel="noopener" target="_blank" href="https://hyperscript.org">_hyperscript</a> and the <a rel="noopener" target="_blank" href="https://htmx.org/events#htmx:beforeOnLoad"><code>htmx:beforeOnLoad</code> event</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-target.html"><code>ic-target</code></a></td><td><a href="https://htmx.org/attributes/hx-target/"><code>hx-target</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-transform-response.html"><code>ic-transform-response</code></a></td><td>None. The <a href="https://htmx.org/extensions/client-side-templates/"><code>client-side-templates</code> extension</a> enables JSON response transformation via templating engines like <a rel="noopener" target="_blank" href="https://github.com/janl/mustache.js">mustache</a>, <a rel="noopener" target="_blank" href="https://handlebarsjs.com/">handlebars</a> or <a rel="noopener" target="_blank" href="https://mozilla.github.io/nunjucks/">nunjucks</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-transition-duration.html"><code>ic-transition-duration</code></a></td><td>None. Equivalent functionality can be achieved by relying on the nature of <a href="https://htmx.org/docs/#css_transitions">htmx&rsquo;s swapping mechanism and CSS transitions</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-trigger-delay.html"><code>ic-trigger-delay</code></a></td><td>Use <a href="https://htmx.org/attributes/hx-trigger/"><code>hx-trigger</code></a> with <a href="https://htmx.org/docs/#trigger-modifiers">modifiers</a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-trigger-from.html"><code>ic-trigger-from</code></a></td><td>Use <a href="https://htmx.org/attributes/hx-trigger/"><code>hx-trigger</code></a> with <code>from:</code> clause</td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-trigger-on.html"><code>ic-trigger-on</code></a></td><td><a href="https://htmx.org/attributes/hx-trigger/"><code>hx-trigger</code></a></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://intercoolerjs.org/attributes/ic-verb.html"><code>ic-verb</code></a></td><td>None. By default htmx sends the actual http method. You can however non-<code>GET</code> verbs to <code>POST</code> via the <a href="https://htmx.org/extensions/method-override/"><code>method-override</code> extension</a></td></tr>
+</tbody></table>
+<h4 id="request-parameters"><a class="zola-anchor" href="#request-parameters" aria-label="Anchor link for: request-parameters">#</a>Request parameters</h4>
+<table><thead><tr><th>Intercooler</th><th>htmx</th></tr></thead><tbody>
+<tr><td><code>ic-request</code></td><td>None. Use <code>HX-Request</code> header</td></tr>
+<tr><td><code>_method</code></td><td>None. Use <a href="https://htmx.org/extensions/method-override/"><code>method-override</code></a> extension and its provided <code>X-HTTP-Method-Override</code> header</td></tr>
+<tr><td><code>ic-element-id</code></td><td>None</td></tr>
+<tr><td><code>ic-element-name</code></td><td>None</td></tr>
+<tr><td><code>ic-target-id</code></td><td>None. Use <code>HX-Target</code> header</td></tr>
+<tr><td><code>ic-trigger-id</code></td><td>None. Use <code>HX-Trigger</code> header</td></tr>
+<tr><td><code>ic-trigger-name</code></td><td>None. Use <code>HX-Trigger-Name</code> header</td></tr>
+<tr><td><code>ic-current-url</code></td><td>None. Use the <code>HX-Current-URL</code> header</td></tr>
+<tr><td><code>ic-prompt-value</code></td><td>None. Use the <code>HX-Prompt</code> header</td></tr>
+</tbody></table>
+<h4 id="request-headers"><a class="zola-anchor" href="#request-headers" aria-label="Anchor link for: request-headers">#</a>Request headers</h4>
+<table><thead><tr><th>Intercooler</th><th>htmx</th></tr></thead><tbody>
+<tr><td><code>X-IC-Request</code></td><td><code>HX-Request</code></td></tr>
+<tr><td><code>X-HTTP-Method-Override</code></td><td><code>X-HTTP-Method-Override</code></td></tr>
+</tbody></table>
+<h4 id="response-headers"><a class="zola-anchor" href="#response-headers" aria-label="Anchor link for: response-headers">#</a>Response headers</h4>
+<table><thead><tr><th>Intercooler</th><th>htmx</th></tr></thead><tbody>
+<tr><td><code>X-IC-Trigger</code></td><td><code>HX-Trigger</code>, <code>HX-Trigger-After-Settle</code>, <code>HX-Trigger-After-Swap</code>. See <a href="https://htmx.org/headers/hx-trigger/">documentation</a> for more details</td></tr>
+<tr><td><code>X-IC-Refresh</code></td><td><code>HX-Refresh</code></td></tr>
+<tr><td><code>X-IC-Redirect</code></td><td><code>HX-Redirect</code></td></tr>
+<tr><td><code>X-IC-Script</code></td><td>None. No  direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>X-IC-CancelPolling</code></td><td>None. Respond with HTTP response code <code>286</code> to cancel <a href="https://htmx.org/docs/#polling">polling</a>.</td></tr>
+<tr><td><code>X-IC-ResumePolling</code></td><td>None. No direct equivalent functionality exists</td></tr>
+<tr><td><code>X-IC-SetPollInterval</code></td><td>None. If using <a href="https://htmx.org/docs/#load_polling">load polling</a>, respond with content that contains a different load interval.</td></tr>
+<tr><td><code>X-IC-Open</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>X-IC-PushURL</code></td><td><code>HX-Push</code></td></tr>
+<tr><td><code>X-IC-Remove</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>X-IC-Title</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>X-IC-Title-Encoded</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>X-IC-Set-Local-Vars</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+</tbody></table>
+<h4 id="events"><a class="zola-anchor" href="#events" aria-label="Anchor link for: events">#</a>Events</h4>
+<p><strong>Note</strong>: All <a href="https://htmx.org/docs/#events">htmx events</a> are fired in both Camel and Kebab casing.</p>
+<table><thead><tr><th>Intercooler</th><th>htmx</th></tr></thead><tbody>
+<tr><td><code>log.ic</code></td><td>None. Equivalent achieved via <code>htmx.logger</code>. See <a href="https://htmx.org/docs/#events"><code>Events &amp; Logging</code> documentation</a></td></tr>
+<tr><td><code>beforeAjaxSend.ic</code></td><td><a href="https://htmx.org/events/#htmx:configRequest"><code>htmx:configRequest</code></a></td></tr>
+<tr><td><code>beforeHeaders.ic</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>afterHeaders.ic</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>beforeSend.ic</code></td><td><a href="https://htmx.org/events/#htmx:beforeRequest"><code>htmx:beforeRequest</code></a></td></tr>
+<tr><td><code>success.ic</code></td><td><a href="https://htmx.org/events/#htmx:afterOnLoad"><code>htmx:afterOnLoad</code></a></td></tr>
+<tr><td><code>after.success.ic</code></td><td>Approximate equivalent: <a href="https://htmx.org/events/#htmx:beforeSwap"><code>htmx:beforeSwap</code></a></td></tr>
+<tr><td><code>error.ic</code></td><td><a href="https://htmx.org/events/#htmx:sendError"><code>htmx:sendError</code></a> or <a href="https://htmx.org/events/#htmx:sseError"><code>htmx:sseError</code></a> or <a href="https://htmx.org/events/#htmx:responseError"><code>htmx:responseError</code></a> or <a href="https://htmx.org/events/#htmx:swapError"><code>htmx:swapError</code></a> or <a href="https://htmx.org/events/#htmx:onLoadError"><code>htmx:onLoadError</code></a> (TBC)</td></tr>
+<tr><td><code>complete.ic</code></td><td><a href="https://htmx.org/events/#htmx:afterRequest"><code>htmx:afterRequest</code></a></td></tr>
+<tr><td><code>onPoll.ic</code></td><td>No direct equivalent. When using <a href="https://htmx.org/docs/#load_polling">load polling</a>, the [<code>htmx:load</code> event] could potentially be used</td></tr>
+<tr><td><code>handle.onpopstate.ic</code></td><td><a href="https://htmx.org/events/#htmx:historyRestore"><code>htmx:historyRestore</code></a> (TBC)</td></tr>
+<tr><td><code>elementAdded.ic</code></td><td><a href="https://htmx.org/events/#htmx:load"><code>htmx:load</code></a></td></tr>
+<tr><td><code>pushUrl.ic</code></td><td>tbd</td></tr>
+<tr><td><code>beforeHistorySnapshot.ic</code></td><td><a href="https://htmx.org/events/#htmx:beforeHistorySave"><code>htmx:beforeHistorySave</code></a></td></tr>
+</tbody></table>
+<h4 id="methods"><a class="zola-anchor" href="#methods" aria-label="Anchor link for: methods">#</a>JavaScript API methods</h4>
+<table><thead><tr><th>Intercooler</th><th>htmx</th></tr></thead><tbody>
+<tr><td><code>Intercooler.refresh(eltOrPath)</code></td><td><code>PathDeps.refresh()</code> (requires the <a href="https://htmx.org/extensions/path-deps/"><code>path-deps</code></a> extension)</td></tr>
+<tr><td><code>Intercooler.triggerRequest(elt, handler)</code></td><td><a href="https://htmx.org/api/#trigger"><code>htmx.trigger()</code></a></td></tr>
+<tr><td><code>Intercooler.processNodes(elt)</code></td><td><a href="https://htmx.org/api/#process"><code>htmx.process()</code></a></td></tr>
+<tr><td><code>Intercooler.closestAttrValue(elt, attr)</code></td><td><a href="https://htmx.org/api/#closest"><code>htmx.closest()</code></a> can be used with any selector</td></tr>
+<tr><td><code>Intercooler.verbFor(elt)</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>Intercooler.isDependent(elt1, elt2)</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>Intercooler.getTarget(elt1)</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>Intercooler.processHeaders(elt, xhr)</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>Intercooler.ready(func(elt))</code></td><td><a href="https://htmx.org/api/#onLoad"><code>htmx.onLoad()</code></a></td></tr>
+<tr><td><code>LeadDyno.startPolling(elt)</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+<tr><td><code>LeadDyno.stopPolling(elt)</code></td><td>None. No direct equivalent functionality exists (TBC)</td></tr>
+</tbody></table>
+<h4 id="meta-tags"><a class="zola-anchor" href="#meta-tags" aria-label="Anchor link for: meta-tags">#</a>Meta tags</h4>
+<table><thead><tr><th>Intercooler</th><th>htmx</th></tr></thead><tbody>
+<tr><td><code>&lt;meta name=&#34;intercoolerjs:use-data-prefix&#34; content=&#34;true&#34;/&gt;</code></td><td>None. You can simply use the <code>data-</code> prefix without specifying a meta tag. htmx will automatically recognize htmx attributes like this: <code>&lt;a data-hx-post=&#34;/click&#34;&gt;Click Me!&lt;/a&gt;</code></td></tr>
+<tr><td><code>&lt;meta name=&#34;intercoolerjs:use-actual-http-method&#34; content=&#34;true&#34;/&gt;</code></td><td>None. By default htmx sends the actual http method. You can however change the verb for all non-GET requests to POST via the <a href="https://htmx.org/extensions/method-override/"><code>method-override</code> extension</a></td></tr>
+</tbody></table>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

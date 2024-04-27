@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ The preload Extension</title>
+    <link rel="canonical" href="https://htmx.org/extensions/preload/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>The <code>preload</code> Extension</h1>
+  <p>The <code>preload</code> extension allows you to load HTML fragments into your browser&rsquo;s cache before they are requested by the user, so that additional pages appear to users to load nearly instantaneously.  As a developer, you can customize its behavior to fit your applications needs and use cases.</p>
+<p><strong>IMPORTANT:</strong> Preloading content judiciously can improve your web application&rsquo;s perceived performance, but preloading too many resources can negatively impact your visitors&rsquo; bandwidth and your server performance by initiating too many unused requests.  Use this extension carefully!</p>
+<h2 id="install"><a class="zola-anchor" href="#install" aria-label="Anchor link for: install">#</a>Install</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://unpkg.com/htmx.org@1.9.12/dist/ext/preload.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<h2 id="usage"><a class="zola-anchor" href="#usage" aria-label="Anchor link for: usage">#</a>Usage</h2>
+<p>Register the extension with htmx using the <code>hx-ext</code> attribute.  Then, add a <code>preload</code> attribute to any hyperlinks and <code>hx-get</code> elements you want to preload.  By default, resources will be loaded as soon as the <code>mousedown</code> event begins, giving your application a roughly 100-200ms head start on serving responses.  See configuration below for other options.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">body </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;preload&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">h1</span><span>&gt;What Works&lt;/</span><span style="color:#e06c75;">h2</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/server/1&#34; </span><span style="color:#d19a66;">preload</span><span>&gt;WILL BE requested using a standard XMLHttpRequest() and default options (below)&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/server/2&#34; </span><span style="color:#d19a66;">preload</span><span>&gt;WILL BE requested with additional htmx headers.&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>
+</span><span>    &lt;</span><span style="color:#e06c75;">h1</span><span>&gt;What WILL NOT WORK&lt;/</span><span style="color:#e06c75;">h1</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/server/3&#34;</span><span>&gt;WILL NOT be preloaded because it does not have an explicit &#34;preload&#34; attribute&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/server/4&#34; </span><span style="color:#d19a66;">preload</span><span>&gt;WILL NOT be preloaded because it is an HX-POST transaction.&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">body</span><span>&gt;
+</span></code></pre>
+<h3 id="inheriting-preload-settings"><a class="zola-anchor" href="#inheriting-preload-settings" aria-label="Anchor link for: inheriting-preload-settings">#</a>Inheriting Preload Settings</h3>
+<p>You can add the <code>preload</code> attribute to the top-level element that contains several <code>&lt;a href=&#34;&#34;&gt;</code> or <code>hx-get=&#34;&#34;</code> elements, and all of them will be preloaded.  Be careful with this setting, because you can end up wasting bandwidth if you preload many more resources than you need.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">body </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;preload&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">ul </span><span style="color:#d19a66;">preload</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">li</span><span>&gt;&lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/server/1&#34;</span><span>&gt;This will be preloaded because of the attribute in the node above.&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">li</span><span>&gt;&lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/server/2&#34;</span><span>&gt;This will also be preloaded for the same reason.&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">li</span><span>&gt;&lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/server/3&#34;</span><span>&gt;This will be preloaded, too.  Lorem ipsum.&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">ul</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">body</span><span>&gt;
+</span></code></pre>
+<h3 id="preloading-of-linked-images"><a class="zola-anchor" href="#preloading-of-linked-images" aria-label="Anchor link for: preloading-of-linked-images">#</a>Preloading of Linked Images</h3>
+<p>After an HTML page (or page fragment) is preloaded, this extension can also preload linked image resources.  It will not load or run linked Javascript or Cascading Stylesheet content, whether linked or embedded in the preloaded HTML.  To preload images as well, use the following syntax.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;preload&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/my-next-page&#34; </span><span style="color:#d19a66;">preload</span><span>=</span><span style="color:#98c379;">&#34;mouseover&#34; </span><span style="color:#d19a66;">preload-images</span><span>=</span><span style="color:#98c379;">&#34;true&#34;</span><span>&gt;Next Page&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<h3 id="configuration"><a class="zola-anchor" href="#configuration" aria-label="Anchor link for: configuration">#</a>Configuration</h3>
+<p>Defaults for this extension are chosen to balance users&rsquo; perceived performance with potential load on your servers from unused requests.  As a developer, you can modify two settings to customize this behavior to your specific use cases.</p>
+<h4 id="preload-mousedown-default"><a class="zola-anchor" href="#preload-mousedown-default" aria-label="Anchor link for: preload-mousedown-default">#</a>preload=&ldquo;mousedown&rdquo; (DEFAULT)</h4>
+<p>The default behavior for this extension is to begin loading a resource when the user presses the mouse down.  This is a conservative setting that guarantees the user actually intends to use the linked resource.  Because user click events typically take 100-200ms to complete, this setting gives your server a significant headstart compared with a regular click.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/server/1&#34; </span><span style="color:#d19a66;">preload</span><span>=</span><span style="color:#98c379;">&#34;mousedown&#34;</span><span>&gt;This will be preloaded when the user begins to click.&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span></code></pre>
+<h4 id="preload-mouseover"><a class="zola-anchor" href="#preload-mouseover" aria-label="Anchor link for: preload-mouseover">#</a>preload=&ldquo;mouseover&rdquo;</h4>
+<p>To preload links more aggressively, you can trigger the preload to happen when the user&rsquo;s mouse hovers over the link instead.  To prevent many resources from being loaded when the user scrolls or moves the mouse across a large list of objects, a 100ms delay is built in to this action.  If the user&rsquo;s mouse leaves the element <em>before</em> this timeout expires, then the resource is not preloaded.</p>
+<p>Typical users hover over links for several hundred milliseconds before they click, which gives your server even more time to respond to the request than the <code>mousedown</code> option above.  <a rel="noopener" target="_blank" href="http://instantclick.io/click-test">Test your own hover timing here.</a>.  However, be careful when using this option because it can increase server load by requesting resources unnecessarily.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/server/1&#34; </span><span style="color:#d19a66;">preload</span><span>=</span><span style="color:#98c379;">&#34;mouseover&#34;</span><span>&gt;This will be preloaded when the user&#39;s mouse remains over it for more than 100ms.&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span></code></pre>
+<h4 id="preload-custom-event-name"><a class="zola-anchor" href="#preload-custom-event-name" aria-label="Anchor link for: preload-custom-event-name">#</a>preload=&ldquo;custom-event-name&rdquo;</h4>
+<p>Preload can also listen to any custom event within the system, triggering resources to be preloaded (if they have not already been cached by the browser).  The extension itself generates an event called <code>preload:init</code> that can be used to trigger preloads as soon as an object has been processed by htmx.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">body </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;preload&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/server&#34; </span><span style="color:#d19a66;">preload</span><span>=</span><span style="color:#98c379;">&#34;preload:init&#34; </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;idLoadMore&#34;</span><span>&gt;Load More&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;idLoadMore&#34;</span><span>&gt;
+</span><span>        Content for this DIV will be preloaded as soon as the page is ready.
+</span><span>        Clicking the button above will swap it into the DOM.
+</span><span>    &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">body</span><span>&gt;
+</span></code></pre>
+<h3 id="about-touch-events"><a class="zola-anchor" href="#about-touch-events" aria-label="Anchor link for: about-touch-events">#</a>About Touch Events</h3>
+<p>To accommodate touchscreen devices, an additional <code>ontouchstart</code> event handler is added whenever you specify a <code>mouseover</code> or <code>mousedown</code> trigger.  This extra trigger fires immediately (no waiting period) whenever the user touches the screen, saving you 300ms of waiting time on Android, and 450ms on iOS.</p>
+<h3 id="limitations"><a class="zola-anchor" href="#limitations" aria-label="Anchor link for: limitations">#</a>Limitations</h3>
+<ul>
+<li>Links must be marked with a <code>preload</code> attribute, or have an ancestor node that has the <code>preload</code> attribute.</li>
+<li>Only <code>GET</code> transactions (including <code>&lt;a href=&#34;&#34;&gt;</code> and <code>hx-get=&#34;&#34;</code>) can be preloaded.  Following REST principles, <code>GET</code> transactions are assumed to not make any significant changes to a resource.  Transactions that can potentially make a change (such as <code>POST</code>, <code>PUT</code>, and <code>DELETE</code>) will not be preloaded under any circumstances.</li>
+<li>When listening to <code>mouseover</code> events, preload waits for 100ms before downloading the linked resource.  If the mouse leaves the resource before this timeout expires, the resource is not preloaded.</li>
+<li>Preloaded responses will only be cached in the browser if the response headers allow it. For example, the response header <code>Cache-Control: private, max-age=60</code> allows the browser to cache the response, whereas <code>Cache-Control: no-cache</code> prevents it.</li>
+</ul>
+<a class="dashingAutolink" name="autolink-69"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Credits"></a><h2 id="credits"><a class="zola-anchor" href="#credits" aria-label="Anchor link for: credits">#</a>Credits</h2>
+<p>The behavior for this plugin was inspired by the work done by <a rel="noopener" target="_blank" href="https://github.com/dieulot">Alexandre Dieulot</a> on <a rel="noopener" target="_blank" href="http://instantclick.io/">InstantClick</a>, which is released under the MIT license.</p>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

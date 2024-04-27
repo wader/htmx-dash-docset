@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  
+<title>&lt;/&gt; htmx ~ Examples ~ Bulk Update</title>
+    <link rel="canonical" href="https://htmx.org/examples/bulk-update/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation"> <!-- don't boost on demo pages, sinon hijacks everything :/ -->
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  
+    
+  
+  <h1>Bulk Update</h1>
+  <script src="https://unpkg.com/sinon@9.0.2/pkg/sinon.js"></script>
+  <script src="js/demo.js"></script>
+  <p>This demo shows how to implement a common pattern where rows are selected and then bulk updated.  This is
+accomplished by putting a form around a table, with checkboxes in the table, and then including the checked
+values in the form submission (<code>POST</code> request):</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;checked-contacts&#34;
+</span><span>      </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/users&#34;
+</span><span>      </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML settle:3s&#34;
+</span><span>      </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#toast&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">table</span><span>&gt;
+</span><span>      &lt;</span><span style="color:#e06c75;">thead</span><span>&gt;
+</span><span>      &lt;</span><span style="color:#e06c75;">tr</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">th</span><span>&gt;Name&lt;/</span><span style="color:#e06c75;">th</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">th</span><span>&gt;Email&lt;/</span><span style="color:#e06c75;">th</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">th</span><span>&gt;Active&lt;/</span><span style="color:#e06c75;">th</span><span>&gt;
+</span><span>      &lt;/</span><span style="color:#e06c75;">tr</span><span>&gt;
+</span><span>      &lt;/</span><span style="color:#e06c75;">thead</span><span>&gt;
+</span><span>      &lt;</span><span style="color:#e06c75;">tbody </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;tbody&#34;</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">tr</span><span>&gt;
+</span><span>          &lt;</span><span style="color:#e06c75;">td</span><span>&gt;Joe Smith&lt;/</span><span style="color:#e06c75;">td</span><span>&gt;
+</span><span>          &lt;</span><span style="color:#e06c75;">td</span><span>&gt;joe@smith.org&lt;/</span><span style="color:#e06c75;">td</span><span>&gt;
+</span><span>          &lt;</span><span style="color:#e06c75;">td</span><span>&gt;&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;checkbox&#34; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;active:joe@smith.org&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">td</span><span>&gt;
+</span><span>        &lt;/</span><span style="color:#e06c75;">tr</span><span>&gt;
+</span><span>        ...
+</span><span>      &lt;/</span><span style="color:#e06c75;">tbody</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">table</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;submit&#34; </span><span style="color:#d19a66;">value</span><span>=</span><span style="color:#98c379;">&#34;Bulk Update&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">span </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;toast&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">span</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<p>The server will bulk-update the statuses based on the values of the checkboxes.
+We respond with a small toast message about the update to inform the user, and
+use ARIA to politely announce the update for accessibility.</p>
+<pre data-lang="css" style="background-color:#1f2329;color:#abb2bf;" class="language-css "><code class="language-css" data-lang="css"><span style="color:#d19a66;">#toast.htmx-settling </span><span>{
+</span><span>  opacity: </span><span style="color:#d19a66;">100</span><span>;
+</span><span>}
+</span><span>
+</span><span style="color:#d19a66;">#toast </span><span>{
+</span><span>  background: </span><span style="color:#56b6c2;">#E1F0DA</span><span>;
+</span><span>  opacity: </span><span style="color:#d19a66;">0</span><span>;
+</span><span>  transition: opacity </span><span style="color:#d19a66;">3s </span><span>ease-out;
+</span><span>}
+</span></code></pre>
+<p>The cool thing is that, because HTML form inputs already manage their own state,
+we don&rsquo;t need to re-render any part of the users table. The active users are
+already checked and the inactive ones unchecked!</p>
+<p>You can see a working example of this code below.</p>
+<style scoped="">
+#toast.htmx-settling {
+  opacity: 100;
+}
+
+#toast {
+  background: #E1F0DA;
+  opacity: 0;
+  transition: opacity 3s ease-out;
+}
+</style>
+<style>
+  #demo-server-info {
+      padding: 8px;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 64px;
+      width: 100vw;
+      background-color: whitesmoke;
+      border-top: 2px solid gray;
+      overflow: hide;
+      margin: 0px;
+      z-index: 1;
+  }
+  #demo-server-info.show {
+      max-height: 45vh;
+      height: 500px;
+      overflow: scroll;
+  }
+  #demo-activity {
+      height:300px
+  }
+
+  #demo-activity div {
+      vertical-align: top
+  }
+
+  #demo-activity ol li {
+      list-style-position: inside;
+  }
+
+  #demo-canvas {
+      margin-bottom: 500px;
+      padding-top: 12px;
+  }
+
+</style>
+<script>
+  function toggleRequestInfo() {
+      var classList = document.getElementById("demo-server-info").classList;
+      classList.toggle("show");
+      if (classList.contains('show')) {
+          document.getElementById("request-info-toggler").innerHTML = "&downarrow; Hide"
+      } else {
+          document.getElementById("request-info-toggler").innerHTML = "&uparrow; Show"
+      }
+  }
+</script>
+<div id="demo-server-info">
+  <div>Server Requests<span id="request-count"></span> <a id="request-info-toggler" onclick="toggleRequestInfo()" style="cursor: pointer">&uarr; Show</a></div>
+  <div id="demo-activity" class="row">
+      <div class="3 col">
+          <ol id="demo-timeline" reversed="">
+          </ol>
+      </div>
+      <div id="demo-current-request" class="9 col">
+      </div>
+  </div>
+</div>
+
+<h2><a class="zola-anchor" href="#demo" aria-label="Anchor link for: demo">🔗</a>Demo</h2>
+<div id="demo-canvas">
+</div>
+<script>
+    //=========================================================================
+    // Fake Server Side Code
+    //=========================================================================
+
+    const dataStore = (() => {
+      const data = {
+        "joe@smith.org": {name: 'Joe Smith', status: 'Active'},
+        "angie@macdowell.org": {name: 'Angie MacDowell', status: 'Active'},
+        "fuqua@tarkenton.org": {name: 'Fuqua Tarkenton', status: 'Active'},
+        "kim@yee.org": {name: 'Kim Yee', status: 'Inactive'},
+      };
+
+      return {
+        all() {
+          return data;
+        },
+
+        activate(email) {
+          if (data[email].status === 'Active') {
+            return 0;
+          } else {
+            data[email].status = 'Active';
+            return 1;
+          }
+        },
+
+        deactivate(email) {
+          if (data[email].status === 'Inactive') {
+            return 0;
+          } else {
+            data[email].status = 'Inactive';
+            return 1;
+          }
+        },
+      };
+    })();
+
+    // routes
+    init("/demo", function(request){
+        return displayUI(dataStore.all());
+    });
+
+    /*
+    Params look like:
+    {"active:joe@smith.org":"on","active:angie@macdowell.org":"on","active:fuqua@tarkenton.org":"on"}
+    */
+    onPost("/users", function (req, params) {
+      const actives = {};
+      let activated = 0;
+      let deactivated = 0;
+
+      // Build a set of active users for efficient lookup
+      for (const param of Object.keys(params)) {
+        const nameEmail = param.split(':');
+        if (nameEmail[0] === 'active') {
+          actives[nameEmail[1]] = true;
+        }
+      }
+
+      // Activate or deactivate users based on the lookup
+      for (const email of Object.keys(dataStore.all())) {
+        if (actives[email]) {
+          activated += dataStore.activate(email);
+        } else {
+          deactivated += dataStore.deactivate(email);
+        }
+      }
+
+      return `<span id="toast" aria-live="polite">Activated ${activated} and deactivated ${deactivated} users</span>`;
+    });
+
+    // templates
+    function displayUI(contacts) {
+      return `<h3>Select Rows And Activate Or Deactivate Below</h3>
+               <form
+                id="checked-contacts"
+                hx-post="/users"
+                hx-swap="outerHTML settle:3s"
+                hx-target="#toast"
+              >
+                <table>
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                  </tr>
+                  </thead>
+                  <tbody id="tbody">
+                    ${displayTable(contacts)}
+                  </tbody>
+                </table>
+                <input type="submit" value="Bulk Update">
+                <span id="toast"></span>
+              </form>
+              <br>`;
+    }
+
+    function displayTable(contacts) {
+      var txt = "";
+
+      for (email of Object.keys(contacts)) {
+        txt += `
+<tr>
+  <td>${contacts[email].name}</td>
+  <td>${email}</td>
+  <td>
+    <input
+      type="checkbox"
+      name="active:${email}"
+      ${contacts[email].status === 'Active' ? 'checked' : ''}>
+  </td>
+</tr>
+`;
+      }
+
+      return txt;
+    }
+</script>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

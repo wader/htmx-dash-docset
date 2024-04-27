@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ The response-targets Extension</title>
+    <link rel="canonical" href="https://htmx.org/extensions/response-targets/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>The <code>response-targets</code> Extension</h1>
+  <p>This extension allows you to specify different target elements to be swapped when
+different HTTP response codes are received.</p>
+<p>It uses attribute names in a&nbsp;form of <code>hx-target-[CODE]</code> where <code>[CODE]</code> is a&nbsp;numeric
+HTTP response code with the optional wildcard character at its end. You can also use
+<code>hx-target-error</code>, which handles both 4xx and 5xx response codes.</p>
+<p>The value of each attribute can be:</p>
+<ul>
+<li>A CSS query selector of the element to target.</li>
+<li><code>this</code> which indicates that the element that the <code>hx-target</code> attribute is on is the target.</li>
+<li><code>closest &lt;CSS selector&gt;</code> which will find the closest parent ancestor that matches the given CSS selector
+(e.g. <code>closest tr</code> will target the closest table row to the element).</li>
+<li><code>find &lt;CSS selector&gt;</code> which will find the first child descendant element that matches the given CSS selector.</li>
+<li><code>next &lt;CSS selector&gt;</code> which will scan the DOM forward for the first element that matches the given CSS selector.
+(e.g. <code>next .error</code> will target the closest following sibling element with <code>error</code> class)</li>
+<li><code>previous &lt;CSS selector&gt;</code> which will scan the DOM backwards for the first element that matches the given CSS selector.
+(e.g <code>previous .error</code> will target the closest previous sibling with <code>error</code> class)</li>
+</ul>
+<h2 id="install"><a class="zola-anchor" href="#install" aria-label="Anchor link for: install">#</a>Install</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://unpkg.com/htmx.org@1.9.12/dist/ext/response-targets.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<a class="dashingAutolink" name="autolink-70"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Configure%20%28optional%29"></a><h2 id="configure-optional"><a class="zola-anchor" href="#configure-optional" aria-label="Anchor link for: configure-optional">#</a>Configure (optional)</h2>
+<ul>
+<li>
+<p>When <code>HX-Retarget</code> response header is received it disables any lookup that would be
+performed by this extension but any responses with error status codes will be
+swapped (normally they would not be, even with target set via header) and internal
+error flag (<code>isError</code>) will be modified. You may change this and choose to ignore
+<code>HX-Retarget</code> header when <code>hx-target-&hellip;</code> is in place by setting a&nbsp;configuration flag
+<code>htmx.config.responseTargetPrefersRetargetHeader</code> to <code>false</code> (default is
+<code>true</code>). Note that this extension only performs a&nbsp;simple check whether the header
+is set and target exists. It is not extracting target&rsquo;s value from the header but
+trusts it was set by HTMX core logic.</p>
+</li>
+<li>
+<p>Normally, any target which is already established by HTMX built-in functions or
+extensions called before will be overwritten if a&nbsp;matching <code>hx-target-&hellip;</code> tag is
+found. You may change it by using a&nbsp;configuration flag
+<code>htmx.config.responseTargetPrefersExisting</code> to <code>true</code> (default is <code>false</code>). This is
+kinky and risky option. It has a real-life applications similar to a&nbsp;skilled,
+full-stack tardigrade eating parentheses when no one is watching.</p>
+</li>
+<li>
+<p><code>isError</code> flag on the <code>detail</code> member of an event associated with swapping the
+content with <code>hx-target-[CODE]</code> will be set to <code>false</code> when error response code is
+received. This is different from the default behavior. You may change this by
+setting a&nbsp;configuration flag <code>htmx.config.responseTargetUnsetsError</code> to <code>false</code>
+(default is <code>true</code>).</p>
+</li>
+<li>
+<p><code>isError</code> flag on the <code>detail</code> member of an event associated with swapping the
+content with <code>hx-target-[CODE]</code> will be set to <code>false</code> when non-erroneous response
+code is received. This is no different from the default behavior. You may change
+this by setting a&nbsp;configuration flag <code>htmx.config.responseTargetSetsError</code> to
+<code>true</code> (default is <code>false</code>). This setting will not affect the response code 200
+since it is not handled by this extension.</p>
+</li>
+</ul>
+<h2 id="usage"><a class="zola-anchor" href="#usage" aria-label="Anchor link for: usage">#</a>Usage</h2>
+<p>Here is an example that targets a <code>div</code> for normal (200) response but another <code>div</code>
+for 404 (not found) response, and yet another for all 5xx response codes:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;response-targets&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;response-div&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/register&#34;
+</span><span>            </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#response-div&#34;
+</span><span>            </span><span style="color:#d19a66;">hx-target-5*</span><span>=</span><span style="color:#98c379;">&#34;#serious-errors&#34;
+</span><span>            </span><span style="color:#d19a66;">hx-target-404</span><span>=</span><span style="color:#98c379;">&#34;#not-found&#34;</span><span>&gt;
+</span><span>        Register!
+</span><span>    &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;serious-errors&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;not-found&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<ul>
+<li>
+<p>The response from the <code>/register</code> URL will replace contents of the <code>div</code> with the
+<code>id</code> <code>response-div</code> when response code is 200 (OK).</p>
+</li>
+<li>
+<p>The response from the <code>/register</code> URL will replace contents of the <code>div</code> with the <code>id</code>
+<code>serious-errors</code> when response code begins with a&nbsp;digit 5 (server errors).</p>
+</li>
+<li>
+<p>The response from the <code>/register</code> URL will replace contents of the <code>div</code> with
+the <code>id</code> <code>not-found</code> when response code is 404 (Not Found).</p>
+</li>
+</ul>
+<p>Sometimes you may not want to handle 5xx and 4xx errors separately, in which case you
+can use <code>hx-target-error</code>:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;response-targets&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;response-div&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/register&#34;
+</span><span>            </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#response-div&#34;
+</span><span>            </span><span style="color:#d19a66;">hx-target-error</span><span>=</span><span style="color:#98c379;">&#34;#any-errors&#34;</span><span>&gt;
+</span><span>        Register!
+</span><span>    &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;any-errors&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>2xx codes will be handled as in the previous example. However, when the response code is 5xx
+or 4xx, the response from <code>/register</code> will replace the contents of the <code>div</code> with the <code>id</code>
+<code>any-errors</code>.</p>
+<a class="dashingAutolink" name="autolink-71"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Wildcard%20resolution"></a><h2 id="wildcard-resolution"><a class="zola-anchor" href="#wildcard-resolution" aria-label="Anchor link for: wildcard-resolution">#</a>Wildcard resolution</h2>
+<p>When status response code does not match existing <code>hx-target-[CODE]</code> attribute name
+then its numeric part expressed as a&nbsp;string is trimmed with last character being
+replaced with the asterisk (<code>*</code>). This lookup process continues until the attribute
+is found or there are no more digits.</p>
+<p>For example, if a&nbsp;browser receives 404 error code, the following attribute names will
+be looked up (in the given order):</p>
+<ul>
+<li><code>hx-target-404</code></li>
+<li><code>hx-target-40*</code></li>
+<li><code>hx-target-4*</code></li>
+<li><code>hx-target-*</code>.</li>
+</ul>
+<p><em>If you are using tools that do not support asterisks in HTML attributes, you
+may instead use the <code>x</code> character, e.g., <code>hx-target-4xx</code>.</em></p>
+<h2 id="notes"><a class="zola-anchor" href="#notes" aria-label="Anchor link for: notes">#</a>Notes</h2>
+<ul>
+<li><code>hx-target-&hellip;</code> is inherited and can be placed on a parent element.</li>
+<li><code>hx-target-&hellip;</code> cannot be used to handle HTTP response code 200.</li>
+<li><code>hx-target-&hellip;</code> will honor <code>HX-Retarget</code> by default and will prefer it over any
+calculated target but it can be changed by disabling the
+<code>htmx.config.responseTargetPrefersRetargetHeader</code> configuration option.</li>
+<li>To avoid surprises the <code>hx-ext</code> attribute used to enable this extension should be
+placed on a&nbsp;parent element containing elements with <code>hx-target-&hellip;</code> and <code>hx-target</code>
+attributes.</li>
+</ul>
+<a class="dashingAutolink" name="autolink-72"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/See%20also"></a><h2 id="see-also"><a class="zola-anchor" href="#see-also" aria-label="Anchor link for: see-also">#</a>See also</h2>
+<ul>
+<li><a href="https://htmx.org/attributes/hx-target/"><code>hx-target</code></a>, specifies the target element to be swapped</li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

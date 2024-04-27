@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ Reference</title>
+    <link rel="canonical" href="https://htmx.org/reference/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>Reference</h1>
+  <a class="dashingAutolink" name="autolink-85"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Contents"></a><h2 id="contents"><a class="zola-anchor" href="#contents" aria-label="Anchor link for: contents">#</a>Contents</h2>
+<ul>
+<li><a href="https://htmx.org/reference/#attributes">htmx Core Attributes</a></li>
+<li><a href="https://htmx.org/reference/#attributes-additional">htmx Additional Attributes</a></li>
+<li><a href="https://htmx.org/reference/#classes">htmx CSS Classes</a></li>
+<li><a href="https://htmx.org/reference/#request_headers">htmx Request Headers</a></li>
+<li><a href="https://htmx.org/reference/#response_headers">htmx Response Headers</a></li>
+<li><a href="https://htmx.org/reference/#events">htmx Events</a></li>
+<li><a href="extensions#included">htmx Extensions</a></li>
+<li><a href="https://htmx.org/reference/#api">JavaScript API</a></li>
+<li><a href="https://htmx.org/reference/#config">Configuration Options</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-86"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Core%20Attribute%20Reference"></a><h2 id="attributes"><a class="zola-anchor" href="#attributes" aria-label="Anchor link for: attributes">#</a>Core Attribute Reference</h2>
+<p>The most common attributes when using htmx.</p>
+<div class="info-table">
+<table><thead><tr><th>Attribute</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/attributes/hx-get/"><code>hx-get</code></a></td><td>issues a <code>GET</code> to the specified URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-post/"><code>hx-post</code></a></td><td>issues a <code>POST</code> to the specified URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-on/"><code>hx-on*</code></a></td><td>handle events with inline scripts on elements</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-push-url/"><code>hx-push-url</code></a></td><td>push a URL into the browser location bar to create history</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-select/"><code>hx-select</code></a></td><td>select content to swap in from a response</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-select-oob/"><code>hx-select-oob</code></a></td><td>select content to swap in from a response, somewhere other than the target (out of band)</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a></td><td>controls how content will swap in (<code>outerHTML</code>, <code>beforeend</code>, <code>afterend</code>, &hellip;)</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-swap-oob/"><code>hx-swap-oob</code></a></td><td>mark element to swap in from a response (out of band)</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-target/"><code>hx-target</code></a></td><td>specifies the target element to be swapped</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-trigger/"><code>hx-trigger</code></a></td><td>specifies the event that triggers the request</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-vals/"><code>hx-vals</code></a></td><td>add values to submit with the request (JSON format)</td></tr>
+</tbody></table>
+</div>
+<a class="dashingAutolink" name="autolink-87"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Additional%20Attribute%20Reference"></a><h2 id="attributes-additional"><a class="zola-anchor" href="#attributes-additional" aria-label="Anchor link for: attributes-additional">#</a>Additional Attribute Reference</h2>
+<p>All other attributes available in htmx.</p>
+<div class="info-table">
+<table><thead><tr><th>Attribute</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/attributes/hx-boost/"><code>hx-boost</code></a></td><td>add <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Progressive_enhancement">progressive enhancement</a> for links and forms</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-confirm/"><code>hx-confirm</code></a></td><td>shows a <code>confirm()</code> dialog before issuing a request</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-delete/"><code>hx-delete</code></a></td><td>issues a <code>DELETE</code> to the specified URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-disable/"><code>hx-disable</code></a></td><td>disables htmx processing for the given node and any children nodes</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-disabled-elt/"><code>hx-disabled-elt</code></a></td><td>adds the <code>disabled</code> attribute to the specified elements while a request is in flight</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-disinherit/"><code>hx-disinherit</code></a></td><td>control and disable automatic attribute inheritance for child nodes</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-encoding/"><code>hx-encoding</code></a></td><td>changes the request encoding type</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-ext/"><code>hx-ext</code></a></td><td>extensions to use for this element</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-headers/"><code>hx-headers</code></a></td><td>adds to the headers that will be submitted with the request</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-history/"><code>hx-history</code></a></td><td>prevent sensitive data being saved to the history cache</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-history-elt/"><code>hx-history-elt</code></a></td><td>the element to snapshot and restore during history navigation</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-include/"><code>hx-include</code></a></td><td>include additional data in requests</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-indicator/"><code>hx-indicator</code></a></td><td>the element to put the <code>htmx-request</code> class on during the request</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-params/"><code>hx-params</code></a></td><td>filters the parameters that will be submitted with a request</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-patch/"><code>hx-patch</code></a></td><td>issues a <code>PATCH</code> to the specified URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-preserve/"><code>hx-preserve</code></a></td><td>specifies elements to keep unchanged between requests</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-prompt/"><code>hx-prompt</code></a></td><td>shows a <code>prompt()</code> before submitting a request</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-put/"><code>hx-put</code></a></td><td>issues a <code>PUT</code> to the specified URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-replace-url/"><code>hx-replace-url</code></a></td><td>replace the URL in the browser location bar</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-request/"><code>hx-request</code></a></td><td>configures various aspects of the request</td></tr>
+<tr><td><a href="https://htmx.org/extensions/server-sent-events/"><code>hx-sse</code></a></td><td>has been moved to an extension.  <a href="https://htmx.org/attributes/hx-sse/">Documentation for older versions</a></td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-sync/"><code>hx-sync</code></a></td><td>control how requests made by different elements are synchronized</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-validate/"><code>hx-validate</code></a></td><td>force elements to validate themselves before a request</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-vars/"><code>hx-vars</code></a></td><td>adds values dynamically to the parameters to submit with the request (deprecated, please use <a href="https://htmx.org/attributes/hx-vals/"><code>hx-vals</code></a>)</td></tr>
+<tr><td><a href="https://htmx.org/extensions/web-sockets/"><code>hx-ws</code></a></td><td>has been moved to an extension.  <a href="https://htmx.org/attributes/hx-ws/">Documentation for older versions</a></td></tr>
+</tbody></table>
+</div>
+<a class="dashingAutolink" name="autolink-88"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CSS%20Class%20Reference"></a><h2 id="classes"><a class="zola-anchor" href="#classes" aria-label="Anchor link for: classes">#</a>CSS Class Reference</h2>
+<div class="info-table">
+<table><thead><tr><th>Class</th><th>Description</th></tr></thead><tbody>
+<tr><td><a class="dashingAutolink" name="autolink-93"></a><a class="dashAnchor" name="//apple_ref/cpp/Class/htmx-added"></a><code>htmx-added</code></td><td>Applied to a new piece of content before it is swapped, removed after it is settled.</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-94"></a><a class="dashAnchor" name="//apple_ref/cpp/Class/htmx-indicator"></a><code>htmx-indicator</code></td><td>A dynamically generated class that will toggle visible (opacity:1) when a <a class="dashingAutolink" name="autolink-95"></a><a class="dashAnchor" name="//apple_ref/cpp/Class/htmx-request"></a><code>htmx-request</code> class is present</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-96"></a><a class="dashAnchor" name="//apple_ref/cpp/Class/htmx-request"></a><code>htmx-request</code></td><td>Applied to either the element or the element specified with <a href="https://htmx.org/attributes/hx-indicator/"><code>hx-indicator</code></a> while a request is ongoing</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-97"></a><a class="dashAnchor" name="//apple_ref/cpp/Class/htmx-settling"></a><code>htmx-settling</code></td><td>Applied to a target after content is swapped, removed after it is settled. The duration can be modified via <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a>.</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-98"></a><a class="dashAnchor" name="//apple_ref/cpp/Class/htmx-swapping"></a><code>htmx-swapping</code></td><td>Applied to a target before any content is swapped, removed after it is swapped. The duration can be modified via <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a>.</td></tr>
+</tbody></table>
+</div>
+<a class="dashingAutolink" name="autolink-89"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/HTTP%20Header%20Reference"></a><h2 id="headers"><a class="zola-anchor" href="#headers" aria-label="Anchor link for: headers">#</a>HTTP Header Reference</h2>
+<h3 id="request_headers"><a class="zola-anchor" href="#request_headers" aria-label="Anchor link for: request_headers">#</a>Request Headers Reference</h3>
+<div class="info-table">
+<table><thead><tr><th>Header</th><th>Description</th></tr></thead><tbody>
+<tr><td><a class="dashingAutolink" name="autolink-99"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Boosted"></a><code>HX-Boosted</code></td><td>indicates that the request is via an element using <a href="https://htmx.org/attributes/hx-boost/">hx-boost</a></td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-100"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Current-URL"></a><code>HX-Current-URL</code></td><td>the current URL of the browser</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-101"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-History-Restore-Request"></a><code>HX-History-Restore-Request</code></td><td>&ldquo;true&rdquo; if the request is for history restoration after a miss in the local history cache</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-102"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Prompt"></a><code>HX-Prompt</code></td><td>the user response to an <a href="https://htmx.org/attributes/hx-prompt/">hx-prompt</a></td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-103"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Request"></a><code>HX-Request</code></td><td>always &ldquo;true&rdquo;</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-104"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Target"></a><code>HX-Target</code></td><td>the <a class="dashingAutolink" name="autolink-105"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/id"></a><code>id</code> of the target element if it exists</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-106"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Trigger-Name"></a><code>HX-Trigger-Name</code></td><td>the <a class="dashingAutolink" name="autolink-107"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/name"></a><code>name</code> of the triggered element if it exists</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-108"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Trigger"></a><code>HX-Trigger</code></td><td>the <a class="dashingAutolink" name="autolink-109"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/id"></a><code>id</code> of the triggered element if it exists</td></tr>
+</tbody></table>
+</div>
+<h3 id="response_headers"><a class="zola-anchor" href="#response_headers" aria-label="Anchor link for: response_headers">#</a>Response Headers Reference</h3>
+<div class="info-table">
+<table><thead><tr><th>Header</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/headers/hx-location/"><a class="dashingAutolink" name="autolink-110"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Location"></a><code>HX-Location</code></a></td><td>allows you to do a client-side redirect that does not do a full page reload</td></tr>
+<tr><td><a href="https://htmx.org/headers/hx-push-url/"><a class="dashingAutolink" name="autolink-111"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Push-Url"></a><code>HX-Push-Url</code></a></td><td>pushes a new url into the history stack</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-112"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Redirect"></a><code>HX-Redirect</code></td><td>can be used to do a client-side redirect to a new location</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-113"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Refresh"></a><code>HX-Refresh</code></td><td>if set to &ldquo;true&rdquo; the client-side will do a full refresh of the page</td></tr>
+<tr><td><a href="https://htmx.org/headers/hx-replace-url/"><a class="dashingAutolink" name="autolink-114"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Replace-Url"></a><code>HX-Replace-Url</code></a></td><td>replaces the current URL in the location bar</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-115"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Reswap"></a><code>HX-Reswap</code></td><td>allows you to specify how the response will be swapped. See <a href="https://htmx.org/attributes/hx-swap/">hx-swap</a> for possible values</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-116"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Retarget"></a><code>HX-Retarget</code></td><td>a CSS selector that updates the target of the content update to a different element on the page</td></tr>
+<tr><td><a class="dashingAutolink" name="autolink-117"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Reselect"></a><code>HX-Reselect</code></td><td>a CSS selector that allows you to choose which part of the response is used to be swapped in. Overrides an existing <a href="https://htmx.org/attributes/hx-select/"><a class="dashingAutolink" name="autolink-118"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/hx-select"></a><code>hx-select</code></a> on the triggering element</td></tr>
+<tr><td><a href="https://htmx.org/headers/hx-trigger/"><a class="dashingAutolink" name="autolink-119"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Trigger"></a><code>HX-Trigger</code></a></td><td>allows you to trigger client-side events</td></tr>
+<tr><td><a href="https://htmx.org/headers/hx-trigger/"><a class="dashingAutolink" name="autolink-120"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Trigger-After-Settle"></a><code>HX-Trigger-After-Settle</code></a></td><td>allows you to trigger client-side events after the settle step</td></tr>
+<tr><td><a href="https://htmx.org/headers/hx-trigger/"><a class="dashingAutolink" name="autolink-121"></a><a class="dashAnchor" name="//apple_ref/cpp/Protocol/HX-Trigger-After-Swap"></a><code>HX-Trigger-After-Swap</code></a></td><td>allows you to trigger client-side events after the swap step</td></tr>
+</tbody></table>
+</div>
+<a class="dashingAutolink" name="autolink-90"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Event%20Reference"></a><h2 id="events"><a class="zola-anchor" href="#events" aria-label="Anchor link for: events">#</a>Event Reference</h2>
+<div class="info-table">
+<table><thead><tr><th>Event</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/events/#htmx:abort"><a class="dashingAutolink" name="autolink-122"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Aabort"></a><code>htmx:abort</code></a></td><td>send this event to an element to abort a request</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:afterOnLoad"><a class="dashingAutolink" name="autolink-123"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AafterOnLoad"></a><code>htmx:afterOnLoad</code></a></td><td>triggered after an AJAX request has completed processing a successful response</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:afterProcessNode"><a class="dashingAutolink" name="autolink-124"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AafterProcessNode"></a><code>htmx:afterProcessNode</code></a></td><td>triggered after htmx has initialized a node</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:afterRequest"><a class="dashingAutolink" name="autolink-125"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AafterRequest"></a><code>htmx:afterRequest</code></a></td><td>triggered after an AJAX request has completed</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:afterSettle"><a class="dashingAutolink" name="autolink-126"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AafterSettle"></a><code>htmx:afterSettle</code></a></td><td>triggered after the DOM has settled</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:afterSwap"><a class="dashingAutolink" name="autolink-127"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AafterSwap"></a><code>htmx:afterSwap</code></a></td><td>triggered after new content has been swapped in</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:beforeCleanupElement"><a class="dashingAutolink" name="autolink-128"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AbeforeCleanupElement"></a><code>htmx:beforeCleanupElement</code></a></td><td>triggered before htmx <a href="https://htmx.org/attributes/hx-disable/">disables</a> an element or removes it from the DOM</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:beforeOnLoad"><a class="dashingAutolink" name="autolink-129"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AbeforeOnLoad"></a><code>htmx:beforeOnLoad</code></a></td><td>triggered before any response processing occurs</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:beforeProcessNode"><a class="dashingAutolink" name="autolink-130"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AbeforeProcessNode"></a><code>htmx:beforeProcessNode</code></a></td><td>triggered before htmx initializes a node</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:beforeRequest"><a class="dashingAutolink" name="autolink-131"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AbeforeRequest"></a><code>htmx:beforeRequest</code></a></td><td>triggered before an AJAX request is made</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:beforeSwap"><a class="dashingAutolink" name="autolink-132"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AbeforeSwap"></a><code>htmx:beforeSwap</code></a></td><td>triggered before a swap is done, allows you to configure the swap</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:beforeSend"><a class="dashingAutolink" name="autolink-133"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AbeforeSend"></a><code>htmx:beforeSend</code></a></td><td>triggered just before an ajax request is sent</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:configRequest"><a class="dashingAutolink" name="autolink-134"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AconfigRequest"></a><code>htmx:configRequest</code></a></td><td>triggered before the request, allows you to customize parameters, headers</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:confirm"><a class="dashingAutolink" name="autolink-135"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Aconfirm"></a><code>htmx:confirm</code></a></td><td>triggered after a trigger occurs on an element, allows you to cancel (or delay) issuing the AJAX request</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:historyCacheError"><a class="dashingAutolink" name="autolink-136"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AhistoryCacheError"></a><code>htmx:historyCacheError</code></a></td><td>triggered on an error during cache writing</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:historyCacheMiss"><a class="dashingAutolink" name="autolink-137"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AhistoryCacheMiss"></a><code>htmx:historyCacheMiss</code></a></td><td>triggered on a cache miss in the history subsystem</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:historyCacheMissError"><a class="dashingAutolink" name="autolink-138"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AhistoryCacheMissError"></a><code>htmx:historyCacheMissError</code></a></td><td>triggered on a unsuccessful remote retrieval</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:historyCacheMissLoad"><a class="dashingAutolink" name="autolink-139"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AhistoryCacheMissLoad"></a><code>htmx:historyCacheMissLoad</code></a></td><td>triggered on a successful remote retrieval</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:historyRestore"><a class="dashingAutolink" name="autolink-140"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AhistoryRestore"></a><code>htmx:historyRestore</code></a></td><td>triggered when htmx handles a history restoration action</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:beforeHistorySave"><a class="dashingAutolink" name="autolink-141"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AbeforeHistorySave"></a><code>htmx:beforeHistorySave</code></a></td><td>triggered before content is saved to the history cache</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:load"><a class="dashingAutolink" name="autolink-142"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Aload"></a><code>htmx:load</code></a></td><td>triggered when new content is added to the DOM</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:noSSESourceError"><a class="dashingAutolink" name="autolink-143"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AnoSSESourceError"></a><code>htmx:noSSESourceError</code></a></td><td>triggered when an element refers to a SSE event in its trigger, but no parent SSE source has been defined</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:onLoadError"><a class="dashingAutolink" name="autolink-144"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AonLoadError"></a><code>htmx:onLoadError</code></a></td><td>triggered when an exception occurs during the onLoad handling in htmx</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:oobAfterSwap"><a class="dashingAutolink" name="autolink-145"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AoobAfterSwap"></a><code>htmx:oobAfterSwap</code></a></td><td>triggered after an out of band element as been swapped in</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:oobBeforeSwap"><a class="dashingAutolink" name="autolink-146"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AoobBeforeSwap"></a><code>htmx:oobBeforeSwap</code></a></td><td>triggered before an out of band element swap is done, allows you to configure the swap</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:oobErrorNoTarget"><a class="dashingAutolink" name="autolink-147"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AoobErrorNoTarget"></a><code>htmx:oobErrorNoTarget</code></a></td><td>triggered when an out of band element does not have a matching ID in the current DOM</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:prompt"><a class="dashingAutolink" name="autolink-148"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Aprompt"></a><code>htmx:prompt</code></a></td><td>triggered after a prompt is shown</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:pushedIntoHistory"><a class="dashingAutolink" name="autolink-149"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3ApushedIntoHistory"></a><code>htmx:pushedIntoHistory</code></a></td><td>triggered after an url is pushed into history</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:responseError"><a class="dashingAutolink" name="autolink-150"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AresponseError"></a><code>htmx:responseError</code></a></td><td>triggered when an HTTP response error (non-<code>200</code> or <code>300</code> response code) occurs</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:sendError"><a class="dashingAutolink" name="autolink-151"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AsendError"></a><code>htmx:sendError</code></a></td><td>triggered when a network error prevents an HTTP request from happening</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:sseError"><a class="dashingAutolink" name="autolink-152"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AsseError"></a><code>htmx:sseError</code></a></td><td>triggered when an error occurs with a SSE source</td></tr>
+<tr><td><a href="events#htmx:sseOpen"><a class="dashingAutolink" name="autolink-153"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AsseOpen"></a><code>htmx:sseOpen</code></a></td><td>triggered when a SSE source is opened</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:swapError"><a class="dashingAutolink" name="autolink-154"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AswapError"></a><code>htmx:swapError</code></a></td><td>triggered when an error occurs during the swap phase</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:targetError"><a class="dashingAutolink" name="autolink-155"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3AtargetError"></a><code>htmx:targetError</code></a></td><td>triggered when an invalid target is specified</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:timeout"><a class="dashingAutolink" name="autolink-156"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Atimeout"></a><code>htmx:timeout</code></a></td><td>triggered when a request timeout occurs</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:validation:validate"><a class="dashingAutolink" name="autolink-157"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Avalidation%3Avalidate"></a><code>htmx:validation:validate</code></a></td><td>triggered before an element is validated</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:validation:failed"><a class="dashingAutolink" name="autolink-158"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Avalidation%3Afailed"></a><code>htmx:validation:failed</code></a></td><td>triggered when an element fails validation</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:validation:halted"><a class="dashingAutolink" name="autolink-159"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Avalidation%3Ahalted"></a><code>htmx:validation:halted</code></a></td><td>triggered when a request is halted due to validation errors</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:xhr:abort"><a class="dashingAutolink" name="autolink-160"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Axhr%3Aabort"></a><code>htmx:xhr:abort</code></a></td><td>triggered when an ajax request aborts</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:xhr:loadend"><a class="dashingAutolink" name="autolink-161"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Axhr%3Aloadend"></a><code>htmx:xhr:loadend</code></a></td><td>triggered when an ajax request ends</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:xhr:loadstart"><a class="dashingAutolink" name="autolink-162"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Axhr%3Aloadstart"></a><code>htmx:xhr:loadstart</code></a></td><td>triggered when an ajax request starts</td></tr>
+<tr><td><a href="https://htmx.org/events/#htmx:xhr:progress"><a class="dashingAutolink" name="autolink-163"></a><a class="dashAnchor" name="//apple_ref/cpp/Event/htmx%3Axhr%3Aprogress"></a><code>htmx:xhr:progress</code></a></td><td>triggered periodically during an ajax request that supports progress events</td></tr>
+</tbody></table>
+</div>
+<a class="dashingAutolink" name="autolink-91"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/JavaScript%20API%20Reference"></a><h2 id="api"><a class="zola-anchor" href="#api" aria-label="Anchor link for: api">#</a>JavaScript API Reference</h2>
+<div class="info-table">
+<table><thead><tr><th>Method</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/api/#addClass"><a class="dashingAutolink" name="autolink-164"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.addClass%28%29"></a><code>htmx.addClass()</code></a></td><td>Adds a class to the given element</td></tr>
+<tr><td><a href="https://htmx.org/api/#ajax"><a class="dashingAutolink" name="autolink-165"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.ajax%28%29"></a><code>htmx.ajax()</code></a></td><td>Issues an htmx-style ajax request</td></tr>
+<tr><td><a href="https://htmx.org/api/#closest"><a class="dashingAutolink" name="autolink-166"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.closest%28%29"></a><code>htmx.closest()</code></a></td><td>Finds the closest parent to the given element matching the selector</td></tr>
+<tr><td><a href="https://htmx.org/api/#config"><a class="dashingAutolink" name="autolink-167"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.config"></a><code>htmx.config</code></a></td><td>A property that holds the current htmx config object</td></tr>
+<tr><td><a href="https://htmx.org/api/#createEventSource"><a class="dashingAutolink" name="autolink-168"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.createEventSource"></a><code>htmx.createEventSource</code></a></td><td>A property holding the function to create SSE EventSource objects for htmx</td></tr>
+<tr><td><a href="https://htmx.org/api/#createWebSocket"><a class="dashingAutolink" name="autolink-169"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.createWebSocket"></a><code>htmx.createWebSocket</code></a></td><td>A property holding the function to create WebSocket objects for htmx</td></tr>
+<tr><td><a href="https://htmx.org/api/#defineExtension"><a class="dashingAutolink" name="autolink-170"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.defineExtension%28%29"></a><code>htmx.defineExtension()</code></a></td><td>Defines an htmx <a href="https://htmx.org/extensions/">extension</a></td></tr>
+<tr><td><a href="https://htmx.org/api/#find"><a class="dashingAutolink" name="autolink-171"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.find%28%29"></a><code>htmx.find()</code></a></td><td>Finds a single element matching the selector</td></tr>
+<tr><td><a href="https://htmx.org/api/#find"><a class="dashingAutolink" name="autolink-172"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.findAll%28%29"></a><code>htmx.findAll()</code> <a class="dashingAutolink" name="autolink-173"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.findAll%28elt%2C%20selector%29"></a><code>htmx.findAll(elt, selector)</code></a></td><td>Finds all elements matching a given selector</td></tr>
+<tr><td><a href="https://htmx.org/api/#logAll"><a class="dashingAutolink" name="autolink-174"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.logAll%28%29"></a><code>htmx.logAll()</code></a></td><td>Installs a logger that will log all htmx events</td></tr>
+<tr><td><a href="https://htmx.org/api/#logger"><a class="dashingAutolink" name="autolink-175"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.logger"></a><code>htmx.logger</code></a></td><td>A property set to the current logger (default is <code>null</code>)</td></tr>
+<tr><td><a href="https://htmx.org/api/#off"><a class="dashingAutolink" name="autolink-176"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.off%28%29"></a><code>htmx.off()</code></a></td><td>Removes an event listener from the given element</td></tr>
+<tr><td><a href="https://htmx.org/api/#on"><a class="dashingAutolink" name="autolink-177"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.on%28%29"></a><code>htmx.on()</code></a></td><td>Creates an event listener on the given element, returning it</td></tr>
+<tr><td><a href="https://htmx.org/api/#onLoad"><a class="dashingAutolink" name="autolink-178"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.onLoad%28%29"></a><code>htmx.onLoad()</code></a></td><td>Adds a callback handler for the <code>htmx:load</code> event</td></tr>
+<tr><td><a href="https://htmx.org/api/#parseInterval"><a class="dashingAutolink" name="autolink-179"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.parseInterval%28%29"></a><code>htmx.parseInterval()</code></a></td><td>Parses an interval declaration into a millisecond value</td></tr>
+<tr><td><a href="https://htmx.org/api/#process"><a class="dashingAutolink" name="autolink-180"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.process%28%29"></a><code>htmx.process()</code></a></td><td>Processes the given element and its children, hooking up any htmx behavior</td></tr>
+<tr><td><a href="https://htmx.org/api/#remove"><a class="dashingAutolink" name="autolink-181"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.remove%28%29"></a><code>htmx.remove()</code></a></td><td>Removes the given element</td></tr>
+<tr><td><a href="https://htmx.org/api/#removeClass"><a class="dashingAutolink" name="autolink-182"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.removeClass%28%29"></a><code>htmx.removeClass()</code></a></td><td>Removes a class from the given element</td></tr>
+<tr><td><a href="https://htmx.org/api/#removeExtension"><a class="dashingAutolink" name="autolink-183"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.removeExtension%28%29"></a><code>htmx.removeExtension()</code></a></td><td>Removes an htmx <a href="https://htmx.org/extensions/">extension</a></td></tr>
+<tr><td><a href="https://htmx.org/api/#takeClass"><a class="dashingAutolink" name="autolink-184"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.takeClass%28%29"></a><code>htmx.takeClass()</code></a></td><td>Takes a class from other elements for the given element</td></tr>
+<tr><td><a href="https://htmx.org/api/#toggleClass"><a class="dashingAutolink" name="autolink-185"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.toggleClass%28%29"></a><code>htmx.toggleClass()</code></a></td><td>Toggles a class from the given element</td></tr>
+<tr><td><a href="https://htmx.org/api/#trigger"><a class="dashingAutolink" name="autolink-186"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.trigger%28%29"></a><code>htmx.trigger()</code></a></td><td>Triggers an event on an element</td></tr>
+<tr><td><a href="https://htmx.org/api/#values"><a class="dashingAutolink" name="autolink-187"></a><a class="dashAnchor" name="//apple_ref/cpp/Function/htmx.values%28%29"></a><code>htmx.values()</code></a></td><td>Returns the input values associated with the given element</td></tr>
+</tbody></table>
+</div>
+<a class="dashingAutolink" name="autolink-92"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Configuration%20Reference"></a><h2 id="config"><a class="zola-anchor" href="#config" aria-label="Anchor link for: config">#</a>Configuration Reference</h2>
+<p>Htmx has some configuration options that can be accessed either programmatically or declaratively.  They are
+listed below:</p>
+<div class="info-table">
+<table><thead><tr><th>Config Variable</th><th>Info</th></tr></thead><tbody>
+<tr><td><code>htmx.config.historyEnabled</code></td><td>defaults to <code>true</code>, really only useful for testing</td></tr>
+<tr><td><code>htmx.config.historyCacheSize</code></td><td>defaults to 10</td></tr>
+<tr><td><code>htmx.config.refreshOnHistoryMiss</code></td><td>defaults to <code>false</code>, if set to <code>true</code> htmx will issue a full page refresh on history misses rather than use an AJAX request</td></tr>
+<tr><td><code>htmx.config.defaultSwapStyle</code></td><td>defaults to <code>innerHTML</code></td></tr>
+<tr><td><code>htmx.config.defaultSwapDelay</code></td><td>defaults to 0</td></tr>
+<tr><td><code>htmx.config.defaultSettleDelay</code></td><td>defaults to 20</td></tr>
+<tr><td><code>htmx.config.includeIndicatorStyles</code></td><td>defaults to <code>true</code> (determines if the indicator styles are loaded)</td></tr>
+<tr><td><code>htmx.config.indicatorClass</code></td><td>defaults to <code>htmx-indicator</code></td></tr>
+<tr><td><code>htmx.config.requestClass</code></td><td>defaults to <code>htmx-request</code></td></tr>
+<tr><td><code>htmx.config.addedClass</code></td><td>defaults to <code>htmx-added</code></td></tr>
+<tr><td><code>htmx.config.settlingClass</code></td><td>defaults to <code>htmx-settling</code></td></tr>
+<tr><td><code>htmx.config.swappingClass</code></td><td>defaults to <code>htmx-swapping</code></td></tr>
+<tr><td><code>htmx.config.allowEval</code></td><td>defaults to <code>true</code>, can be used to disable htmx&rsquo;s use of eval for certain features (e.g. trigger filters)</td></tr>
+<tr><td><code>htmx.config.allowScriptTags</code></td><td>defaults to <code>true</code>, determines if htmx will process script tags found in new content</td></tr>
+<tr><td><code>htmx.config.inlineScriptNonce</code></td><td>defaults to <code>&#39;&#39;</code>, meaning that no nonce will be added to inline scripts</td></tr>
+<tr><td><code>htmx.config.attributesToSettle</code></td><td>defaults to <code>[&#34;class&#34;, &#34;style&#34;, &#34;width&#34;, &#34;height&#34;]</code>, the attributes to settle during the settling phase</td></tr>
+<tr><td><code>htmx.config.useTemplateFragments</code></td><td>defaults to <code>false</code>, HTML template tags for parsing content from the server (not IE11 compatible!)</td></tr>
+<tr><td><code>htmx.config.wsReconnectDelay</code></td><td>defaults to <code>full-jitter</code></td></tr>
+<tr><td><code>htmx.config.wsBinaryType</code></td><td>defaults to <code>blob</code>, the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/docs/Web/API/WebSocket/binaryType">the type of binary data</a> being received over the WebSocket connection</td></tr>
+<tr><td><code>htmx.config.disableSelector</code></td><td>defaults to <code>[hx-disable], [data-hx-disable]</code>, htmx will not process elements with this attribute on it or a parent</td></tr>
+<tr><td><code>htmx.config.withCredentials</code></td><td>defaults to <code>false</code>, allow cross-site Access-Control requests using credentials such as cookies, authorization headers or TLS client certificates</td></tr>
+<tr><td><code>htmx.config.timeout</code></td><td>defaults to 0, the number of milliseconds a request can take before automatically being terminated</td></tr>
+<tr><td><code>htmx.config.scrollBehavior</code></td><td>defaults to &lsquo;smooth&rsquo;, the behavior for a boosted link on page transitions. The allowed values are <code>auto</code> and <code>smooth</code>. Smooth will smoothscroll to the top of the page while auto will behave like a vanilla link.</td></tr>
+<tr><td><code>htmx.config.defaultFocusScroll</code></td><td>if the focused element should be scrolled into view, defaults to false and can be overridden using the <a href="https://htmx.org/attributes/hx-swap/#focus-scroll">focus-scroll</a> swap modifier.</td></tr>
+<tr><td><code>htmx.config.getCacheBusterParam</code></td><td>defaults to false, if set to true htmx will append the target element to the <code>GET</code> request in the format <code>org.htmx.cache-buster=targetElementId</code></td></tr>
+<tr><td><code>htmx.config.globalViewTransitions</code></td><td>if set to <code>true</code>, htmx will use the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API">View Transition</a> API when swapping in new content.</td></tr>
+<tr><td><code>htmx.config.methodsThatUseUrlParams</code></td><td>defaults to <code>[&#34;get&#34;]</code>, htmx will format requests with these methods by encoding their parameters in the URL, not the request body</td></tr>
+<tr><td><code>htmx.config.selfRequestsOnly</code></td><td>defaults to <code>false</code>, if set to <code>true</code> will only allow AJAX requests to the same domain as the current document</td></tr>
+<tr><td><code>htmx.config.ignoreTitle</code></td><td>defaults to <code>false</code>, if set to <code>true</code> htmx will not update the title of the document when a <code>title</code> tag is found in new content</td></tr>
+<tr><td><code>htmx.config.scrollIntoViewOnBoost</code></td><td>defaults to <code>true</code>, whether or not the target of a boosted element is scrolled into the viewport. If <code>hx-target</code> is omitted on a boosted element, the target defaults to <code>body</code>, causing the page to scroll to the top.</td></tr>
+<tr><td><code>htmx.config.triggerSpecsCache</code></td><td>defaults to <code>null</code>, the cache to store evaluated trigger specifications into, improving parsing performance at the cost of more memory usage. You may define a simple object to use a never-clearing cache, or implement your own system using a <a rel="noopener" target="_blank" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy">proxy object</a></td></tr>
+</tbody></table>
+</div>
+<p>You can set them directly in javascript, or you can use a <code>meta</code> tag:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">meta </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;htmx-config&#34; </span><span style="color:#d19a66;">content</span><span>=</span><span style="color:#98c379;">&#39;{&#34;defaultSwapStyle&#34;:&#34;outerHTML&#34;}&#39;</span><span>&gt;
+</span></code></pre>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

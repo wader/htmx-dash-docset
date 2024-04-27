@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ Extensions</title>
+    <link rel="canonical" href="https://htmx.org/extensions/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>Extensions</h1>
+  <p>Htmx provides an extension mechanism for defining and using extensions within htmx-based applications.</p>
+<a class="dashingAutolink" name="autolink-64"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Using%20Extensions"></a><h2 id="using"><a class="zola-anchor" href="#using" aria-label="Anchor link for: using">#</a>Using Extensions</h2>
+<p>Using an extension involves two steps:</p>
+<ul>
+<li>include the extension definition, which will add it to the <code>htmx</code> extension registry</li>
+<li>reference the extension via the <a href="https://htmx.org/attributes/hx-ext/">hx-ext</a> attribute</li>
+</ul>
+<p>Here is an example</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/path/to/ext/debug.js&#34; </span><span style="color:#d19a66;">defer</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;debug&#34;</span><span>&gt;This Button Uses The Debug Extension&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>This loads the debug extension off of the <code>unpkg</code> CDN and then adds the debug extension to the given button.  (This
+will print out extensive logging for the button, for debugging purposes.)</p>
+<p>Note that the <code>hx-ext</code> tag may be placed on parent elements if you want a plugin to apply to an entire part of the DOM,
+and on the <code>body</code> tag for it to apply to all htmx requests.</p>
+<p><strong>Tip:</strong> To use multiple extensions on one element, separate them with a comma:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;debug, json-enc&#34;</span><span>&gt;This Button Uses Two Extensions&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<a class="dashingAutolink" name="autolink-65"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Ignoring%20Extensions"></a><h2 id="ignoring"><a class="zola-anchor" href="#ignoring" aria-label="Anchor link for: ignoring">#</a>Ignoring Extensions</h2>
+<p>By default, extensions are applied to the DOM node where it is invoked, along with all child elements inside of that parent node.
+If you need to disable an extension somewhere within the DOM tree, you can use the <code>ignore:</code> keyword to stop it from being used.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;debug&#34;</span><span>&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34;</span><span>&gt;This button used the debug extension&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;ignore:debug&#34;</span><span>&gt;This button does not&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<a class="dashingAutolink" name="autolink-66"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Included%20Extensions"></a><h2 id="included"><a class="zola-anchor" href="#included" aria-label="Anchor link for: included">#</a>Included Extensions</h2>
+<p>htmx includes a set of extensions out of the box that address common developer needs.  These extensions are tested
+against <code>htmx</code> in each distribution.</p>
+<h3 id="installing"><a class="zola-anchor" href="#installing" aria-label="Anchor link for: installing">#</a>Installing Extensions</h3>
+<p>You can find the source for the bundled extensions at <code>https://unpkg.com/browse/htmx.org@1.9.12/dist/ext/</code>.  You will need
+to include the javascript file for the extension and then install it using the <a href="https://htmx.org/attributes/hx-ext/">hx-ext</a> attributes.</p>
+<p>See the individual extension documentation for more details.</p>
+<h3 id="reference"><a class="zola-anchor" href="#reference" aria-label="Anchor link for: reference">#</a>Included Extensions List</h3>
+<div class="info-table">
+<table><thead><tr><th>Extension</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/extensions/ajax-header/"><code>ajax-header</code></a></td><td>includes the commonly-used <code>X-Requested-With</code> header that identifies ajax requests in many backend frameworks</td></tr>
+<tr><td><a href="https://htmx.org/extensions/alpine-morph/"><code>alpine-morph</code></a></td><td>an extension for using the <a rel="noopener" target="_blank" href="https://alpinejs.dev/plugins/morph">Alpine.js morph</a> plugin as the swapping mechanism in htmx.</td></tr>
+<tr><td><a href="https://htmx.org/extensions/class-tools/"><code>class-tools</code></a></td><td>an extension for manipulating timed addition and removal of classes on HTML elements</td></tr>
+<tr><td><a href="https://htmx.org/extensions/client-side-templates/"><code>client-side-templates</code></a></td><td>support for client side template processing of JSON/XML responses</td></tr>
+<tr><td><a href="https://htmx.org/extensions/debug/"><code>debug</code></a></td><td>an extension for debugging of a particular element using htmx</td></tr>
+<tr><td><a href="https://htmx.org/extensions/event-header/"><code>event-header</code></a></td><td>includes a JSON serialized version of the triggering event, if any</td></tr>
+<tr><td><a href="https://htmx.org/extensions/head-support/"><code>head-support</code></a></td><td>support for merging the <code>head</code> tag from responses into the existing documents <code>head</code></td></tr>
+<tr><td><a href="https://htmx.org/extensions/include-vals/"><code>include-vals</code></a></td><td>allows you to include additional values in a request</td></tr>
+<tr><td><a href="https://htmx.org/extensions/json-enc/"><code>json-enc</code></a></td><td>use JSON encoding in the body of requests, rather than the default <code>x-www-form-urlencoded</code></td></tr>
+<tr><td><a rel="noopener" target="_blank" href="https://github.com/bigskysoftware/idiomorph"><code>idiomorph</code></a></td><td>an extension for using the idiomorph morphing algorithm as a swapping mechanism</td></tr>
+<tr><td><a href="https://htmx.org/extensions/loading-states/"><code>loading-states</code></a></td><td>allows you to disable inputs, add and remove CSS classes to any element while a request is in-flight.</td></tr>
+<tr><td><a href="https://htmx.org/extensions/method-override/"><code>method-override</code></a></td><td>use the <code>X-HTTP-Method-Override</code> header for non-<code>GET</code> and <code>POST</code> requests</td></tr>
+<tr><td><a href="https://htmx.org/extensions/morphdom-swap/"><code>morphdom-swap</code></a></td><td>an extension for using the <a rel="noopener" target="_blank" href="https://github.com/patrick-steele-idem/morphdom">morphdom</a> library as the swapping mechanism in htmx.</td></tr>
+<tr><td><a href="https://htmx.org/extensions/multi-swap/"><code>multi-swap</code></a></td><td>allows to swap multiple elements with different swap methods</td></tr>
+<tr><td><a href="https://htmx.org/extensions/path-deps/"><code>path-deps</code></a></td><td>an extension for expressing path-based dependencies <a rel="noopener" target="_blank" href="http://intercoolerjs.org/docs.html#dependencies">similar to intercoolerjs</a></td></tr>
+<tr><td><a href="https://htmx.org/extensions/preload/"><code>preload</code></a></td><td>preloads selected <code>href</code> and <code>hx-get</code> targets based on rules you control.</td></tr>
+<tr><td><a href="https://htmx.org/extensions/remove-me/"><code>remove-me</code></a></td><td>allows you to remove an element after a given amount of time</td></tr>
+<tr><td><a href="https://htmx.org/extensions/response-targets/"><code>response-targets</code></a></td><td>allows to specify different target elements to be swapped when different HTTP response codes are received</td></tr>
+<tr><td><a href="https://htmx.org/extensions/restored/"><code>restored</code></a></td><td>allows you to trigger events when the back button has been pressed</td></tr>
+<tr><td><a href="https://htmx.org/extensions/server-sent-events/"><code>server-sent-events</code></a></td><td>uni-directional server push messaging via <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/EventSource">EventSource</a></td></tr>
+<tr><td><a href="https://htmx.org/extensions/web-sockets/"><code>web-sockets</code></a></td><td>bi-directional connection to WebSocket servers</td></tr>
+<tr><td><a href="https://htmx.org/extensions/path-params/"><code>path-params</code></a></td><td>allows to use parameters for path variables instead of sending them in query or body</td></tr>
+</tbody></table>
+</div>
+<a class="dashingAutolink" name="autolink-67"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Defining%20an%20Extension"></a><h2 id="defining"><a class="zola-anchor" href="#defining" aria-label="Anchor link for: defining">#</a>Defining an Extension</h2>
+<p>To define an extension you call the <code>htmx.defineExtension()</code> function:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>  </span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#e06c75;">defineExtension</span><span>(</span><span style="color:#98c379;">&#39;my-ext&#39;</span><span>, {
+</span><span>    </span><span style="color:#61afef;">onEvent </span><span>: </span><span style="color:#c678dd;">function</span><span>(name, evt) {
+</span><span>        console.</span><span style="color:#56b6c2;">log</span><span>(</span><span style="color:#98c379;">&#34;Fired event: &#34; </span><span>+ </span><span style="color:#e06c75;">name</span><span>, </span><span style="color:#e06c75;">evt</span><span>);
+</span><span>    }
+</span><span>  })
+</span><span>&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<p>Typically, this is done in a stand-alone javascript file, rather than in an inline <code>script</code> tag.</p>
+<p>Extensions should have names that are dash separated and that are reasonably short and descriptive.</p>
+<p>Extensions can override the following default extension points to add or change functionality:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>{
+</span><span>    onEvent : </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">name</span><span>, </span><span style="color:#e06c75;">evt</span><span>) {</span><span style="color:#c678dd;">return </span><span style="color:#d19a66;">true</span><span>;},
+</span><span>    transformResponse : </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">text</span><span>, </span><span style="color:#e06c75;">xhr</span><span>, </span><span style="color:#e06c75;">elt</span><span>) {</span><span style="color:#c678dd;">return </span><span style="color:#e06c75;">text</span><span>;},
+</span><span>    isInlineSwap : </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">swapStyle</span><span>) {</span><span style="color:#c678dd;">return </span><span style="color:#d19a66;">false</span><span>;},
+</span><span>    handleSwap : </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">swapStyle</span><span>, </span><span style="color:#e06c75;">target</span><span>, </span><span style="color:#e06c75;">fragment</span><span>, </span><span style="color:#e06c75;">settleInfo</span><span>) {</span><span style="color:#c678dd;">return </span><span style="color:#d19a66;">false</span><span>;},
+</span><span>    encodeParameters : </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">xhr</span><span>, </span><span style="color:#e06c75;">parameters</span><span>, </span><span style="color:#e06c75;">elt</span><span>) {</span><span style="color:#c678dd;">return </span><span style="color:#d19a66;">null</span><span>;}
+</span><span>}
+</span></code></pre>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

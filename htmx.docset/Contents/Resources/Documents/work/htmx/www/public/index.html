@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+     <title>&lt;/&gt; htmx - high power tools for html</title>
+    <link rel="canonical" href="https://htmx.org/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+    <div class="dark-hero full-width" classes="add appear">
+  <span class="logo dark">&lt;<span class="blue">/</span>&gt; <span class="no-mobile">htm<span class="blue">x</span></span></span>
+  <sub class="no-mobile"><i>high power tools for HTML</i></sub>
+</div>
+<div style="border: 1px solid lightgrey; margin:24px;padding:12px;border-radius: 8px; background-color: whitesmoke; filter: drop-shadow(3px 3px darkgray)">
+<b>NEWS:</b> htmx finished 2nd in the <a href="https://risingstars.js.org/2023/en#section-framework">2023 
+JavaScript Rising Stars</a> &#34;Front-end Frameworks&#34; category, just behind React (htmx is a library, btw) and <a href="https://risingstars.js.org/2023/en#section-all">#10 overall</a>!
+Thank you to everyone who <a href="https://github.com/bigskysoftware/htmx">starred</a> us!
+</div>
+<a class="dashingAutolink" name="autolink-73"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/introduction"></a><h2>introduction</h2>
+<p>htmx gives you access to <a href="https://htmx.org/docs/#ajax">AJAX</a>, <a href="https://htmx.org/docs/#css_transitions">CSS Transitions</a>, <a href="https://htmx.org/docs/#websockets">WebSockets</a> and <a href="https://htmx.org/docs/#sse">Server Sent Events</a> 
+directly in HTML, using <a href="https://htmx.org/reference/#attributes">attributes</a>, so you can build 
+<a href="https://htmx.org/examples/">modern user interfaces</a> with the <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/HATEOAS">simplicity</a> and 
+<a rel="noopener" target="_blank" href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">power</a> of hypertext</p>
+<p>htmx is small (<a rel="noopener" target="_blank" href="https://unpkg.com/htmx.org/dist/">~14k min.gz&rsquo;d</a>), 
+<a rel="noopener" target="_blank" href="https://github.com/bigskysoftware/htmx/blob/master/package.json">dependency-free</a>,
+<a href="https://htmx.org/extensions/">extendable</a>, 
+IE11 compatible &amp; has <strong>reduced</strong> code base sizes by <a href="https://htmx.org/essays/a-real-world-react-to-htmx-port/">67% when compared with react</a></p>
+<a class="dashingAutolink" name="autolink-74"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/motivation"></a><h2>motivation</h2>
+<ul>
+<li>Why should only <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a"><code>&lt;a&gt;</code></a> &amp; <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form"><code>&lt;form&gt;</code></a> be able to make HTTP requests?</li>
+<li>Why should only <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event"><code>click</code></a> &amp; <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event"><code>submit</code></a> events trigger them?</li>
+<li>Why should only <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET"><code>GET</code></a> &amp; <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST"><code>POST</code></a> methods be <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods">available</a>?</li>
+<li>Why should you only be able to replace the <strong>entire</strong> screen?</li>
+</ul>
+<p>By removing these constraints, htmx completes HTML as a <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Hypertext">hypertext</a></p>
+<a class="dashingAutolink" name="autolink-75"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/quick%20start"></a><h2>quick start</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://unpkg.com/htmx.org@1.9.12&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>  </span><span style="font-style:italic;color:#848da1;">&lt;!-- have a button POST a click via AJAX --&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/clicked&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML&#34;</span><span>&gt;
+</span><span>    Click Me
+</span><span>  &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>The <a href="https://htmx.org/attributes/hx-post/"><code>hx-post</code></a> and <a href="https://htmx.org/attributes/hx-swap/"><code>hx-swap</code></a> attributes on
+this button tell htmx:</p>
+<blockquote>
+<p>&ldquo;When a user clicks on this button, issue an AJAX request to /clicked, and replace the entire button with the HTML response&rdquo;</p>
+</blockquote>
+<p>htmx is the successor to <a rel="noopener" target="_blank" href="http://intercoolerjs.org">intercooler.js</a></p>
+<p>Read the <a href="https://htmx.org/docs/#introduction">docs introduction</a> for a more in-depth&hellip; introduction.</p>
+<a class="dashingAutolink" name="autolink-76"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/book"></a><h2><a name="book"></a>book</h2>
+<p>We are happy to announce the release of <a rel="noopener" target="_blank" href="https://hypermedia.systems">Hypermedia Systems</a>, a book on how to build 
+<a href="https://htmx.org/essays/hypermedia-driven-applications/">Hypermedia-Driven Applications</a> using htmx &amp; more:</p>
+<div style="text-align: center;padding: 24px">
+<a href="https://www.amazon.com/dp/B0C9S88QV6/ref=sr_1_1?crid=1P0I3GXQK32TN"><img src="img/hypermedia-systems.png" alt="hypermedia systems"/></a>
+</div>
+<a class="dashingAutolink" name="autolink-77"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/sponsors"></a><h2>sponsors <iframe src="https://github.com/sponsors/bigskysoftware/button" title="Sponsor htmx" height="32" width="114" style="border: 1px solid gray; border-radius: 12px; float:right"></iframe></h2>
+<p>htmx development can be supported via <a rel="noopener" target="_blank" href="https://github.com/sponsors/bigskysoftware?o=esb">GitHub Sponsors</a></p>
+<p>Thank you to all our generous <a href="https://github.com/sponsors/bigskysoftware?o=esb">supporters</a>, including:</p>
+<style>
+#sponsor-table td {
+  text-align: center;
+  padding: 16px;
+  min-height: 100px;
+  border-bottom: none;
+}
+
+@media only screen and (max-width: 760px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+
+}
+
+</style>
+<div style="overflow-x: auto">
+<table id="sponsor-table">
+<tbody><tr>
+<td colspan="3">
+        <a data-github-account="NotASithLord" href="https://hydrahost.com"><img src="img/hydra-hosting.svg" alt="The GPU Marketplace" style="width:100%;"/></a>
+</td>
+</tr>
+<tr>
+<td>
+        <a data-github-account="JetBrainsOfficial" href="https://www.jetbrains.com"><img src="img/jetbrains.png" alt="Jetbrains" style="max-width:30%;min-width:100px;"/></a>
+</td>
+<td>
+        <a data-github-account="commspace" href="https://www.commspace.co.za"><img src="img/commspace.svg" alt="commspace" style="min-width:200px"/></a>
+</td>
+<td>
+        <a href="https://github.blog/2023-04-12-github-accelerator-our-first-cohort-and-whats-next"><img src="img/Github_Logo.png" alt="GitHub" style="max-width:30%;min-width:100px;"/></a>
+</td>
+</tr>
+<tr>
+<td>
+        <a data-github-account="craftcms" href="https://craftcms.com"><img src="img/logo-craft-cms.svg" alt="craft cms" style="width:90%;max-width:200px"/></a>
+</td>
+<td>
+        <a data-github-account="ButterCMS" href="https://buttercms.com/?utm_campaign=sponsorship&amp;utm_medium=banner&amp;utm_source=htmxhome">
+          <img src="img/butter-cms.svg" alt="ButterCMS" style="width:100%;max-width:200px"/>
+        </a>
+</td>
+<td>
+        <a data-github-account="Black-HOST" href="https://black.host">
+          <img src="img/blackhost-logo.svg" alt="Black Host" style="width:100%;max-width:200px"/>
+        </a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="https://www.v7n.com/">
+          <img alt="V7N" src="img/v7n-logo.png" style="width:100%;max-width:200px"/>
+        </a>
+</td>
+<td>
+      <a data-github-account="sekunho" href="https://twitter.com/sekunho_/"><img src="img/sekun-doggo.jpg" alt="Hiro The Doggo" style="border: 2px solid lightgray; border-radius:20px; width:100%;max-width:150px"/></a>
+</td>
+<td>
+        <a href="https://dasfilter.shop/pages/partner-program">
+          <img alt="Das Filter" src="img/das-filter.svg" style="width:100%;max-width:300px"/>
+        </a>
+</td>
+</tr>
+<tr>
+<td>
+      <a href="https://www.pullapprove.com/?utm_campaign=sponsorship&amp;utm_medium=banner&amp;utm_source=htmx">
+        <img src="img/pullapprove-logo.svg" alt="PullApprove" style="width:100%;max-width:200px"/>
+      </a>
+</td>
+<td>
+        <a data-github-account="transloadit" href=" https://transloadit.com/?utm_source=htmx&amp;utm_medium=referral&amp;utm_campaign=sponsorship&amp;utm_content=website/">
+          <img alt="Transloadit" src="img/logos-transloadit-default.svg" style="width:100%;max-width:200px"/>
+        </a>
+</td>
+<td>
+      <a data-github-account="uibakery" href="https://uibakery.io"><img src="img/ui-bakery.png" alt="UI Bakery" style="width:100%;max-width:250px"/></a>
+</td>
+</tr>
+<tr>
+<td>
+        <a data-github-account="jai-deepsource" href=" https://deepsource.com/">
+          <img alt="Deepsource" src="img/deepsource.svg" style="width:100%;max-width:250px"/>
+        </a>
+</td>
+<td>
+      <a data-github-account="pubkey" href="https://rxdb.info/?utm_source=sponsor&amp;utm_medium=githubsponsor&amp;utm_campaign=githubsponsor-htmx">
+        <img src="img/rxdb.svg" alt="RxDB JavaScript Database" style="width:100%;max-width:150px"/></a>
+</td>
+<td>
+      <a href="https://www.ohne-makler.net/"><img src="img/ohne-makler.svg" alt="Ohne-Makler" style="width:100%;max-width:150px"/></a>
+</td>
+</tr>
+<tr>
+<td>
+        <a data-github-account="codacy" href="https://www.codacy.com//">
+          <img alt="Deepsource" src="img/codacy.svg" style="width:100%;max-width:250px"/>
+        </a>
+</td>
+<td>
+        <a data-github-account="apesternikov" href="https://codereviewbot.ai/">
+          <img alt="AI Code Review Bot" src="img/codereviewbot.svg" style="width:100%;max-width:250px"/>
+        </a>
+</td>
+<td>
+        <a data-github-account="llcorg" href="https://www.llc.org/">
+          <img alt="How to start an LLC - a guide from LLC.org, proud open source sponsor" src="img/llc-org.svg" style="width:100%;max-width:250px"/>
+        </a>
+</td>
+</tr>
+<tr>
+<td>
+        <a data-github-account="VPSServerCom" href="https://www.vpsserver.com/">
+          <img alt="VPS Server Hosting in the Cloud: Cost Efficiency" src="img/vps-server-logo.svg" style="width:100%;max-width:250px"/>
+        </a>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div style="text-align: center;font-style: italic;margin-top: 26px;">ʕ &bull;ᴥ&bull;ʔ made in montana</div>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ The head-support Extension</title>
+    <link rel="canonical" href="https://htmx.org/extensions/head-support/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>The <code>head-support</code> Extension</h1>
+  <p>The <code>head-support</code> extension adds support for <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head">head tags</a>
+in responses to htmx requests.</p>
+<p>htmx began as a library focused on <em>partial replacement</em> of HTML within the <code>body</code> tag.  As such, merging additional
+information such as the head tag was not a focus of the library.  (This is in contrast with, for example, TurboLinks,
+which was focused on merging entire web pages retrieved via AJAX into the browser.)</p>
+<p>The <a href="https://htmx.org/attributes/hx-boost/"><code>hx-boost</code></a> attribute moved htmx closer to this world of full HTML-document support &amp;
+support for extracting the <code>title</code> tag out of head elements was eventually added, but full head tag support has never been
+a feature of the library.</p>
+<p>This extension addresses that shortcoming &amp; will likely be integrated into htmx for the 2.0 release.</p>
+<h2 id="install"><a class="zola-anchor" href="#install" aria-label="Anchor link for: install">#</a>Install</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://unpkg.com/htmx.org@1.9.12/dist/ext/head-support.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<h2 id="usage"><a class="zola-anchor" href="#usage" aria-label="Anchor link for: usage">#</a>Usage</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">body </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;head-support&#34;</span><span>&gt;
+</span><span>   ...
+</span></code></pre>
+<p>With this installed, all responses that htmx receives that contain a <code>head</code> tag in them (even if they are not complete
+HTML documents with a root <code>&lt;html&gt;</code> element) will be processed.</p>
+<p>How the head tag is handled depends on the type of htmx request.</p>
+<p>If the htmx request is from a boosted element, then the following merge algorithm is used:</p>
+<ul>
+<li>Elements that exist in the current head as exact textual matches will be left in place</li>
+<li>Elements that do not exist in the current head will be added at the end of the head tag</li>
+<li>Elements that exist in the current head, but not in the new head will be removed from the head</li>
+</ul>
+<p>If the htmx request is from a non-boosted element, then all content will be <em>appended</em> to the existing head element.</p>
+<p>If you wish to override this behavior in either case, you can place the <code>hx-head</code> attribute on the new <code>&lt;head&gt;</code> tag,
+with either of the following two values:</p>
+<ul>
+<li><code>merge</code> - follow the merging algorithm outlined above</li>
+<li><code>append</code> - append the elements to the existing head</li>
+</ul>
+<h3 id="controlling-merge-behavior"><a class="zola-anchor" href="#controlling-merge-behavior" aria-label="Anchor link for: controlling-merge-behavior">#</a>Controlling Merge Behavior</h3>
+<p>Beyond this, you may also control merging behavior of individual elements with the following attributes:</p>
+<ul>
+<li>If you place <code>hx-head=&#34;re-eval&#34;</code> on a head element, it will be re-added (removed and appended) to the head tag on every
+request, even if it already exists.  This can be useful to execute a script on every htmx request, for example.</li>
+<li>If you place <code>hx-preserve=&#34;true&#34;</code> on an element, it will never be removed from the head</li>
+</ul>
+<h3 id="example"><a class="zola-anchor" href="#example" aria-label="Anchor link for: example">#</a>Example</h3>
+<p>As an example, consider the following head tag in an existing document:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">head</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">link </span><span style="color:#d19a66;">rel</span><span>=</span><span style="color:#98c379;">&#34;stylesheet&#34; </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;https://the.missing.style&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">link </span><span style="color:#d19a66;">rel</span><span>=</span><span style="color:#98c379;">&#34;stylesheet&#34; </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/css/site1.css&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/js/script1.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/js/script2.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">head</span><span>&gt;
+</span></code></pre>
+<p>If htmx receives a request containing this new head tag:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">head</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">link </span><span style="color:#d19a66;">rel</span><span>=</span><span style="color:#98c379;">&#34;stylesheet&#34; </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;https://the.missing.style&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">link </span><span style="color:#d19a66;">rel</span><span>=</span><span style="color:#98c379;">&#34;stylesheet&#34; </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/css/site2.css&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/js/script2.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/js/script3.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">head</span><span>&gt;
+</span></code></pre>
+<p>Then the following operations will occur:</p>
+<ul>
+<li><code>&lt;link rel=&#34;stylesheet&#34; href=&#34;https://the.missing.style&#34;&gt;</code> will be left alone</li>
+<li><code>&lt;link rel=&#34;stylesheet&#34; href=&#34;/css/site1.css&#34;&gt;</code> will be removed from the head</li>
+<li><code>&lt;link rel=&#34;stylesheet&#34; href=&#34;/css/site2.css&#34;&gt;</code> will be added to the head</li>
+<li><code>&lt;script src=&#34;/js/script1.js&#34;&gt;&lt;/script&gt;</code> will be removed from the head</li>
+<li><code>&lt;script src=&#34;/js/script2.js&#34;&gt;&lt;/script&gt;</code> will be left alone</li>
+<li><code>&lt;script src=&#34;/js/script3.js&#34;&gt;&lt;/script&gt;</code> will be added to the head</li>
+</ul>
+<p>The final head element will look like this:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">head</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">link </span><span style="color:#d19a66;">rel</span><span>=</span><span style="color:#98c379;">&#34;stylesheet&#34; </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;https://the.missing.style&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/js/script2.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">link </span><span style="color:#d19a66;">rel</span><span>=</span><span style="color:#98c379;">&#34;stylesheet&#34; </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/css/site2.css&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/js/script3.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">head</span><span>&gt;
+</span></code></pre>
+<a class="dashingAutolink" name="autolink-63"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Events"></a><h2 id="events"><a class="zola-anchor" href="#events" aria-label="Anchor link for: events">#</a>Events</h2>
+<p>This extension triggers the following events:</p>
+<ul>
+<li><code>htmx:removingHeadElement</code> - triggered when a head element is about to be removed, with the element being removed
+available in <code>event.detail.headElement</code>.  If <code>preventDefault()</code> is invoked on the event, the element will not be removed.</li>
+<li><code>htmx:addingHeadElement</code> - triggered when a head element is about to be added, with the element being added
+available in <code>event.detail.headElement</code>.  If <code>preventDefault()</code> is invoked on the event, the element will not be added.</li>
+<li><code>htmx:afterHeadMerge</code> - triggered after a head tag merge has occurred, with the following values available in the event <code>detail</code>:
+<ul>
+<li><code>added</code> - added head elements</li>
+<li><code>kept</code> -  kept head elements</li>
+<li><code>removed</code> -  removed head elements</li>
+</ul>
+</li>
+<li><code>htmx:beforeHeadMerge</code> - triggered before a head merge occurs</li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

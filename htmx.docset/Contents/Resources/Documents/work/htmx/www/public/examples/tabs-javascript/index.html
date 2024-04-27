@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  
+<title>&lt;/&gt; htmx ~ Examples ~ Tabs (Using JavaScript)</title>
+    <link rel="canonical" href="https://htmx.org/examples/tabs-javascript/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation"> <!-- don't boost on demo pages, sinon hijacks everything :/ -->
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  
+    
+  
+  <h1>Tabs (Using JavaScript)</h1>
+  <script src="https://unpkg.com/sinon@9.0.2/pkg/sinon.js"></script>
+  <script src="js/demo.js"></script>
+  <p>This example shows how to load tab contents using htmx, and to select the &ldquo;active&rdquo; tab using Javascript.  This reduces 
+some duplication by offloading some of the work of re-rendering the tab HTML from your application server to your 
+clients&rsquo; browsers.</p>
+<p>You may also consider <a href="https://htmx.org/examples/tabs-hateoas/">a more idiomatic approach</a> that follows the principle of <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/HATEOAS">Hypertext As The Engine Of Application State</a>.</p>
+<a class="dashingAutolink" name="autolink-56"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Example%20Code"></a><h2 id="example-code"><a class="zola-anchor" href="#example-code" aria-label="Anchor link for: example-code">#</a>Example Code</h2>
+<p>The HTML below displays a list of tabs, with added HTMX to dynamically load each tab pane from the server.  A simple 
+JavaScript event handler uses the <a rel="noopener" target="_blank" href="https://hyperscript.org/commands/take/"><code>take</code> function</a> to switch the selected tab 
+when the content is swapped into the DOM.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;tabs&#34; </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#tab-contents&#34; </span><span style="color:#d19a66;">role</span><span>=</span><span style="color:#98c379;">&#34;tablist&#34;
+</span><span>     </span><span style="color:#d19a66;">hx-on:htmx-after-on-load</span><span>=</span><span style="color:#98c379;">&#34;let currentTab = document.querySelector(&#39;[aria-selected=true]&#39;);
+</span><span style="color:#98c379;">                               currentTab.setAttribute(&#39;aria-selected&#39;, &#39;false&#39;)
+</span><span style="color:#98c379;">                               currentTab.classList.remove(&#39;selected&#39;)
+</span><span style="color:#98c379;">                               let newTab = event.target
+</span><span style="color:#98c379;">                               newTab.setAttribute(&#39;aria-selected&#39;, &#39;true&#39;)
+</span><span style="color:#98c379;">                               newTab.classList.add(&#39;selected&#39;)&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">role</span><span>=</span><span style="color:#98c379;">&#34;tab&#34; </span><span style="color:#d19a66;">aria-controls</span><span>=</span><span style="color:#98c379;">&#34;tab-contents&#34; </span><span style="color:#d19a66;">aria-selected</span><span>=</span><span style="color:#98c379;">&#34;true&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/tab1&#34; </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;selected&#34;</span><span>&gt;Tab 1&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">role</span><span>=</span><span style="color:#98c379;">&#34;tab&#34; </span><span style="color:#d19a66;">aria-controls</span><span>=</span><span style="color:#98c379;">&#34;tab-contents&#34; </span><span style="color:#d19a66;">aria-selected</span><span>=</span><span style="color:#98c379;">&#34;false&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/tab2&#34;</span><span>&gt;Tab 2&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">role</span><span>=</span><span style="color:#98c379;">&#34;tab&#34; </span><span style="color:#d19a66;">aria-controls</span><span>=</span><span style="color:#98c379;">&#34;tab-contents&#34; </span><span style="color:#d19a66;">aria-selected</span><span>=</span><span style="color:#98c379;">&#34;false&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/tab3&#34;</span><span>&gt;Tab 3&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;tab-contents&#34; </span><span style="color:#d19a66;">role</span><span>=</span><span style="color:#98c379;">&#34;tabpanel&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/tab1&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;load&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<style>
+  #demo-server-info {
+      padding: 8px;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 64px;
+      width: 100vw;
+      background-color: whitesmoke;
+      border-top: 2px solid gray;
+      overflow: hide;
+      margin: 0px;
+      z-index: 1;
+  }
+  #demo-server-info.show {
+      max-height: 45vh;
+      height: 500px;
+      overflow: scroll;
+  }
+  #demo-activity {
+      height:300px
+  }
+
+  #demo-activity div {
+      vertical-align: top
+  }
+
+  #demo-activity ol li {
+      list-style-position: inside;
+  }
+
+  #demo-canvas {
+      margin-bottom: 500px;
+      padding-top: 12px;
+  }
+
+</style>
+<script>
+  function toggleRequestInfo() {
+      var classList = document.getElementById("demo-server-info").classList;
+      classList.toggle("show");
+      if (classList.contains('show')) {
+          document.getElementById("request-info-toggler").innerHTML = "&downarrow; Hide"
+      } else {
+          document.getElementById("request-info-toggler").innerHTML = "&uparrow; Show"
+      }
+  }
+</script>
+<div id="demo-server-info">
+  <div>Server Requests<span id="request-count"></span> <a id="request-info-toggler" onclick="toggleRequestInfo()" style="cursor: pointer">&uarr; Show</a></div>
+  <div id="demo-activity" class="row">
+      <div class="3 col">
+          <ol id="demo-timeline" reversed="">
+          </ol>
+      </div>
+      <div id="demo-current-request" class="9 col">
+      </div>
+  </div>
+</div>
+
+<h2><a class="zola-anchor" href="#demo" aria-label="Anchor link for: demo">🔗</a>Demo</h2>
+<div id="demo-canvas">
+</div>
+<div id="tabs" hx-target="#tab-contents" role="tablist" hx-on:htmx-after-on-load="console.log(event)
+                               let currentTab = document.querySelector(&#39;[aria-selected=true]&#39;);
+                                          currentTab.setAttribute(&#39;aria-selected&#39;, &#39;false&#39;)
+                                          currentTab.classList.remove(&#39;selected&#39;)
+                                          let newTab = event.target
+                                          newTab.setAttribute(&#39;aria-selected&#39;, &#39;true&#39;)
+                                          newTab.classList.add(&#39;selected&#39;)">
+	<button role="tab" aria-controls="tab-contents" aria-selected="true" hx-get="/tab1" class="selected">Tab 1</button>
+	<button role="tab" aria-controls="tab-contents" aria-selected="false" hx-get="/tab2">Tab 2</button>
+	<button role="tab" aria-controls="tab-contents" aria-selected="false" hx-get="/tab3">Tab 3</button>
+</div>
+<div id="tab-contents" role="tabpanel" hx-get="/tab1" hx-trigger="load"></div>
+<script src="https://unpkg.com/hyperscript.org"></script>
+<script>
+	onGet("/tab1", function() {
+		return `
+			<p>Commodo normcore truffaut VHS duis gluten-free keffiyeh iPhone taxidermy godard ramps anim pour-over.
+			Pitchfork vegan mollit umami quinoa aute aliquip kinfolk eiusmod live-edge cardigan ipsum locavore.
+			Polaroid duis occaecat narwhal small batch food truck.
+			PBR&B venmo shaman small batch you probably haven't heard of them hot chicken readymade.
+			Enim tousled cliche woke, typewriter single-origin coffee hella culpa.
+			Art party readymade 90's, asymmetrical hell of fingerstache ipsum.</p>
+		`});
+	onGet("/tab2", function() {
+		return `
+			<p>Kitsch fanny pack yr, farm-to-table cardigan cillum commodo reprehenderit plaid dolore cronut meditation.
+			Tattooed polaroid veniam, anim id cornhole hashtag sed forage.
+			Microdosing pug kitsch enim, kombucha pour-over sed irony forage live-edge.
+			Vexillologist eu nulla trust fund, street art blue bottle selvage raw denim.
+			Dolore nulla do readymade, est subway tile affogato hammock 8-bit.
+			Godard elit offal pariatur you probably haven't heard of them post-ironic.
+			Prism street art cray salvia.</p>
+		`
+	});
+	onGet("/tab3", function() {
+		return `
+			<p>Aute chia marfa echo park tote bag hammock mollit artisan listicle direct trade.
+			Raw denim flexitarian eu godard etsy.
+			Poke tbh la croix put a bird on it fixie polaroid aute cred air plant four loko gastropub swag non brunch.
+			Iceland fanny pack tumeric magna activated charcoal bitters palo santo laboris quis consectetur cupidatat portland aliquip venmo.</p>
+		`
+	});
+
+</script>
+<style>
+
+	#demo-canvas {
+		display:none;
+	}
+
+	#tabs {
+		border-bottom: solid 3px #eee;
+	}
+
+	#tabs > button {
+		border: none;
+		display: inline-block;
+		padding: 5px 10px;
+		cursor:pointer;
+		background-color: transparent;
+	}
+
+	#tabs > button:hover {
+		color: var(--midBlue);
+	}
+
+	#tabs > button.selected {
+		background-color: #eee;
+	}
+
+	#tab-contents {
+		padding:10px;
+	}
+</style>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,1319 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ Documentation</title>
+    <link rel="canonical" href="https://htmx.org/docs/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content wide-content">
+    
+  <h1>Documentation</h1>
+  <div class="row">
+<div class="2 col nav">
+<p><strong>Contents</strong></p>
+<div id="contents">
+<ul>
+<li><a href="https://htmx.org/docs/#introduction">introduction</a></li>
+<li><a href="https://htmx.org/docs/#installing">installing</a></li>
+<li><a href="https://htmx.org/docs/#ajax">ajax</a>
+<ul>
+<li><a href="https://htmx.org/docs/#triggers">triggers</a>
+<ul>
+<li><a href="https://htmx.org/docs/#trigger-modifiers">trigger modifiers</a></li>
+<li><a href="https://htmx.org/docs/#trigger-filters">trigger filters</a></li>
+<li><a href="https://htmx.org/docs/#special-events">special events</a></li>
+<li><a href="https://htmx.org/docs/#polling">polling</a></li>
+<li><a href="https://htmx.org/docs/#load_polling">load polling</a></li>
+</ul>
+</li>
+<li><a href="https://htmx.org/docs/#indicators">indicators</a></li>
+<li><a href="https://htmx.org/docs/#targets">targets</a></li>
+<li><a href="https://htmx.org/docs/#swapping">swapping</a></li>
+<li><a href="https://htmx.org/docs/#synchronization">synchronization</a></li>
+<li><a href="https://htmx.org/docs/#css_transitions">css transitions</a></li>
+<li><a href="https://htmx.org/docs/#oob_swaps">out of band swaps</a></li>
+<li><a href="https://htmx.org/docs/#parameters">parameters</a></li>
+<li><a href="https://htmx.org/docs/#confirming">confirming</a></li>
+</ul>
+</li>
+<li><a href="https://htmx.org/docs/#inheritance">inheritance</a></li>
+<li><a href="https://htmx.org/docs/#boosting">boosting</a></li>
+<li><a href="https://htmx.org/docs/#websockets-and-sse">websockets &amp; SSE</a></li>
+<li><a href="https://htmx.org/docs/#history">history</a></li>
+<li><a href="https://htmx.org/docs/#requests">requests &amp; responses</a></li>
+<li><a href="https://htmx.org/docs/#validation">validation</a></li>
+<li><a href="https://htmx.org/docs/#animations">animations</a></li>
+<li><a href="https://htmx.org/docs/#extensions">extensions</a></li>
+<li><a href="https://htmx.org/docs/#events">events &amp; logging</a></li>
+<li><a href="https://htmx.org/docs/#debugging">debugging</a></li>
+<li><a href="https://htmx.org/docs/#scripting">scripting</a>
+<ul>
+<li><a href="https://htmx.org/docs/#hx-on">hx-on attribute</a></li>
+</ul>
+</li>
+<li><a href="https://htmx.org/docs/#3rd-party">3rd party integration</a></li>
+<li><a href="https://htmx.org/docs/#caching">caching</a></li>
+<li><a href="https://htmx.org/docs/#security">security</a></li>
+<li><a href="https://htmx.org/docs/#config">configuring</a></li>
+</ul>
+</div>
+</div>
+<div class="10 col">
+<h2 id="introduction"><a class="zola-anchor" href="#introduction" aria-label="Anchor link for: introduction">#</a>htmx in a Nutshell</h2>
+<p>htmx is a library that allows you to access modern browser features directly from HTML, rather than using
+javascript.</p>
+<p>To understand htmx, first lets take a look at an anchor tag:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/blog&#34;</span><span>&gt;Blog&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span></code></pre>
+<p>This anchor tag tells a browser:</p>
+<blockquote>
+<p>&ldquo;When a user clicks on this link, issue an HTTP GET request to &lsquo;/blog&rsquo; and load the response content
+into the browser window&rdquo;.</p>
+</blockquote>
+<p>With that in mind, consider the following bit of HTML:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/clicked&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;click&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#parent-div&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML&#34;
+</span><span>&gt;
+</span><span>    Click Me!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>This tells htmx:</p>
+<blockquote>
+<p>&ldquo;When a user clicks on this button, issue an HTTP POST request to &lsquo;/clicked&rsquo; and use the content from the response
+to replace the element with the id <code>parent-div</code> in the DOM&rdquo;</p>
+</blockquote>
+<p>htmx extends and generalizes the core idea of HTML as a hypertext, opening up many more possibilities directly
+within the language:</p>
+<ul>
+<li>Now any element, not just anchors and forms, can issue an HTTP request</li>
+<li>Now any event, not just clicks or form submissions, can trigger requests</li>
+<li>Now any <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/HTTP_Verbs">HTTP verb</a>, not just <code>GET</code> and <code>POST</code>, can be used</li>
+<li>Now any element, not just the entire window, can be the target for update by the request</li>
+</ul>
+<p>Note that when you are using htmx, on the server side you typically respond with <em>HTML</em>, not <em>JSON</em>.  This keeps you firmly
+within the <a rel="noopener" target="_blank" href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">original web programming model</a>,
+using <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/HATEOAS">Hypertext As The Engine Of Application State</a>
+without even needing to really understand that concept.</p>
+<p>It&rsquo;s worth mentioning that, if you prefer, you can use the <a rel="noopener" target="_blank" href="https://html.spec.whatwg.org/multipage/dom.html#attr-data-*"><code>data-</code></a> prefix when using htmx:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">data-hx-post</span><span>=</span><span style="color:#98c379;">&#34;/click&#34;</span><span>&gt;Click Me!&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span></code></pre>
+<h2 id="installing"><a class="zola-anchor" href="#installing" aria-label="Anchor link for: installing">#</a>Installing</h2>
+<p>Htmx is a dependency-free, browser-oriented javascript library. This means that using it is as simple as adding a <code>&lt;script&gt;</code>
+tag to your document head.  No need for complicated build steps or systems.</p>
+<p>If you are migrating to htmx from intercooler.js, please see the <a href="https://htmx.org/migration-guide/">migration guide</a>.</p>
+<h3 id="via-a-cdn-e-g-unpkg-com"><a class="zola-anchor" href="#via-a-cdn-e-g-unpkg-com" aria-label="Anchor link for: via-a-cdn-e-g-unpkg-com">#</a>Via A CDN (e.g. unpkg.com)</h3>
+<p>The fastest way to get going with htmx is to load it via a CDN. You can simply add this to your head tag
+and get going:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://unpkg.com/htmx.org@1.9.12&#34; </span><span style="color:#d19a66;">integrity</span><span>=</span><span style="color:#98c379;">&#34;sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2&#34; </span><span style="color:#d19a66;">crossorigin</span><span>=</span><span style="color:#98c379;">&#34;anonymous&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<p>Unminified version is also available</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://unpkg.com/htmx.org@1.9.12/dist/htmx.js&#34; </span><span style="color:#d19a66;">integrity</span><span>=</span><span style="color:#98c379;">&#34;sha384-qbtR4rS9RrUMECUWDWM2+YGgN3U4V4ZncZ0BvUcg9FGct0jqXz3PUdVpU1p0yrXS&#34; </span><span style="color:#d19a66;">crossorigin</span><span>=</span><span style="color:#98c379;">&#34;anonymous&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<p>While the CDN approach is extremely simple, you may want to consider <a rel="noopener" target="_blank" href="https://blog.wesleyac.com/posts/why-not-javascript-cdn">not using CDNs in production</a>.</p>
+<h3 id="download-a-copy"><a class="zola-anchor" href="#download-a-copy" aria-label="Anchor link for: download-a-copy">#</a>Download a copy</h3>
+<p>The next easiest way to install htmx is to simply copy it into your project.</p>
+<p>Download <code>htmx.min.js</code> <a rel="noopener" target="_blank" href="https://unpkg.com/htmx.org/dist/htmx.min.js">from unpkg.com</a> and add it to the appropriate directory in your project
+and include it where necessary with a <code>&lt;script&gt;</code> tag:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/path/to/htmx.min.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<p>You can also add extensions this way, by downloading them from the <code>ext/</code> directory.</p>
+<h3 id="npm"><a class="zola-anchor" href="#npm" aria-label="Anchor link for: npm">#</a>npm</h3>
+<p>For npm-style build systems, you can install htmx via <a rel="noopener" target="_blank" href="https://www.npmjs.com/">npm</a>:</p>
+<pre data-lang="sh" style="background-color:#1f2329;color:#abb2bf;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#e06c75;">npm</span><span> install htmx.org
+</span></code></pre>
+<p>After installing, you&rsquo;ll need to use appropriate tooling to use <code>node_modules/htmx.org/dist/htmx.js</code> (or <code>.min.js</code>).
+For example, you might bundle htmx with some extensions and project-specific code.</p>
+<h3 id="webpack"><a class="zola-anchor" href="#webpack" aria-label="Anchor link for: webpack">#</a>Webpack</h3>
+<p>If you are using webpack to manage your javascript:</p>
+<ul>
+<li>Install <code>htmx</code> via your favourite package manager (like npm or yarn)</li>
+<li>Add the import to your <code>index.js</code></li>
+</ul>
+<pre data-lang="js" style="background-color:#1f2329;color:#abb2bf;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#c678dd;">import </span><span style="color:#98c379;">&#39;htmx.org&#39;</span><span>;
+</span></code></pre>
+<p>If you want to use the global <code>htmx</code> variable (recommended), you need to inject it to the window scope:</p>
+<ul>
+<li>Create a custom JS file</li>
+<li>Import this file to your <code>index.js</code> (below the import from step 2)</li>
+</ul>
+<pre data-lang="js" style="background-color:#1f2329;color:#abb2bf;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#c678dd;">import </span><span style="color:#98c379;">&#39;path/to/my_custom.js&#39;</span><span>;
+</span></code></pre>
+<ul>
+<li>Then add this code to the file:</li>
+</ul>
+<pre data-lang="js" style="background-color:#1f2329;color:#abb2bf;" class="language-js "><code class="language-js" data-lang="js"><span>window.</span><span style="color:#e06c75;">htmx </span><span>= </span><span style="color:#56b6c2;">require</span><span>(</span><span style="color:#98c379;">&#39;htmx.org&#39;</span><span>);
+</span></code></pre>
+<ul>
+<li>Finally, rebuild your bundle</li>
+</ul>
+<h2 id="ajax"><a class="zola-anchor" href="#ajax" aria-label="Anchor link for: ajax">#</a>AJAX</h2>
+<p>The core of htmx is a set of attributes that allow you to issue AJAX requests directly from HTML:</p>
+<table><thead><tr><th>Attribute</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/attributes/hx-get/">hx-get</a></td><td>Issues a <code>GET</code> request to the given URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-post/">hx-post</a></td><td>Issues a <code>POST</code> request to the given URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-put/">hx-put</a></td><td>Issues a <code>PUT</code> request to the given URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-patch/">hx-patch</a></td><td>Issues a <code>PATCH</code> request to the given URL</td></tr>
+<tr><td><a href="https://htmx.org/attributes/hx-delete/">hx-delete</a></td><td>Issues a <code>DELETE</code> request to the given URL</td></tr>
+</tbody></table>
+<p>Each of these attributes takes a URL to issue an AJAX request to.  The element will issue a request of the specified
+type to the given URL when the element is <a href="https://htmx.org/docs/#triggers">triggered</a>:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-put</span><span>=</span><span style="color:#98c379;">&#34;/messages&#34;</span><span>&gt;
+</span><span>    Put To Messages
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>This tells the browser:</p>
+<blockquote>
+<p>When a user clicks on this div, issue a PUT request to the URL /messages and load the response into the div</p>
+</blockquote>
+<h3 id="triggers"><a class="zola-anchor" href="#triggers" aria-label="Anchor link for: triggers">#</a>Triggering Requests</h3>
+<p>By default, AJAX requests are triggered by the &ldquo;natural&rdquo; event of an element:</p>
+<ul>
+<li><code>input</code>, <code>textarea</code> &amp; <code>select</code> are triggered on the <code>change</code> event</li>
+<li><code>form</code> is triggered on the <code>submit</code> event</li>
+<li>everything else is triggered by the <code>click</code> event</li>
+</ul>
+<p>If you want different behavior you can use the <a href="https://htmx.org/attributes/hx-trigger/">hx-trigger</a>
+attribute to specify which event will cause the request.</p>
+<p>Here is a <code>div</code> that posts to <code>/mouse_entered</code> when a mouse enters it:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/mouse_entered&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;mouseenter&#34;</span><span>&gt;
+</span><span>    [Here Mouse, Mouse!]
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<h4 id="trigger-modifiers"><a class="zola-anchor" href="#trigger-modifiers" aria-label="Anchor link for: trigger-modifiers">#</a>Trigger Modifiers</h4>
+<p>A trigger can also have a few additional modifiers that change its behavior.  For example, if you want a request to only
+happen once, you can use the <code>once</code> modifier for the trigger:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/mouse_entered&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;mouseenter once&#34;</span><span>&gt;
+</span><span>    [Here Mouse, Mouse!]
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>Other modifiers you can use for triggers are:</p>
+<ul>
+<li><code>changed</code> - only issue a request if the value of the element has changed</li>
+<li><code>delay:&lt;time interval&gt;</code> - wait the given amount of time (e.g. <code>1s</code>) before
+issuing the request.  If the event triggers again, the countdown is reset.</li>
+<li><code>throttle:&lt;time interval&gt;</code> - wait the given amount of time (e.g. <code>1s</code>) before
+issuing the request.  Unlike <code>delay</code> if a new event occurs before the time limit is hit the event will be discarded,
+so the request will trigger at the end of the time period.</li>
+<li><code>from:&lt;CSS Selector&gt;</code> - listen for the event on a different element.  This can be used for things like keyboard shortcuts.</li>
+</ul>
+<p>You can use these attributes to implement many common UX patterns, such as <a href="https://htmx.org/examples/active-search/">Active Search</a>:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;text&#34; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;q&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/trigger_delay&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;keyup changed delay:500ms&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#search-results&#34;
+</span><span>    </span><span style="color:#d19a66;">placeholder</span><span>=</span><span style="color:#98c379;">&#34;Search...&#34;
+</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;search-results&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>This input will issue a request 500 milliseconds after a key up event if the input has been changed and inserts the results
+into the <code>div</code> with the id <code>search-results</code>.</p>
+<p>Multiple triggers can be specified in the <a href="https://htmx.org/attributes/hx-trigger/">hx-trigger</a> attribute, separated by commas.</p>
+<h4 id="trigger-filters"><a class="zola-anchor" href="#trigger-filters" aria-label="Anchor link for: trigger-filters">#</a>Trigger Filters</h4>
+<p>You may also apply trigger filters by using square brackets after the event name, enclosing a javascript expression that
+will be evaluated.  If the expression evaluates to <code>true</code> the event will trigger, otherwise it will not.</p>
+<p>Here is an example that triggers only on a Control-Click of the element</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/clicked&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;click[ctrlKey]&#34;</span><span>&gt;
+</span><span>    Control Click Me
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>Properties like <code>ctrlKey</code> will be resolved against the triggering event first, then the global scope.  The
+<code>this</code> symbol will be set to the current element.</p>
+<h4 id="special-events"><a class="zola-anchor" href="#special-events" aria-label="Anchor link for: special-events">#</a>Special Events</h4>
+<p>htmx provides a few special events for use in <a href="https://htmx.org/attributes/hx-trigger/">hx-trigger</a>:</p>
+<ul>
+<li><code>load</code> - fires once when the element is first loaded</li>
+<li><code>revealed</code> - fires once when an element first scrolls into the viewport</li>
+<li><code>intersect</code> - fires once when an element first intersects the viewport.  This supports two additional options:
+<ul>
+<li><code>root:&lt;selector&gt;</code> - a CSS selector of the root element for intersection</li>
+<li><code>threshold:&lt;float&gt;</code> - a floating point number between 0.0 and 1.0, indicating what amount of intersection to fire the event on</li>
+</ul>
+</li>
+</ul>
+<p>You can also use custom events to trigger requests if you have an advanced use case.</p>
+<h4 id="polling"><a class="zola-anchor" href="#polling" aria-label="Anchor link for: polling">#</a>Polling</h4>
+<p>If you want an element to poll the given URL rather than wait for an event, you can use the <code>every</code> syntax
+with the <a href="https://htmx.org/attributes/hx-trigger/"><code>hx-trigger</code></a> attribute:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/news&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;every 2s&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>This tells htmx</p>
+<blockquote>
+<p>Every 2 seconds, issue a GET to /news and load the response into the div</p>
+</blockquote>
+<p>If you want to stop polling from a server response you can respond with the HTTP response code <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/86_(term)"><code>286</code></a>
+and the element will cancel the polling.</p>
+<h4 id="load_polling"><a class="zola-anchor" href="#load_polling" aria-label="Anchor link for: load_polling">#</a>Load Polling</h4>
+<p>Another technique that can be used to achieve polling in htmx is &ldquo;load polling&rdquo;, where an element specifies
+a <code>load</code> trigger along with a delay, and replaces itself with the response:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/messages&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;load delay:1s&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML&#34;
+</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>If the <code>/messages</code> end point keeps returning a div set up this way, it will keep &ldquo;polling&rdquo; back to the URL every
+second.</p>
+<p>Load polling can be useful in situations where a poll has an end point at which point the polling terminates, such as
+when you are showing the user a <a href="https://htmx.org/examples/progress-bar/">progress bar</a>.</p>
+<h3 id="indicators"><a class="zola-anchor" href="#indicators" aria-label="Anchor link for: indicators">#</a>Request Indicators</h3>
+<p>When an AJAX request is issued it is often good to let the user know that something is happening since the browser
+will not give them any feedback.  You can accomplish this in htmx by using <code>htmx-indicator</code> class.</p>
+<p>The <code>htmx-indicator</code> class is defined so that the opacity of any element with this class is 0 by default, making it invisible
+but present in the DOM.</p>
+<p>When htmx issues a request, it will put a <code>htmx-request</code> class onto an element (either the requesting element or
+another element, if specified).  The <code>htmx-request</code> class will cause a child element with the <code>htmx-indicator</code> class
+on it to transition to an opacity of 1, showing the indicator.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/click&#34;</span><span>&gt;
+</span><span>    Click Me!
+</span><span>    &lt;</span><span style="color:#e06c75;">img </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;htmx-indicator&#34; </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/spinner.gif&#34;</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>Here we have a button.  When it is clicked the <code>htmx-request</code> class will be added to it, which will reveal the spinner
+gif element.  (I like <a rel="noopener" target="_blank" href="http://samherbert.net/svg-loaders/">SVG spinners</a> these days.)</p>
+<p>While the <code>htmx-indicator</code> class uses opacity to hide and show the progress indicator, if you would prefer another mechanism
+you can create your own CSS transition like so:</p>
+<pre data-lang="css" style="background-color:#1f2329;color:#abb2bf;" class="language-css "><code class="language-css" data-lang="css"><span style="color:#d19a66;">.htmx-indicator</span><span>{
+</span><span>    display:none;
+</span><span>}
+</span><span style="color:#d19a66;">.htmx-request .htmx-indicator</span><span>{
+</span><span>    display:inline;
+</span><span>}
+</span><span style="color:#d19a66;">.htmx-request.htmx-indicator</span><span>{
+</span><span>    display:inline;
+</span><span>}
+</span></code></pre>
+<p>If you want the <code>htmx-request</code> class added to a different element, you can use the <a href="https://htmx.org/attributes/hx-indicator/">hx-indicator</a>
+attribute with a CSS selector to do so:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/click&#34; </span><span style="color:#d19a66;">hx-indicator</span><span>=</span><span style="color:#98c379;">&#34;#indicator&#34;</span><span>&gt;
+</span><span>        Click Me!
+</span><span>    &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">img </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;indicator&#34; </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;htmx-indicator&#34; </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/spinner.gif&#34;</span><span>/&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>Here we call out the indicator explicitly by id.  Note that we could have placed the class on the parent <code>div</code> as well
+and had the same effect.</p>
+<p>You can also add the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled">the <code>disabled</code> attribute</a> to
+elements for the duration of a request by using the <a href="https://htmx.org/attributes/hx-disabled-elt/">hx-disabled-elt</a> attribute.</p>
+<h3 id="targets"><a class="zola-anchor" href="#targets" aria-label="Anchor link for: targets">#</a>Targets</h3>
+<p>If you want the response to be loaded into a different element other than the one that made the request, you can
+use the <a href="https://htmx.org/attributes/hx-target/">hx-target</a> attribute, which takes a CSS selector.  Looking back at our Live Search example:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;text&#34; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;q&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/trigger_delay&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;keyup delay:500ms changed&#34;
+</span><span>    </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#search-results&#34;
+</span><span>    </span><span style="color:#d19a66;">placeholder</span><span>=</span><span style="color:#98c379;">&#34;Search...&#34;
+</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;search-results&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>You can see that the results from the search are going to be loaded into <code>div#search-results</code>, rather than into the
+input tag.</p>
+<h4 id="extended-css-selectors"><a class="zola-anchor" href="#extended-css-selectors" aria-label="Anchor link for: extended-css-selectors">#</a>Extended CSS Selectors</h4>
+<p><code>hx-target</code>, and most attributes that take a CSS selector, support an &ldquo;extended&rdquo; CSS syntax:</p>
+<ul>
+<li>You can use the <code>this</code> keyword, which indicates that the element that the <code>hx-target</code> attribute is on is the target</li>
+<li>The <code>closest &lt;CSS selector&gt;</code> syntax will find the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/docs/Web/API/Element/closest">closest</a>
+ancestor element or itself, that matches the given CSS selector.
+(e.g. <code>closest tr</code> will target the closest table row to the element)</li>
+<li>The <code>next &lt;CSS selector&gt;</code> syntax will find the next element in the DOM matching the given CSS selector.</li>
+<li>The <code>previous &lt;CSS selector&gt;</code> syntax will find the previous element in the DOM the given CSS selector.</li>
+<li><code>find &lt;CSS selector&gt;</code> which will find the first child descendant element that matches the given CSS selector.
+(e.g <code>find tr</code> would target the first child descendant row to the element)</li>
+</ul>
+<p>In addition, a CSS selector may be wrapped in <code>&lt;</code> and <code>/&gt;</code> characters, mimicking the
+<a rel="noopener" target="_blank" href="https://hyperscript.org/expressions/query-reference/">query literal</a> syntax of hyperscript.</p>
+<p>Relative targets like this can be useful for creating flexible user interfaces without peppering your DOM with loads
+of <code>id</code> attributes.</p>
+<h3 id="swapping"><a class="zola-anchor" href="#swapping" aria-label="Anchor link for: swapping">#</a>Swapping</h3>
+<p>htmx offers a few different ways to swap the HTML returned into the DOM.  By default, the content replaces the
+<code>innerHTML</code> of the target element.  You can modify this by using the <a href="https://htmx.org/attributes/hx-swap/">hx-swap</a> attribute
+with any of the following values:</p>
+<table><thead><tr><th>Name</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>innerHTML</code></td><td>the default, puts the content inside the target element</td></tr>
+<tr><td><code>outerHTML</code></td><td>replaces the entire target element with the returned content</td></tr>
+<tr><td><code>afterbegin</code></td><td>prepends the content before the first child inside the target</td></tr>
+<tr><td><code>beforebegin</code></td><td>prepends the content before the target in the target&rsquo;s parent element</td></tr>
+<tr><td><code>beforeend</code></td><td>appends the content after the last child inside the target</td></tr>
+<tr><td><code>afterend</code></td><td>appends the content after the target in the target&rsquo;s parent element</td></tr>
+<tr><td><code>delete</code></td><td>deletes the target element regardless of the response</td></tr>
+<tr><td><code>none</code></td><td>does not append content from response (<a href="https://htmx.org/docs/#oob_swaps">Out of Band Swaps</a> and <a href="https://htmx.org/docs/#response-headers">Response Headers</a> will still be processed)</td></tr>
+</tbody></table>
+<h4 id="morphing"><a class="zola-anchor" href="#morphing" aria-label="Anchor link for: morphing">#</a>Morph Swaps</h4>
+<p>In addition to the standard swap mechanisms above, htmx also supports <em>morphing</em> swaps, via extensions.  Morphing swaps
+attempt to <em>merge</em> new content into the existing DOM, rather than simply replacing it.  They often do a better job
+preserving things like focus, video state, etc. by mutating existing nodes in-place during the swap operation, at the
+cost of more CPU.</p>
+<p>The following extensions are available for morph-style swaps:</p>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/bigskysoftware/idiomorph#htmx">Idiomorph</a> - A morphing algorithm created by the htmx developers.</li>
+<li><a href="https://htmx.org/extensions/morphdom-swap/">Morphdom Swap</a> - Based on the <a rel="noopener" target="_blank" href="https://github.com/patrick-steele-idem/morphdom">morphdom</a>,
+the original DOM morphing library.</li>
+<li><a href="https://htmx.org/extensions/alpine-morph/">Alpine-morph</a> - Based on the <a rel="noopener" target="_blank" href="https://alpinejs.dev/plugins/morph">alpine morph</a> plugin, plays
+well with alpine.js</li>
+</ul>
+<h4 id="view-transitions"><a class="zola-anchor" href="#view-transitions" aria-label="Anchor link for: view-transitions">#</a>View Transitions</h4>
+<p>The new, experimental <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API">View Transitions API</a>
+gives developers a way to create an animated transition between different DOM states.  It is still in active development
+and is not available in all browsers, but htmx provides a way to work with this new API that falls back to the non-transition
+mechanism if the API is not available in a given browser.</p>
+<p>You can experiment with this new API using the following approaches:</p>
+<ul>
+<li>Set the <code>htmx.config.globalViewTransitions</code> config variable to <code>true</code> to use transitions for all swaps</li>
+<li>Use the <code>transition:true</code> option in the <code>hx-swap</code> attribute</li>
+<li>If an element swap is going to be transitioned due to either of the above configurations, you may catch the
+<code>htmx:beforeTransition</code> event and call <code>preventDefault()</code> on it to cancel the transition.</li>
+</ul>
+<p>View Transitions can be configured using CSS, as outlined in <a rel="noopener" target="_blank" href="https://developer.chrome.com/docs/web-platform/view-transitions/#simple-customization">the Chrome documentation for the feature</a>.</p>
+<p>You can see a view transition example on the <a href="examples/animations#view-transitions">Animation Examples</a> page.</p>
+<h4 id="swap-options"><a class="zola-anchor" href="#swap-options" aria-label="Anchor link for: swap-options">#</a>Swap Options</h4>
+<p>The <a href="https://htmx.org/attributes/hx-swap/">hx-swap</a> attribute supports many options for tuning the swapping behavior of htmx.  For
+example, by default htmx will swap in the title of a title tag found anywhere in the new content.  You can turn this
+behavior off by setting the <code>ignoreTitle</code> modifier to true:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/like&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML ignoreTitle:true&#34;</span><span>&gt;Like&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>The modifiers available on <code>hx-swap</code> are:</p>
+<table><thead><tr><th>Option</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>transition</code></td><td><code>true</code> or <code>false</code>, whether to use the view transition API for this swap</td></tr>
+<tr><td><code>swap</code></td><td>The swap delay to use (e.g. <code>100ms</code>) between when old content is cleared and the new content is inserted</td></tr>
+<tr><td><code>settle</code></td><td>The settle delay to use (e.g. <code>100ms</code>) between when new content is inserted and when it is settled</td></tr>
+<tr><td><code>ignoreTitle</code></td><td>If set to <code>true</code>, any title found in the new content will be ignored and not update the document title</td></tr>
+<tr><td><code>scroll</code></td><td><code>top</code> or <code>bottom</code>, will scroll the target element to its top or bottom</td></tr>
+<tr><td><code>show</code></td><td><code>top</code> or <code>bottom</code>, will scroll the target element&rsquo;s top or bottom into view</td></tr>
+</tbody></table>
+<p>All swap modifiers appear after the swap style is specified, and are colon-separated.</p>
+<p>See the <a href="https://htmx.org/attributes/hx-swap/">hx-swap</a> documentation for more details on these options.</p>
+<h3 id="synchronization"><a class="zola-anchor" href="#synchronization" aria-label="Anchor link for: synchronization">#</a>Synchronization</h3>
+<p>Often you want to coordinate the requests between two elements.  For example, you may want a request from one element
+to supersede the request of another element, or to wait until the other element&rsquo;s request has finished.</p>
+<p>htmx offers a <a href="https://htmx.org/attributes/hx-sync/"><code>hx-sync</code></a> attribute to help you accomplish this.</p>
+<p>Consider a race condition between a form submission and an individual input&rsquo;s validation request in this HTML:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/store&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;title&#34; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;title&#34; </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;text&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/validate&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;change&#34;
+</span><span>    &gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;submit&#34;</span><span>&gt;Submit&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<p>Without using <code>hx-sync</code>, filling out the input and immediately submitting the form triggers two parallel requests to
+<code>/validate</code> and <code>/store</code>.</p>
+<p>Using <code>hx-sync=&#34;closest form:abort&#34;</code> on the input will watch for requests on the form and abort the input&rsquo;s request if
+a form request is present or starts while the input request is in flight:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/store&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;title&#34; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;title&#34; </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;text&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/validate&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;change&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-sync</span><span>=</span><span style="color:#98c379;">&#34;closest form:abort&#34;
+</span><span>    &gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;submit&#34;</span><span>&gt;Submit&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<p>This resolves the synchronization between the two elements in a declarative way.</p>
+<p>htmx also supports a programmatic way to cancel requests: you can send the <code>htmx:abort</code> event to an element to
+cancel any in-flight requests:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;request-button&#34; </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34;</span><span>&gt;
+</span><span>    Issue Request
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">onclick</span><span>=</span><span style="color:#98c379;">&#34;</span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#e06c75;">trigger</span><span>(</span><span style="color:#98c379;">&#39;#request-button&#39;</span><span>, </span><span style="color:#98c379;">&#39;htmx:abort&#39;</span><span>)</span><span style="color:#98c379;">&#34;</span><span>&gt;
+</span><span>    Cancel Request
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>More examples and details can be found on the <a href="https://htmx.org/attributes/hx-sync/"><code>hx-sync</code> attribute page.</a></p>
+<h3 id="css_transitions"><a class="zola-anchor" href="#css_transitions" aria-label="Anchor link for: css_transitions">#</a>CSS Transitions</h3>
+<p>htmx makes it easy to use <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions">CSS Transitions</a> without
+javascript.  Consider this HTML content:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;div1&#34;</span><span>&gt;Original Content&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>Imagine this content is replaced by htmx via an ajax request with this new content:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;div1&#34; </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;red&#34;</span><span>&gt;New Content&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>Note two things:</p>
+<ul>
+<li>The div has the <em>same</em> id in the original and in the new content</li>
+<li>The <code>red</code> class has been added to the new content</li>
+</ul>
+<p>Given this situation, we can write a CSS transition from the old state to the new state:</p>
+<pre data-lang="css" style="background-color:#1f2329;color:#abb2bf;" class="language-css "><code class="language-css" data-lang="css"><span style="color:#d19a66;">.red </span><span>{
+</span><span>    color: red;
+</span><span>    transition: all ease-in </span><span style="color:#d19a66;">1s </span><span>;
+</span><span>}
+</span></code></pre>
+<p>When htmx swaps in this new content, it will do so in such a way that the CSS transition will apply to the new content,
+giving you a nice, smooth transition to the new state.</p>
+<p>So, in summary, all you need to do to use CSS transitions for an element is keep its <code>id</code> stable across requests!</p>
+<p>You can see the <a href="https://htmx.org/examples/animations/">Animation Examples</a> for more details and live demonstrations.</p>
+<h4 id="details"><a class="zola-anchor" href="#details" aria-label="Anchor link for: details">#</a>Details</h4>
+<p>To understand how CSS transitions actually work in htmx, you must understand the underlying swap &amp; settle model that htmx uses.</p>
+<p>When new content is received from a server, before the content is swapped in, the existing
+content of the page is examined for elements that match by the <code>id</code> attribute.  If a match
+is found for an element in the new content, the attributes of the old content are copied
+onto the new element before the swap occurs.  The new content is then swapped in, but with the
+<em>old</em> attribute values.  Finally, the new attribute values are swapped in, after a &ldquo;settle&rdquo; delay
+(20ms by default).  A little crazy, but this is what allows CSS transitions to work without any javascript by
+the developer.</p>
+<h3 id="oob_swaps"><a class="zola-anchor" href="#oob_swaps" aria-label="Anchor link for: oob_swaps">#</a>Out of Band Swaps</h3>
+<p>If you want to swap content from a response directly into the DOM by using the <code>id</code> attribute you can use the
+<a href="https://htmx.org/attributes/hx-swap-oob/">hx-swap-oob</a> attribute in the <em>response</em> html:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;message&#34; </span><span style="color:#d19a66;">hx-swap-oob</span><span>=</span><span style="color:#98c379;">&#34;true&#34;</span><span>&gt;Swap me directly!&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>Additional Content
+</span></code></pre>
+<p>In this response, <code>div#message</code> would be swapped directly into the matching DOM element, while the additional content
+would be swapped into the target in the normal manner.</p>
+<p>You can use this technique to &ldquo;piggy-back&rdquo; updates on other requests.</p>
+<h4 id="selecting-content-to-swap"><a class="zola-anchor" href="#selecting-content-to-swap" aria-label="Anchor link for: selecting-content-to-swap">#</a>Selecting Content To Swap</h4>
+<p>If you want to select a subset of the response HTML to swap into the target, you can use the <a href="https://htmx.org/attributes/hx-select/">hx-select</a>
+attribute, which takes a CSS selector and selects the matching elements from the response.</p>
+<p>You can also pick out pieces of content for an out-of-band swap by using the <a href="https://htmx.org/attributes/hx-select-oob/">hx-select-oob</a>
+attribute, which takes a list of element IDs to pick out and swap.</p>
+<h4 id="preserving-content-during-a-swap"><a class="zola-anchor" href="#preserving-content-during-a-swap" aria-label="Anchor link for: preserving-content-during-a-swap">#</a>Preserving Content During A Swap</h4>
+<p>If there is content that you wish to be preserved across swaps (e.g. a video player that you wish to remain playing
+even if a swap occurs) you can use the <a href="https://htmx.org/attributes/hx-preserve/">hx-preserve</a>
+attribute on the elements you wish to be preserved.</p>
+<h3 id="parameters"><a class="zola-anchor" href="#parameters" aria-label="Anchor link for: parameters">#</a>Parameters</h3>
+<p>By default, an element that causes a request will include its value if it has one.  If the element is a form it
+will include the values of all inputs within it.</p>
+<p>As with HTML forms, the <code>name</code> attribute of the input is used as the parameter name in the request that htmx sends.</p>
+<p>Additionally, if the element causes a non-<code>GET</code> request, the values of all the inputs of the nearest enclosing form
+will be included.</p>
+<p>If you wish to include the values of other elements, you can use the <a href="https://htmx.org/attributes/hx-include/">hx-include</a> attribute
+with a CSS selector of all the elements whose values you want to include in the request.</p>
+<p>If you wish to filter out some parameters you can use the <a href="https://htmx.org/attributes/hx-params/">hx-params</a> attribute.</p>
+<p>Finally, if you want to programmatically modify the parameters, you can use the <a href="https://htmx.org/events/#htmx:configRequest">htmx:configRequest</a>
+event.</p>
+<h4 id="files"><a class="zola-anchor" href="#files" aria-label="Anchor link for: files">#</a>File Upload</h4>
+<p>If you wish to upload files via an htmx request, you can set the <a href="https://htmx.org/attributes/hx-encoding/">hx-encoding</a> attribute to
+<code>multipart/form-data</code>.  This will use a <code>FormData</code> object to submit the request, which will properly include the file
+in the request.</p>
+<p>Note that depending on your server-side technology, you may have to handle requests with this type of body content very
+differently.</p>
+<p>Note that htmx fires a <code>htmx:xhr:progress</code> event periodically based on the standard <code>progress</code> event during upload,
+which you can hook into to show the progress of the upload.</p>
+<p>See the <a href="https://htmx.org/examples/">examples section</a> for more advanced form patterns, including <a href="https://htmx.org/examples/file-upload/">progress bars</a> and <a href="https://htmx.org/examples/file-upload-input/">error handling</a>.</p>
+<h4 id="extra-values"><a class="zola-anchor" href="#extra-values" aria-label="Anchor link for: extra-values">#</a>Extra Values</h4>
+<p>You can include extra values in a request using the <a href="https://htmx.org/attributes/hx-vals/">hx-vals</a> (name-expression pairs in JSON format) and
+<a href="https://htmx.org/attributes/hx-vars/">hx-vars</a> attributes (comma-separated name-expression pairs that are dynamically computed).</p>
+<h3 id="confirming"><a class="zola-anchor" href="#confirming" aria-label="Anchor link for: confirming">#</a>Confirming Requests</h3>
+<p>Often you will want to confirm an action before issuing a request.  htmx supports the <a href="https://htmx.org/attributes/hx-confirm/"><code>hx-confirm</code></a>
+attribute, which allows you to confirm an action using a simple javascript dialog:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-delete</span><span>=</span><span style="color:#98c379;">&#34;/account&#34; </span><span style="color:#d19a66;">hx-confirm</span><span>=</span><span style="color:#98c379;">&#34;Are you sure you wish to delete your account?&#34;</span><span>&gt;
+</span><span>    Delete My Account
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>Using events you can implement more sophisticated confirmation dialogs.  The <a href="https://htmx.org/examples/confirm/">confirm example</a>
+shows how to use <a rel="noopener" target="_blank" href="https://sweetalert2.github.io/">sweetalert2</a> library for confirmation of htmx actions.</p>
+<h2 id="inheritance"><a class="zola-anchor" href="#inheritance" aria-label="Anchor link for: inheritance">#</a>Attribute Inheritance</h2>
+<p>Most attributes in htmx are inherited: they apply to the element they are on as well as any children elements.  This
+allows you to &ldquo;hoist&rdquo; attributes up the DOM to avoid code duplication.  Consider the following htmx:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-delete</span><span>=</span><span style="color:#98c379;">&#34;/account&#34; </span><span style="color:#d19a66;">hx-confirm</span><span>=</span><span style="color:#98c379;">&#34;Are you sure?&#34;</span><span>&gt;
+</span><span>    Delete My Account
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-put</span><span>=</span><span style="color:#98c379;">&#34;/account&#34; </span><span style="color:#d19a66;">hx-confirm</span><span>=</span><span style="color:#98c379;">&#34;Are you sure?&#34;</span><span>&gt;
+</span><span>    Update My Account
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>Here we have a duplicate <code>hx-confirm</code> attribute.  We can hoist this attribute to a parent element:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-confirm</span><span>=</span><span style="color:#98c379;">&#34;Are you sure?&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-delete</span><span>=</span><span style="color:#98c379;">&#34;/account&#34;</span><span>&gt;
+</span><span>        Delete My Account
+</span><span>    &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-put</span><span>=</span><span style="color:#98c379;">&#34;/account&#34;</span><span>&gt;
+</span><span>        Update My Account
+</span><span>    &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>This <code>hx-confirm</code> attribute will now apply to all htmx-powered elements within it.</p>
+<p>Sometimes you wish to undo this inheritance.  Consider if we had a cancel button to this group, but didn&rsquo;t want it to
+be confirmed.  We could add an <code>unset</code> directive on it like so:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-confirm</span><span>=</span><span style="color:#98c379;">&#34;Are you sure?&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-delete</span><span>=</span><span style="color:#98c379;">&#34;/account&#34;</span><span>&gt;
+</span><span>        Delete My Account
+</span><span>    &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-put</span><span>=</span><span style="color:#98c379;">&#34;/account&#34;</span><span>&gt;
+</span><span>        Update My Account
+</span><span>    &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-confirm</span><span>=</span><span style="color:#98c379;">&#34;unset&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/&#34;</span><span>&gt;
+</span><span>        Cancel
+</span><span>    &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>The top two buttons would then show a confirm dialog, but the bottom cancel button would not.</p>
+<p>Automatic inheritance can be disabled using the <a href="https://htmx.org/attributes/hx-disinherit/"><code>hx-disinherit</code></a> attribute.</p>
+<h2 id="boosting"><a class="zola-anchor" href="#boosting" aria-label="Anchor link for: boosting">#</a>Boosting</h2>
+<p>Htmx supports &ldquo;boosting&rdquo; regular HTML anchors and forms with the <a href="https://htmx.org/attributes/hx-boost/">hx-boost</a> attribute.  This
+attribute will convert all anchor tags and forms into AJAX requests that, by default, target the body of the page.</p>
+<p>Here is an example:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-boost</span><span>=</span><span style="color:#98c379;">&#34;true&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;/blog&#34;</span><span>&gt;Blog&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>The anchor tag in this div will issue an AJAX <code>GET</code> request to <code>/blog</code> and swap the response into the <code>body</code> tag.</p>
+<h3 id="progressive_enhancement"><a class="zola-anchor" href="#progressive_enhancement" aria-label="Anchor link for: progressive_enhancement">#</a>Progressive Enhancement</h3>
+<p>A feature of <code>hx-boost</code> is that it degrades gracefully if javascript is not enabled: the links and forms continue
+to work, they simply don&rsquo;t use ajax requests.  This is known as
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement">Progressive Enhancement</a>, and it allows
+a wider audience to use your site&rsquo;s functionality.</p>
+<p>Other htmx patterns can be adapted to achieve progressive enhancement as well, but they will require more thought.</p>
+<p>Consider the <a href="https://htmx.org/examples/active-search/">active search</a> example.  As it is written, it will not degrade gracefully:
+someone who does not have javascript enabled will not be able to use this feature. This is done for simplicity&rsquo;s sake,
+to keep the example as brief as possible.</p>
+<p>However, you could wrap the htmx-enhanced input in a form element:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">action</span><span>=</span><span style="color:#98c379;">&#34;/search&#34; </span><span style="color:#d19a66;">method</span><span>=</span><span style="color:#98c379;">&#34;POST&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;form-control&#34; </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;search&#34;
+</span><span>        </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;search&#34; </span><span style="color:#d19a66;">placeholder</span><span>=</span><span style="color:#98c379;">&#34;Begin typing to search users...&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/search&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;keyup changed delay:500ms, search&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#search-results&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-indicator</span><span>=</span><span style="color:#98c379;">&#34;.htmx-indicator&#34;</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<p>With this in place, javascript-enabled clients would still get the nice active-search UX, but non-javascript enabled
+clients would be able to hit the enter key and still search.  Even better, you could add a &ldquo;Search&rdquo; button as well.
+You would then need to update the form with an <code>hx-post</code> that mirrored the <code>action</code> attribute, or perhaps use <code>hx-boost</code>
+on it.</p>
+<p>You would need to check on the server side for the <code>HX-Request</code> header to differentiate between an htmx-driven and a
+regular request, to determine exactly what to render to the client.</p>
+<p>Other patterns can be adapted similarly to achieve the progressive enhancement needs of your application.</p>
+<p>As you can see, this requires more thought and more work.  It also rules some functionality entirely out of bounds.
+These tradeoffs must be made by you, the developer, with respect to your projects goals and audience.</p>
+<p><a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Learn/Accessibility/What_is_accessibility">Accessibility</a> is a concept
+closely related to progressive enhancement.  Using progressive enhancement techniques such as <code>hx-boost</code> will make your
+htmx application more accessible to a wide array of users.</p>
+<p>htmx-based applications are very similar to normal, non-AJAX driven web applications because htmx is HTML-oriented.</p>
+<p>As such, the normal HTML accessibility recommendations apply.  For example:</p>
+<ul>
+<li>Use semantic HTML as much as possible (i.e. the right tags for the right things)</li>
+<li>Ensure focus state is clearly visible</li>
+<li>Associate text labels with all form fields</li>
+<li>Maximize the readability of your application with appropriate fonts, contrast, etc.</li>
+</ul>
+<h2 id="websockets-and-sse"><a class="zola-anchor" href="#websockets-and-sse" aria-label="Anchor link for: websockets-and-sse">#</a>Web Sockets &amp; SSE</h2>
+<p>htmx has experimental support for declarative use of both
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications">WebSockets</a>
+and  <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">Server Sent Events</a>.</p>
+<div style="border: 1px solid whitesmoke; background-color: #e4f0ff; padding: 8px; border-radius: 8px">
+<p><strong>Note:</strong> In htmx 2.0, these features will be migrated to extensions.  These new extensions are already available in
+htmx 1.7+ and, if you are writing new code, you are encouraged to use the extensions instead.  All new feature work for
+both SSE and web sockets will be done in the extensions.</p>
+<p>Please visit the <a href="https://htmx.org/extensions/server-sent-events/">SSE extension</a> and <a href="https://htmx.org/extensions/web-sockets/">WebSocket extension</a>
+pages to learn more about the new extensions.</p>
+</div>
+<h3 id="websockets"><a class="zola-anchor" href="#websockets" aria-label="Anchor link for: websockets">#</a>WebSockets</h3>
+<p>If you wish to establish a <code>WebSocket</code> connection in htmx, you use the <a href="https://htmx.org/attributes/hx-ws/">hx-ws</a> attribute:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-ws</span><span>=</span><span style="color:#98c379;">&#34;connect:wss:/chatroom&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;chat_room&#34;</span><span>&gt;
+</span><span>        ...
+</span><span>    &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">hx-ws</span><span>=</span><span style="color:#98c379;">&#34;send:submit&#34;</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;chat_message&#34;</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>The <code>connect</code> declaration established the connection, and the <code>send</code> declaration tells the form to submit values to the socket on <code>submit</code>.</p>
+<p>More details can be found on the <a href="https://htmx.org/attributes/hx-ws/">hx-ws attribute page</a></p>
+<h3 id="sse"><a class="zola-anchor" href="#sse" aria-label="Anchor link for: sse">#</a>Server Sent Events</h3>
+<p><a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events">Server Sent Events</a> are a way for servers to send events to browsers.  It provides a higher-level mechanism for communication between the
+server and the browser than websockets.</p>
+<p>If you want an element to respond to a Server Sent Event via htmx, you need to do two things:</p>
+<ol>
+<li>
+<p>Define an SSE source.  To do this, add a <a href="https://htmx.org/attributes/hx-sse/">hx-sse</a> attribute on a parent element with
+a <code>connect:&lt;url&gt;</code> declaration that specifies the URL from which Server Sent Events will be received.</p>
+</li>
+<li>
+<p>Define elements that are descendents of this element that are triggered by server sent events using the
+<code>hx-trigger=&#34;sse:&lt;event_name&gt;&#34;</code> syntax</p>
+</li>
+</ol>
+<p>Here is an example:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">body </span><span style="color:#d19a66;">hx-sse</span><span>=</span><span style="color:#98c379;">&#34;connect:/news_updates&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;sse:new_news&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/news&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">body</span><span>&gt;
+</span></code></pre>
+<p>Depending on your implementation, this may be more efficient than the polling example above since the server would
+notify the div if there was new news to get, rather than the steady requests that a poll causes.</p>
+<h2 id="history"><a class="zola-anchor" href="#history" aria-label="Anchor link for: history">#</a>History Support</h2>
+<p>Htmx provides a simple mechanism for interacting with the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">browser history API</a>:</p>
+<p>If you want a given element to push its request URL into the browser navigation bar and add the current state of the page
+to the browser&rsquo;s history, include the <a href="https://htmx.org/attributes/hx-push-url/">hx-push-url</a> attribute:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/blog&#34; </span><span style="color:#d19a66;">hx-push-url</span><span>=</span><span style="color:#98c379;">&#34;true&#34;</span><span>&gt;Blog&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span></code></pre>
+<p>When a user clicks on this link, htmx will snapshot the current DOM and store it before it makes a request to /blog.
+It then does the swap and pushes a new location onto the history stack.</p>
+<p>When a user hits the back button, htmx will retrieve the old content from storage and swap it back into the target,
+simulating &ldquo;going back&rdquo; to the previous state.  If the location is not found in the cache, htmx will make an ajax
+request to the given URL, with the header <code>HX-History-Restore-Request</code> set to true, and expects back the HTML needed
+for the entire page.  Alternatively, if the <code>htmx.config.refreshOnHistoryMiss</code> config variable is set to true, it will
+issue a hard browser refresh.</p>
+<p><strong>NOTE:</strong> If you push a URL into the history, you <strong>must</strong> be able to navigate to that URL and get a full page back!
+A user could copy and paste the URL into an email, or new tab.  Additionally, htmx will need the entire page when restoring
+history if the page is not in the history cache.</p>
+<h3 id="specifying-history-snapshot-element"><a class="zola-anchor" href="#specifying-history-snapshot-element" aria-label="Anchor link for: specifying-history-snapshot-element">#</a>Specifying History Snapshot Element</h3>
+<p>By default, htmx will use the <code>body</code> to take and restore the history snapshot from.  This is usually the right thing, but
+if you want to use a narrower element for snapshotting you can use the <a href="https://htmx.org/attributes/hx-history-elt/">hx-history-elt</a>
+attribute to specify a different one.</p>
+<p>Careful: this element will need to be on all pages or restoring from history won&rsquo;t work reliably.</p>
+<h3 id="undoing-dom-mutations-by-3rd-party-libraries"><a class="zola-anchor" href="#undoing-dom-mutations-by-3rd-party-libraries" aria-label="Anchor link for: undoing-dom-mutations-by-3rd-party-libraries">#</a>Undoing DOM Mutations By 3rd Party Libraries</h3>
+<p>If you are using a 3rd party library and want to use the htmx history feature, you will need to clean up the DOM before
+a snapshot is taken.  Let&rsquo;s consider the <a rel="noopener" target="_blank" href="https://tom-select.js.org/">Tom Select</a> library, which makes select elements
+a much richer user experience.  Let&rsquo;s set up TomSelect to turn any input element with the <code>.tomselect</code> class into a rich
+select element.</p>
+<p>First we need to initialize elements that have the class in new content:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#56b6c2;">onLoad</span><span>(</span><span style="color:#c678dd;">function </span><span>(</span><span style="color:#e06c75;">target</span><span>) {
+</span><span>    </span><span style="font-style:italic;color:#848da1;">// find all elements in the new content that should be
+</span><span>    </span><span style="font-style:italic;color:#848da1;">// an editor and init w/ quill
+</span><span>    </span><span style="color:#c678dd;">var </span><span style="color:#e06c75;">editors </span><span>= </span><span style="color:#e06c75;">target</span><span>.</span><span style="color:#56b6c2;">querySelectorAll</span><span>(</span><span style="color:#98c379;">&#34;.tomselect&#34;</span><span>)
+</span><span>            .</span><span style="color:#56b6c2;">forEach</span><span>(</span><span style="color:#e06c75;">elt </span><span style="color:#c678dd;">=&gt; </span><span>new TomSelect(</span><span style="color:#e06c75;">elt</span><span>))
+</span><span>});
+</span></code></pre>
+<p>This will create a rich selector for all input elements that have the <code>.tomselect</code> class on it.  However, it mutates
+the DOM and we don&rsquo;t want that mutation saved to the history cache, since TomSelect will be reinitialized when the
+history content is loaded back into the screen.</p>
+<p>To deal with this, we need to catch the <code>htmx:beforeHistorySave</code> event and clean out the TomSelect mutations by calling
+<code>destroy()</code> on them:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#61afef;">on</span><span>(</span><span style="color:#98c379;">&#39;htmx:beforeHistorySave&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#848da1;">// find all TomSelect elements
+</span><span>    document.</span><span style="color:#56b6c2;">querySelectorAll</span><span>(</span><span style="color:#98c379;">&#39;.tomSelect&#39;</span><span>)
+</span><span>            .</span><span style="color:#56b6c2;">forEach</span><span>(</span><span style="color:#e06c75;">elt </span><span style="color:#c678dd;">=&gt; </span><span style="color:#e06c75;">elt</span><span>.</span><span style="color:#e06c75;">tomselect</span><span>.</span><span style="color:#61afef;">destroy</span><span>()) </span><span style="font-style:italic;color:#848da1;">// and call destroy() on them
+</span><span>})
+</span></code></pre>
+<p>This will revert the DOM to the original HTML, thus allowing for a clean snapshot.</p>
+<h3 id="disabling-history-snapshots"><a class="zola-anchor" href="#disabling-history-snapshots" aria-label="Anchor link for: disabling-history-snapshots">#</a>Disabling History Snapshots</h3>
+<p>History snapshotting can be disabled for a URL by setting the <a href="https://htmx.org/attributes/hx-history/">hx-history</a> attribute to <code>false</code>
+on any element in the current document, or any html fragment loaded into the current document by htmx. This can be used
+to prevent sensitive data entering the localStorage cache, which can be important for shared-use / public computers.
+History navigation will work as expected, but on restoration the URL will be requested from the server instead of the
+local history cache.</p>
+<h2 id="requests"><a class="zola-anchor" href="#requests" aria-label="Anchor link for: requests">#</a>Requests &amp; Responses</h2>
+<p>Htmx expects responses to the AJAX requests it makes to be HTML, typically HTML fragments (although a full HTML
+document, matched with a <a href="https://htmx.org/attributes/hx-select/">hx-select</a> tag can be useful too).  Htmx will then swap the returned
+HTML into the document at the target specified and with the swap strategy specified.</p>
+<p>Sometimes you might want to do nothing in the swap, but still perhaps trigger a client side event (<a href="https://htmx.org/docs/#response-headers">see below</a>).
+For this situation you can return a <code>204 - No Content</code> response code, and htmx will ignore the content of the response.</p>
+<p>In the event of an error response from the server (e.g. a 404 or a 501), htmx will trigger the <a href="https://htmx.org/events/#htmx:responseError"><code>htmx:responseError</code></a>
+event, which you can handle.</p>
+<p>In the event of a connection error, the <code>htmx:sendError</code> event will be triggered.</p>
+<h3 id="cors"><a class="zola-anchor" href="#cors" aria-label="Anchor link for: cors">#</a>CORS</h3>
+<p>When using htmx in a cross origin context, remember to configure your web
+server to set Access-Control headers in order for htmx headers to be visible
+on the client side.</p>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers">Access-Control-Allow-Headers (for request headers)</a></li>
+<li><a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers">Access-Control-Expose-Headers (for response headers)</a></li>
+</ul>
+<p><a href="https://htmx.org/reference/#request_headers">See all the request and response headers that htmx implements.</a></p>
+<h3 id="request-headers"><a class="zola-anchor" href="#request-headers" aria-label="Anchor link for: request-headers">#</a>Request Headers</h3>
+<p>htmx includes a number of useful headers in requests:</p>
+<table><thead><tr><th>Header</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>HX-Boosted</code></td><td>indicates that the request is via an element using <a href="https://htmx.org/attributes/hx-boost/">hx-boost</a></td></tr>
+<tr><td><code>HX-Current-URL</code></td><td>the current URL of the browser</td></tr>
+<tr><td><code>HX-History-Restore-Request</code></td><td>&ldquo;true&rdquo; if the request is for history restoration after a miss in the local history cache</td></tr>
+<tr><td><code>HX-Prompt</code></td><td>the user response to an <a href="https://htmx.org/attributes/hx-prompt/">hx-prompt</a></td></tr>
+<tr><td><code>HX-Request</code></td><td>always &ldquo;true&rdquo;</td></tr>
+<tr><td><code>HX-Target</code></td><td>the <code>id</code> of the target element if it exists</td></tr>
+<tr><td><code>HX-Trigger-Name</code></td><td>the <code>name</code> of the triggered element if it exists</td></tr>
+<tr><td><code>HX-Trigger</code></td><td>the <code>id</code> of the triggered element if it exists</td></tr>
+</tbody></table>
+<h3 id="response-headers"><a class="zola-anchor" href="#response-headers" aria-label="Anchor link for: response-headers">#</a>Response Headers</h3>
+<p>htmx supports some htmx-specific response headers:</p>
+<ul>
+<li><a href="https://htmx.org/headers/hx-location/"><code>HX-Location</code></a> - allows you to do a client-side redirect that does not do a full page reload</li>
+<li><a href="https://htmx.org/headers/hx-push-url/"><code>HX-Push-Url</code></a> - pushes a new url into the history stack</li>
+<li><code>HX-Redirect</code> - can be used to do a client-side redirect to a new location</li>
+<li><code>HX-Refresh</code> - if set to &ldquo;true&rdquo; the client-side will do a full refresh of the page</li>
+<li><a href="https://htmx.org/headers/hx-replace-url/"><code>HX-Replace-Url</code></a> - replaces the current URL in the location bar</li>
+<li><code>HX-Reswap</code> - allows you to specify how the response will be swapped. See <a href="https://htmx.org/attributes/hx-swap/">hx-swap</a> for possible values</li>
+<li><code>HX-Retarget</code> - a CSS selector that updates the target of the content update to a different element on the page</li>
+<li><code>HX-Reselect</code> - a CSS selector that allows you to choose which part of the response is used to be swapped in. Overrides an existing <a href="https://htmx.org/attributes/hx-select/"><code>hx-select</code></a> on the triggering element</li>
+<li><a href="https://htmx.org/headers/hx-trigger/"><code>HX-Trigger</code></a> - allows you to trigger client-side events</li>
+<li><a href="https://htmx.org/headers/hx-trigger/"><code>HX-Trigger-After-Settle</code></a> - allows you to trigger client-side events after the settle step</li>
+<li><a href="https://htmx.org/headers/hx-trigger/"><code>HX-Trigger-After-Swap</code></a> - allows you to trigger client-side events after the swap step</li>
+</ul>
+<p>For more on the <code>HX-Trigger</code> headers, see <a href="https://htmx.org/headers/hx-trigger/"><code>HX-Trigger</code> Response Headers</a>.</p>
+<p>Submitting a form via htmx has the benefit of no longer needing the <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Post/Redirect/Get">Post/Redirect/Get Pattern</a>.
+After successfully processing a POST request on the server, you don&rsquo;t need to return a <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/HTTP_302">HTTP 302 (Redirect)</a>. You can directly return the new HTML fragment.</p>
+<h3 id="request-operations"><a class="zola-anchor" href="#request-operations" aria-label="Anchor link for: request-operations">#</a>Request Order of Operations</h3>
+<p>The order of operations in a htmx request are:</p>
+<ul>
+<li>The element is triggered and begins a request
+<ul>
+<li>Values are gathered for the request</li>
+<li>The <code>htmx-request</code> class is applied to the appropriate elements</li>
+<li>The request is then issued asynchronously via AJAX
+<ul>
+<li>Upon getting a response the target element is marked with the <code>htmx-swapping</code> class</li>
+<li>An optional swap delay is applied (see the <a href="https://htmx.org/attributes/hx-swap/">hx-swap</a> attribute)</li>
+<li>The actual content swap is done
+<ul>
+<li>the <code>htmx-swapping</code> class is removed from the target</li>
+<li>the <code>htmx-added</code> class is added to each new piece of content</li>
+<li>the <code>htmx-settling</code> class is applied to the target</li>
+<li>A settle delay is done (default: 20ms)</li>
+<li>The DOM is settled</li>
+<li>the <code>htmx-settling</code> class is removed from the target</li>
+<li>the <code>htmx-added</code> class is removed from each new piece of content</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>You can use the <code>htmx-swapping</code> and <code>htmx-settling</code> classes to create
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions">CSS transitions</a> between pages.</p>
+<h2 id="validation"><a class="zola-anchor" href="#validation" aria-label="Anchor link for: validation">#</a>Validation</h2>
+<p>Htmx integrates with the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation">HTML5 Validation API</a>
+and will not issue a request for a form if a validatable input is invalid.  This is true for both AJAX requests as well as
+WebSocket sends.</p>
+<p>Htmx fires events around validation that can be used to hook in custom validation and error handling:</p>
+<ul>
+<li><code>htmx:validation:validate</code> - called before an element&rsquo;s <code>checkValidity()</code> method is called.  May be used to add in
+custom validation logic</li>
+<li><code>htmx:validation:failed</code> - called when <code>checkValidity()</code> returns false, indicating an invalid input</li>
+<li><code>htmx:validation:halted</code> - called when a request is not issued due to validation errors.  Specific errors may be found
+in the <code>event.detail.errors</code> object</li>
+</ul>
+<p>Non-form elements do not validate before they make requests by default, but you can enable validation by setting
+the <a href="https://htmx.org/attributes/hx-validate/"><code>hx-validate</code></a> attribute to &ldquo;true&rdquo;.</p>
+<h3 id="validation-example"><a class="zola-anchor" href="#validation-example" aria-label="Anchor link for: validation-example">#</a>Validation Example</h3>
+<p>Here is an example of an input that uses the <a href="attributes/hx-on"><code>hx-on</code></a> attribute to catch the 
+<code>htmx:validation:validate</code> event and require that the input have the value <code>foo</code>:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;example-form&#34; </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/test&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;example&#34;
+</span><span>           </span><span style="color:#d19a66;">onkeyup</span><span>=</span><span style="color:#98c379;">&#34;</span><span style="color:#e06c75;">this</span><span>.</span><span style="color:#e06c75;">setCustomValidity</span><span>(</span><span style="color:#98c379;">&#39;&#39;</span><span>) </span><span style="font-style:italic;color:#848da1;">// reset the validation on keyup</span><span style="color:#98c379;">&#34;
+</span><span>           </span><span style="color:#d19a66;">hx-on:htmx:validation:validate</span><span>=</span><span style="color:#98c379;">&#34;if(this.value != &#39;foo&#39;) {
+</span><span style="color:#98c379;">                    this.setCustomValidity(&#39;Please enter the value foo&#39;) // set the validation error
+</span><span style="color:#98c379;">                    htmx.find(&#39;#foo-form&#39;).reportValidity()              // report the issue
+</span><span style="color:#98c379;">                }&#34;</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<p>Note that all client side validations must be re-done on the server side, as they can always be bypassed.</p>
+<h2 id="animations"><a class="zola-anchor" href="#animations" aria-label="Anchor link for: animations">#</a>Animations</h2>
+<p>Htmx allows you to use <a href="https://htmx.org/docs/#css_transitions">CSS transitions</a>
+in many situations using only HTML and CSS.</p>
+<p>Please see the <a href="https://htmx.org/examples/animations/">Animation Guide</a> for more details on the options available.</p>
+<h2 id="extensions"><a class="zola-anchor" href="#extensions" aria-label="Anchor link for: extensions">#</a>Extensions</h2>
+<p>Htmx has an extension mechanism that allows you to customize the libraries&rsquo; behavior.
+Extensions <a href="https://htmx.org/extensions/#defining">are defined in javascript</a> and then used via
+the <a href="https://htmx.org/attributes/hx-ext/"><code>hx-ext</code></a> attribute:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;debug&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34;</span><span>&gt;This button used the debug extension&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;ignore:debug&#34;</span><span>&gt;This button does not&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>If you are interested in adding your own extension to htmx, please <a href="https://htmx.org/extensions/">see the extension docs</a></p>
+<h3 id="included-extensions"><a class="zola-anchor" href="#included-extensions" aria-label="Anchor link for: included-extensions">#</a>Included Extensions</h3>
+<p>Htmx includes some extensions that are tested against the htmx code base.  Here are a few:</p>
+<table><thead><tr><th>Extension</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/extensions/json-enc/"><code>json-enc</code></a></td><td>use JSON encoding in the body of requests, rather than the default <code>x-www-form-urlencoded</code></td></tr>
+<tr><td><a href="https://htmx.org/extensions/morphdom-swap/"><code>morphdom-swap</code></a></td><td>an extension for using the <a rel="noopener" target="_blank" href="https://github.com/patrick-steele-idem/morphdom">morphdom</a> library as the swapping mechanism in htmx.</td></tr>
+<tr><td><a href="https://htmx.org/extensions/alpine-morph/"><code>alpine-morph</code></a></td><td>an extension for using the <a rel="noopener" target="_blank" href="https://alpinejs.dev/plugins/morph">Alpine.js morph</a> plugin as the swapping mechanism in htmx.</td></tr>
+<tr><td><a href="https://htmx.org/extensions/client-side-templates/"><code>client-side-templates</code></a></td><td>support for client side template processing of JSON responses</td></tr>
+<tr><td><a href="https://htmx.org/extensions/path-deps/"><code>path-deps</code></a></td><td>an extension for expressing path-based dependencies <a rel="noopener" target="_blank" href="http://intercoolerjs.org/docs.html#dependencies">similar to intercoolerjs</a></td></tr>
+<tr><td><a href="https://htmx.org/extensions/class-tools/"><code>class-tools</code></a></td><td>an extension for manipulating timed addition and removal of classes on HTML elements</td></tr>
+<tr><td><a href="https://htmx.org/extensions/multi-swap/"><code>multi-swap</code></a></td><td>allows to swap multiple elements with different swap methods</td></tr>
+<tr><td><a href="https://htmx.org/extensions/response-targets/"><code>response-targets</code></a></td><td>allows to swap elements for responses with HTTP codes beyond <code>200</code></td></tr>
+</tbody></table>
+<p>See the <a href="https://htmx.org/extensions/#included">extensions page</a> for a complete list.</p>
+<h2 id="events"><a class="zola-anchor" href="#events" aria-label="Anchor link for: events">#</a>Events &amp; Logging</h2>
+<p>Htmx has an extensive <a href="https://htmx.org/reference/#events">events mechanism</a>, which doubles as the logging system.</p>
+<p>If you want to register for a given htmx event you can use</p>
+<pre data-lang="js" style="background-color:#1f2329;color:#abb2bf;" class="language-js "><code class="language-js" data-lang="js"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:load&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+</span><span>    </span><span style="color:#e06c75;">myJavascriptLib</span><span>.</span><span style="color:#61afef;">init</span><span>(</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">elt</span><span>);
+</span><span>});
+</span></code></pre>
+<p>or, if you would prefer, you can use the following htmx helper:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#61afef;">on</span><span>(</span><span style="color:#98c379;">&#34;htmx:load&#34;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+</span><span>    </span><span style="color:#e06c75;">myJavascriptLib</span><span>.</span><span style="color:#61afef;">init</span><span>(</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">elt</span><span>);
+</span><span>});
+</span></code></pre>
+<p>The <code>htmx:load</code> event is fired every time an element is loaded into the DOM by htmx, and is effectively the equivalent
+to the normal <code>load</code> event.</p>
+<p>Some common uses for htmx events are:</p>
+<h3 id="init_3rd_party_with_events"><a class="zola-anchor" href="#init_3rd_party_with_events" aria-label="Anchor link for: init_3rd_party_with_events">#</a>Initialize A 3rd Party Library With Events</h3>
+<p>Using the <code>htmx:load</code> event to initialize content is so common that htmx provides a helper function:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#56b6c2;">onLoad</span><span>(</span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">target</span><span>) {
+</span><span>    </span><span style="color:#e06c75;">myJavascriptLib</span><span>.</span><span style="color:#61afef;">init</span><span>(</span><span style="color:#e06c75;">target</span><span>);
+</span><span>});
+</span></code></pre>
+<p>This does the same thing as the first example, but is a little cleaner.</p>
+<h3 id="config_request_with_events"><a class="zola-anchor" href="#config_request_with_events" aria-label="Anchor link for: config_request_with_events">#</a>Configure a Request With Events</h3>
+<p>You can handle the <a href="https://htmx.org/events/#htmx:configRequest"><code>htmx:configRequest</code></a> event in order to modify an AJAX request before it is issued:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:configRequest&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+</span><span>    </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">parameters</span><span>[</span><span style="color:#98c379;">&#39;auth_token&#39;</span><span>] = </span><span style="color:#61afef;">getAuthToken</span><span>(); </span><span style="font-style:italic;color:#848da1;">// add a new parameter into the request
+</span><span>    </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.headers[</span><span style="color:#98c379;">&#39;Authentication-Token&#39;</span><span>] = </span><span style="color:#61afef;">getAuthToken</span><span>(); </span><span style="font-style:italic;color:#848da1;">// add a new header into the request
+</span><span>});
+</span></code></pre>
+<p>Here we add a parameter and header to the request before it is sent.</p>
+<h3 id="modifying_swapping_behavior_with_events"><a class="zola-anchor" href="#modifying_swapping_behavior_with_events" aria-label="Anchor link for: modifying_swapping_behavior_with_events">#</a>Modifying Swapping Behavior With Events</h3>
+<p>You can handle the <a href="https://htmx.org/events/#htmx:beforeSwap"><code>htmx:beforeSwap</code></a> event in order to modify the swap behavior of htmx:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:beforeSwap&#39;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+</span><span>    </span><span style="color:#c678dd;">if</span><span>(</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">xhr</span><span>.status === </span><span style="color:#d19a66;">404</span><span>){
+</span><span>        </span><span style="font-style:italic;color:#848da1;">// alert the user when a 404 occurs (maybe use a nicer mechanism than alert())
+</span><span>        </span><span style="color:#61afef;">alert</span><span>(</span><span style="color:#98c379;">&#34;Error: Could Not Find Resource&#34;</span><span>);
+</span><span>    } </span><span style="color:#c678dd;">else if</span><span>(</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">xhr</span><span>.status === </span><span style="color:#d19a66;">422</span><span>){
+</span><span>        </span><span style="font-style:italic;color:#848da1;">// allow 422 responses to swap as we are using this as a signal that
+</span><span>        </span><span style="font-style:italic;color:#848da1;">// a form was submitted with bad data and want to rerender with the
+</span><span>        </span><span style="font-style:italic;color:#848da1;">// errors
+</span><span>        </span><span style="font-style:italic;color:#848da1;">//
+</span><span>        </span><span style="font-style:italic;color:#848da1;">// set isError to false to avoid error logging in console
+</span><span>        </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">shouldSwap </span><span>= </span><span style="color:#d19a66;">true</span><span>;
+</span><span>        </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">isError </span><span>= </span><span style="color:#d19a66;">false</span><span>;
+</span><span>    } </span><span style="color:#c678dd;">else if</span><span>(</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">xhr</span><span>.status === </span><span style="color:#d19a66;">418</span><span>){
+</span><span>        </span><span style="font-style:italic;color:#848da1;">// if the response code 418 (I&#39;m a teapot) is returned, retarget the
+</span><span>        </span><span style="font-style:italic;color:#848da1;">// content of the response to the element with the id `teapot`
+</span><span>        </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">shouldSwap </span><span>= </span><span style="color:#d19a66;">true</span><span>;
+</span><span>        </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.target = </span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#56b6c2;">find</span><span>(</span><span style="color:#98c379;">&#34;#teapot&#34;</span><span>);
+</span><span>    }
+</span><span>});
+</span></code></pre>
+<p>Here we handle a few <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses">400-level error response codes</a>
+that would normally not do a swap in htmx.</p>
+<h3 id="event_naming"><a class="zola-anchor" href="#event_naming" aria-label="Anchor link for: event_naming">#</a>Event Naming</h3>
+<p>Note that all events are fired with two different names</p>
+<ul>
+<li>Camel Case</li>
+<li>Kebab Case</li>
+</ul>
+<p>So, for example, you can listen for <code>htmx:afterSwap</code> or for <code>htmx:after-swap</code>.  This facilitates interoperability
+with other libraries.  <a rel="noopener" target="_blank" href="https://github.com/alpinejs/alpine/">Alpine.js</a>, for example, requires kebab case.</p>
+<h3 id="logging"><a class="zola-anchor" href="#logging" aria-label="Anchor link for: logging">#</a>Logging</h3>
+<p>If you set a logger at <code>htmx.logger</code>, every event will be logged.  This can be very useful for troubleshooting:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#61afef;">logger </span><span>= </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">elt</span><span>, </span><span style="color:#e06c75;">event</span><span>, </span><span style="color:#e06c75;">data</span><span>) {
+</span><span>    </span><span style="color:#c678dd;">if</span><span>(</span><span style="color:#e5c07b;">console</span><span>) {
+</span><span>        </span><span style="color:#e5c07b;">console</span><span>.</span><span style="color:#56b6c2;">log</span><span>(event, </span><span style="color:#e06c75;">elt</span><span>, </span><span style="color:#e06c75;">data</span><span>);
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h2 id="debugging"><a class="zola-anchor" href="#debugging" aria-label="Anchor link for: debugging">#</a>Debugging</h2>
+<p>Declarative and event driven programming with htmx (or any other declarative language) can be a wonderful and highly productive
+activity, but one disadvantage when compared with imperative approaches is that it can be trickier to debug.</p>
+<p>Figuring out why something <em>isn&rsquo;t</em> happening, for example, can be difficult if you don&rsquo;t know the tricks.</p>
+<p>Well, here are the tricks:</p>
+<p>The first debugging tool you can use is the <code>htmx.logAll()</code> method.  This will log every event that htmx triggers and
+will allow you to see exactly what the library is doing.</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#61afef;">logAll</span><span>();
+</span></code></pre>
+<p>Of course, that won&rsquo;t tell you why htmx <em>isn&rsquo;t</em> doing something.  You might also not know <em>what</em> events a DOM
+element is firing to use as a trigger.  To address this, you can use the
+<a rel="noopener" target="_blank" href="https://developers.google.com/web/updates/2015/05/quickly-monitor-events-from-the-console-panel"><code>monitorEvents()</code></a> method available in the
+browser console:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#61afef;">monitorEvents</span><span>(</span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#56b6c2;">find</span><span>(</span><span style="color:#98c379;">&#34;#theElement&#34;</span><span>));
+</span></code></pre>
+<p>This will spit out all events that are occurring on the element with the id <code>theElement</code> to the console, and allow you
+to see exactly what is going on with it.</p>
+<p>Note that this <em>only</em> works from the console, you cannot embed it in a script tag on your page.</p>
+<p>Finally, push come shove, you might want to just debug <code>htmx.js</code> by loading up the unminimized version.  It&rsquo;s
+about 2500 lines of javascript, so not an insurmountable amount of code.  You would most likely want to set a break
+point in the <code>issueAjaxRequest()</code> and <code>handleAjaxResponse()</code> methods to see what&rsquo;s going on.</p>
+<p>And always feel free to jump on the <a rel="noopener" target="_blank" href="https://htmx.org/discord">Discord</a> if you need help.</p>
+<h3 id="creating-demos"><a class="zola-anchor" href="#creating-demos" aria-label="Anchor link for: creating-demos">#</a>Creating Demos</h3>
+<p>Sometimes, in order to demonstrate a bug or clarify a usage, it is nice to be able to use a javascript snippet
+site like <a rel="noopener" target="_blank" href="https://jsfiddle.net/">jsfiddle</a>.  To facilitate easy demo creation, htmx hosts a demo script
+site that will install:</p>
+<ul>
+<li>htmx</li>
+<li>hyperscript</li>
+<li>a request mocking library</li>
+</ul>
+<p>Simply add the following script tag to your demo/fiddle/whatever:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://demo.htmx.org&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<p>This helper allows you to add mock responses by adding <code>template</code> tags with a <code>url</code> attribute to indicate which URL.
+The response for that url will be the innerHTML of the template, making it easy to construct mock responses. You can
+add a delay to the response with a <code>delay</code> attribute, which should be an integer indicating the number of milliseconds
+to delay</p>
+<p>You may embed simple expressions in the template with the <code>${}</code> syntax.</p>
+<p>Note that this should only be used for demos and is in no way guaranteed to work for long periods of time
+as it will always be grabbing the latest versions htmx and hyperscript!</p>
+<h4 id="demo-example"><a class="zola-anchor" href="#demo-example" aria-label="Anchor link for: demo-example">#</a>Demo Example</h4>
+<p>Here is an example of the code in action:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span style="font-style:italic;color:#848da1;">&lt;!-- load demo environment --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://demo.htmx.org&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>
+</span><span style="font-style:italic;color:#848da1;">&lt;!-- post to /foo --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/foo&#34; </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#result&#34;</span><span>&gt;
+</span><span>    Count Up
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">output </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;result&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">output</span><span>&gt;
+</span><span>
+</span><span style="font-style:italic;color:#848da1;">&lt;!-- respond to /foo with some dynamic content in a template tag --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>    </span><span style="color:#e06c75;">globalInt </span><span>= </span><span style="color:#d19a66;">0</span><span>;
+</span><span>&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">template </span><span style="color:#d19a66;">url</span><span>=</span><span style="color:#98c379;">&#34;/foo&#34; </span><span style="color:#d19a66;">delay</span><span>=</span><span style="color:#98c379;">&#34;500&#34;</span><span>&gt; </span><span style="font-style:italic;color:#848da1;">&lt;!-- note the url and delay attributes --&gt;
+</span><span>    ${globalInt++}
+</span><span>&lt;/</span><span style="color:#e06c75;">template</span><span>&gt;
+</span><span>
+</span></code></pre>
+<h2 id="scripting"><a class="zola-anchor" href="#scripting" aria-label="Anchor link for: scripting">#</a>Scripting</h2>
+<p>While htmx encourages a hypermedia approach to building web applications, it offers many options for client scripting. Scripting is included in the REST-ful description of web architecture, see: <a rel="noopener" target="_blank" href="https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7">Code-On-Demand</a>. As much as is feasible, we recommend a <a href="essays/hypermedia-friendly-scripting">hypermedia-friendly</a> approach to scripting in your web application:</p>
+<ul>
+<li><a href="essays/hypermedia-friendly-scripting#prime_directive">Respect HATEOAS</a></li>
+<li><a href="essays/hypermedia-friendly-scripting#events">Use events to communicate between components</a></li>
+<li><a href="essays/hypermedia-friendly-scripting#islands">Use islands to isolate non-hypermedia components from the rest of your application</a></li>
+<li><a href="essays/hypermedia-friendly-scripting#inline">Consider inline scripting</a></li>
+</ul>
+<p>The primary integration point between htmx and scripting solutions is the <a href="https://htmx.org/docs/#events">events</a> that htmx sends and can
+respond to.  See the SortableJS example in the <a href="https://htmx.org/docs/#3rd-party">3rd Party Javascript</a> section for a good template for
+integrating a JavaScript library with htmx via events.</p>
+<p>Scripting solutions that pair well with htmx include:</p>
+<ul>
+<li><a rel="noopener" target="_blank" href="http://vanilla-js.com/">VanillaJS</a> - Simply using the built-in abilities of JavaScript to hook in event handlers to
+respond to the events htmx emits can work very well for scripting.  This is an extremely lightweight and increasingly
+popular approach.</li>
+<li><a rel="noopener" target="_blank" href="https://alpinejs.dev/">AlpineJS</a> - Alpine.js provides a rich set of tools for creating sophisticated front end scripts,
+including reactive programming support, while still remaining extremely lightweight.  Alpine encourages the &ldquo;inline scripting&rdquo;
+approach that we feel pairs well with htmx.</li>
+<li><a rel="noopener" target="_blank" href="https://jquery.com/">jQuery</a> - Despite its age and reputation in some circles, jQuery pairs very well with htmx, particularly
+in older code-bases that already have a lot of jQuery in them.</li>
+<li><a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript</a> - Hyperscript is an experimental front-end scripting language created by the same
+team that created htmx.  It is designed to embed well in HTML and both respond to and create events, and pairs very well
+with htmx.</li>
+</ul>
+<p>We have an entire chapter entitled <a rel="noopener" target="_blank" href="https://hypermedia.systems/client-side-scripting/">&ldquo;Client-Side Scripting&rdquo;</a> in <a rel="noopener" target="_blank" href="https://hypermedia.systems">our
+book</a> that looks at how scripting can be integrated into your htmx-based application.</p>
+<h3 id="the-hx-on-attributes"><a class="zola-anchor" href="#the-hx-on-attributes" aria-label="Anchor link for: the-hx-on-attributes">#</a><a name="hx-on"></a><a href="https://htmx.org/docs/#hx-on">The <code>hx-on*</code> Attributes</a></h3>
+<p>HTML allows the embedding of inline scripts via the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/Events/Event_handlers#using_onevent_properties"><code>onevent</code> properties</a>,
+such as <code>onClick</code>:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">onclick</span><span>=</span><span style="color:#98c379;">&#34;</span><span style="color:#e06c75;">alert</span><span>(</span><span style="color:#98c379;">&#39;You clicked me!&#39;</span><span>)</span><span style="color:#98c379;">&#34;</span><span>&gt;
+</span><span>    Click Me!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>This feature allows scripting logic to be co-located with the HTML elements the logic applies to, giving good
+<a href="essays/locality-of-behaviour">Locality of Behaviour (LoB)</a>.  Unfortunately, HTML only allows <code>on*</code> attributes for a fixed
+number of <a rel="noopener" target="_blank" href="https://www.w3schools.com/tags/ref_eventattributes.asp">specific DOM events</a> (e.g. <code>onclick</code>) and 
+doesn&rsquo;t provide a generalized mechanism for responding to arbitrary events on elements.</p>
+<p>In order to address this shortcoming, htmx offers <a href="attributes/hx-on"><code>hx-on*</code></a> attributes.  These attributes allow
+you to respond to any event in a manner that preserves the LoB of the standard <code>on*</code> properties.</p>
+<p>If we wanted to respond to the <code>click</code> event using an <code>hx-on</code> attribute, we would write this:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-on:click</span><span>=</span><span style="color:#98c379;">&#34;alert(&#39;You clicked me!&#39;)&#34;</span><span>&gt;
+</span><span>    Click Me!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>So, the string <code>hx-on</code>, followed by a colon (or a dash), then by the name of the event.</p>
+<p>For a <code>click</code> event, of course, we would recommend sticking with the standard <code>onclick</code> attribute.  However, consider an 
+htmx-powered button that wishes to add a parameter to a request using the <code>htmx:config-request</code> event.  This would not 
+be possible using a standard <code>on*</code> property, but it can be done using the <code>hx-on:htmx:config-request</code> attribute:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-on:htmx:config-request</span><span>=</span><span style="color:#98c379;">&#34;event.detail.parameters.example = &#39;Hello Scripting!&#39;&#34;</span><span>&gt;
+</span><span>    Post Me!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>Here the <code>example</code> parameter is added to the <code>POST</code> request before it is issued, with the value &lsquo;Hello Scripting!&rsquo;.</p>
+<p>The <code>hx-on*</code> attributes are a very simple mechanism for generalized embedded scripting.  It is <em>not</em> a replacement for more
+fully developed front-end scripting solutions such as AlpineJS or hyperscript.  It can, however, augment a VanillaJS-based
+approach to scripting in your htmx-powered application.</p>
+<p>Note that HTML attributes are <em>case insensitive</em>.  This means that, unfortunately, events that rely on capitalization/
+camel casing, cannot be responded to.  If you need to support camel case events we recommend using a more fully
+functional scripting solution such as AlpineJS or hyperscript.  htmx dispatches all its events in both camelCase and in
+kebab-case for this very reason.</p>
+<h3 id="3rd-party"><a class="zola-anchor" href="#3rd-party" aria-label="Anchor link for: 3rd-party">#</a>3rd Party Javascript</h3>
+<p>Htmx integrates fairly well with third party libraries.  If the library fires events on the DOM, you can use those events to
+trigger requests from htmx.</p>
+<p>A good example of this is the <a href="https://htmx.org/examples/sortable/">SortableJS demo</a>:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;sortable&#34; </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/items&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;end&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;htmx-indicator&#34;</span><span>&gt;Updating...&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div</span><span>&gt;&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#39;hidden&#39; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#39;item&#39; </span><span style="color:#d19a66;">value</span><span>=</span><span style="color:#98c379;">&#39;1&#39;</span><span>/&gt;Item 1&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div</span><span>&gt;&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#39;hidden&#39; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#39;item&#39; </span><span style="color:#d19a66;">value</span><span>=</span><span style="color:#98c379;">&#39;2&#39;</span><span>/&gt;Item 2&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div</span><span>&gt;&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#39;hidden&#39; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#39;item&#39; </span><span style="color:#d19a66;">value</span><span>=</span><span style="color:#98c379;">&#39;2&#39;</span><span>/&gt;Item 3&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<p>With Sortable, as with most javascript libraries, you need to initialize content at some point.</p>
+<p>In jquery you might do this like so:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#61afef;">$</span><span>(document).</span><span style="color:#61afef;">ready</span><span>(</span><span style="color:#c678dd;">function</span><span>() {
+</span><span>    </span><span style="color:#c678dd;">var </span><span style="color:#e06c75;">sortables </span><span>= document.body.</span><span style="color:#56b6c2;">querySelectorAll</span><span>(</span><span style="color:#98c379;">&#34;.sortable&#34;</span><span>);
+</span><span>    </span><span style="color:#c678dd;">for </span><span>(</span><span style="color:#c678dd;">var </span><span style="color:#e06c75;">i </span><span>= </span><span style="color:#d19a66;">0</span><span>; </span><span style="color:#e06c75;">i </span><span>&lt; </span><span style="color:#e06c75;">sortables</span><span>.length; </span><span style="color:#e06c75;">i</span><span>++) {
+</span><span>        </span><span style="color:#c678dd;">var </span><span style="color:#e06c75;">sortable </span><span>= </span><span style="color:#e06c75;">sortables</span><span>[</span><span style="color:#e06c75;">i</span><span>];
+</span><span>        new Sortable(</span><span style="color:#e06c75;">sortable</span><span>, {
+</span><span>            animation: </span><span style="color:#d19a66;">150</span><span>,
+</span><span>            ghostClass: </span><span style="color:#98c379;">&#39;blue-background-class&#39;
+</span><span>        });
+</span><span>    }
+</span><span>});
+</span></code></pre>
+<p>In htmx, you would instead use the <code>htmx.onLoad</code> function, and you would select only from the newly loaded content,
+rather than the entire document:</p>
+<pre data-lang="js" style="background-color:#1f2329;color:#abb2bf;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#56b6c2;">onLoad</span><span>(</span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">content</span><span>) {
+</span><span>    </span><span style="color:#c678dd;">var </span><span style="color:#e06c75;">sortables </span><span>= </span><span style="color:#e06c75;">content</span><span>.</span><span style="color:#56b6c2;">querySelectorAll</span><span>(</span><span style="color:#98c379;">&#34;.sortable&#34;</span><span>);
+</span><span>    </span><span style="color:#c678dd;">for </span><span>(</span><span style="color:#c678dd;">var </span><span style="color:#e06c75;">i </span><span>= </span><span style="color:#d19a66;">0</span><span>; </span><span style="color:#e06c75;">i </span><span>&lt; </span><span style="color:#e06c75;">sortables</span><span>.length; </span><span style="color:#e06c75;">i</span><span>++) {
+</span><span>        </span><span style="color:#c678dd;">var </span><span style="color:#e06c75;">sortable </span><span>= </span><span style="color:#e06c75;">sortables</span><span>[</span><span style="color:#e06c75;">i</span><span>];
+</span><span>        new Sortable(</span><span style="color:#e06c75;">sortable</span><span>, {
+</span><span>            animation: </span><span style="color:#d19a66;">150</span><span>,
+</span><span>            ghostClass: </span><span style="color:#98c379;">&#39;blue-background-class&#39;
+</span><span>        });
+</span><span>    }
+</span><span>})
+</span></code></pre>
+<p>This will ensure that as new content is added to the DOM by htmx, sortable elements are properly initialized.</p>
+<p>If javascript adds content to the DOM that has htmx attributes on it, you need to make sure that this content
+is initialized with the <code>htmx.process()</code> function.</p>
+<p>For example, if you were to fetch some data and put it into a div using the <code>fetch</code> API, and that HTML had
+htmx attributes in it, you would need to add a call to <code>htmx.process()</code> like this:</p>
+<pre data-lang="js" style="background-color:#1f2329;color:#abb2bf;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#c678dd;">let </span><span style="color:#e06c75;">myDiv </span><span>= document.</span><span style="color:#56b6c2;">getElementById</span><span>(</span><span style="color:#98c379;">&#39;my-div&#39;</span><span>)
+</span><span style="color:#61afef;">fetch</span><span>(</span><span style="color:#98c379;">&#39;http://example.com/movies.json&#39;</span><span>)
+</span><span>    .</span><span style="color:#56b6c2;">then</span><span>(</span><span style="color:#e06c75;">response </span><span style="color:#c678dd;">=&gt; </span><span style="color:#e06c75;">response</span><span>.</span><span style="color:#61afef;">text</span><span>())
+</span><span>    .</span><span style="color:#56b6c2;">then</span><span>(</span><span style="color:#e06c75;">data </span><span style="color:#c678dd;">=&gt; </span><span>{ </span><span style="color:#e06c75;">myDiv</span><span>.</span><span style="color:#e06c75;">innerHTML </span><span>= </span><span style="color:#e06c75;">data</span><span>; </span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#61afef;">process</span><span>(</span><span style="color:#e06c75;">myDiv</span><span>); } );
+</span></code></pre>
+<p>Some 3rd party libraries create content from HTML template elements. For instance, Alpine JS uses the <code>x-if</code>
+attribute on templates to add content conditionally. Such templates are not initially part of the DOM and,
+if they contain htmx attributes, will need a call to <code>htmx.process()</code> after they are loaded. The following
+example uses Alpine&rsquo;s <code>$watch</code> function to look for a change of value that would trigger conditional content:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">x-data</span><span>=</span><span style="color:#98c379;">&#34;{show_new: false}&#34;
+</span><span>    </span><span style="color:#d19a66;">x-init</span><span>=</span><span style="color:#98c379;">&#34;$watch(&#39;show_new&#39;, value =&gt; {
+</span><span style="color:#98c379;">        if (show_new) {
+</span><span style="color:#98c379;">            htmx.process(document.querySelector(&#39;#new_content&#39;))
+</span><span style="color:#98c379;">        }
+</span><span style="color:#98c379;">    })&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">@click </span><span>= </span><span style="color:#98c379;">&#34;show_new = !show_new&#34;</span><span>&gt;Toggle New Content&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">template </span><span style="color:#d19a66;">x-if</span><span>=</span><span style="color:#98c379;">&#34;show_new&#34;</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;new_content&#34;</span><span>&gt;
+</span><span>            &lt;</span><span style="color:#e06c75;">a </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/server/newstuff&#34; </span><span style="color:#d19a66;">href</span><span>=</span><span style="color:#98c379;">&#34;#&#34;</span><span>&gt;New Clickable&lt;/</span><span style="color:#e06c75;">a</span><span>&gt;
+</span><span>        &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">template</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<h2 id="caching"><a class="zola-anchor" href="#caching" aria-label="Anchor link for: caching">#</a>Caching</h2>
+<p>htmx works with standard <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching">HTTP caching</a>
+mechanisms out of the box.</p>
+<p>If your server adds the
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified"><code>Last-Modified</code></a>
+HTTP response header to the response for a given URL, the browser will automatically add the
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since"><code>If-Modified-Since</code></a>
+request HTTP header to the next requests to the same URL. Be mindful that if
+your server can render different content for the same URL depending on some other
+headers, you need to use the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#vary"><code>Vary</code></a>
+response HTTP header. For example, if your server renders the full HTML when the
+<code>HX-Request</code> header is missing or <code>false</code>, and it renders a fragment of that HTML
+when <code>HX-Request: true</code>, you need to add <code>Vary: HX-Request</code>. That causes the cache to be
+keyed based on a composite of the response URL and the <code>HX-Request</code> request header &mdash;
+rather than being based just on the response URL.</p>
+<p>If you are unable (or unwilling) to use the <code>Vary</code> header, you can alternatively set the configuration parameter
+<code>getCacheBusterParam</code> to <code>true</code>.  If this configuration variable is set, htmx will include a cache-busting parameter
+in <code>GET</code> requests that it makes, which will prevent browsers from caching htmx-based and non-htmx based responses
+in the same cache slot.</p>
+<p>htmx also works with <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag"><code>ETag</code></a>
+as expected.  Be mindful that if your server can render different content for the same
+URL (for example, depending on the value of the <code>HX-Request</code> header), the server needs
+to generate a different <code>ETag</code> for each content.</p>
+<h2 id="security"><a class="zola-anchor" href="#security" aria-label="Anchor link for: security">#</a>Security</h2>
+<p>htmx allows you to define logic directly in your DOM.  This has a number of advantages, the largest being 
+<a href="https://htmx.org/essays/locality-of-behaviour/">Locality of Behavior</a>, which makes your system easier to understand and
+maintain.</p>
+<p>A concern with this approach, however, is security: since htmx increases the expressiveness of HTML, if a malicious
+user is able to inject HTML into your application, they can leverage this expressiveness of htmx to malicious
+ends.</p>
+<h3 id="rule-1-escape-all-user-content"><a class="zola-anchor" href="#rule-1-escape-all-user-content" aria-label="Anchor link for: rule-1-escape-all-user-content">#</a>Rule 1: Escape All User Content</h3>
+<p>The first rule of HTML-based web development has always been: <em>do not trust input from the user</em>.  You should escape all 
+3rd party, untrusted content that is injected into your site.  This is to prevent, among other issues, 
+<a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Cross-site_scripting">XSS attacks</a>.</p>
+<p>There is extensive documentation on XSS and how to prevent it on the excellent <a rel="noopener" target="_blank" href="https://owasp.org/www-community/attacks/xss/">OWASP Website</a>,
+including a <a rel="noopener" target="_blank" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a>.</p>
+<p>The good news is that this is a very old and well understood topic, and the vast majority of server-side templating languages
+support <a rel="noopener" target="_blank" href="https://docs.djangoproject.com/en/4.2/ref/templates/language/#automatic-html-escaping">automatic escaping</a> of
+content to prevent just such an issue.</p>
+<p>That being said, there are times people choose to inject HTML more dangerously, often via some sort of <code>raw()</code>
+mechanism in their templating language.  This can be done for good reasons, but if the content being injected is coming
+from a 3rd party then it <em>must</em> be scrubbed, including removing attributes starting with <code>hx-</code> and <code>data-hx</code>, as well as
+inline <code>&lt;script&gt;</code> tags, etc.</p>
+<p>If you are injecting raw HTML and doing your own escaping, a best practice is to <em>whitelist</em> the attributes and tags you 
+allow, rather than to blacklist the ones you disallow. </p>
+<h3 id="htmx-security-tools"><a class="zola-anchor" href="#htmx-security-tools" aria-label="Anchor link for: htmx-security-tools">#</a>htmx Security Tools</h3>
+<p>Of course, bugs happen and developers are not perfect, so it is good to have a layered approach to security for
+your web application, and htmx provides tools to help secure your application as well. </p>
+<p>Let&rsquo;s take a look at them.</p>
+<h4 id="hx-disable"><a class="zola-anchor" href="#hx-disable" aria-label="Anchor link for: hx-disable">#</a><code>hx-disable</code></h4>
+<p>The first tool htmx provides to help further secure your application is the <a href="attributes/hx-disable"><code>hx-disable</code></a> 
+attribute.  This attribute will prevent processing of all htmx attributes on a given element, and on all elements within
+it.  So, for example, if you were including raw HTML content in a template (again, this is not recommended!) then you 
+could place a div around the content with the <code>hx-disable</code> attribute on it:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-disable</span><span>&gt;
+</span><span>    &lt;%= raw(user_content) %&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>And htmx will not process any htmx-related attributes or features found in that content.  This attribute cannot be
+disabled by injecting further content: if an <code>hx-disable</code> attribute is found anywhere in the parent hierarchy of an
+element, it will not be processed by htmx.</p>
+<h4 id="hx-history"><a class="zola-anchor" href="#hx-history" aria-label="Anchor link for: hx-history">#</a><code>hx-history</code></h4>
+<p>Another security consideration is htmx history cache.  You may have pages that have sensitive data that you do not
+want stored in the users <code>localStorage</code> cache.  You can omit a given page from the history cache by including the 
+<a href="attributes/hx-history"><code>hx-history</code></a> attribute anywhere on the page, and setting its value to <code>false</code>.</p>
+<h4 id="configuration-options"><a class="zola-anchor" href="#configuration-options" aria-label="Anchor link for: configuration-options">#</a>Configuration Options</h4>
+<p>htmx also provides configuration options related to security:</p>
+<ul>
+<li><code>htmx.config.selfRequestsOnly</code> - if set to <code>true</code>, only requests to the same domain as the current document will be allowed</li>
+<li><code>htmx.config.allowScriptTags</code> - htmx will process <code>&lt;script&gt;</code> tags found in new content it loads.  If you wish to disable 
+this behavior you can set this configuration variable to <code>false</code></li>
+<li><code>htmx.config.historyCacheSize</code> - can be set to <code>0</code> to avoid storing any HTML in the <code>localStorage</code> cache</li>
+<li><code>htmx.config.allowEval</code> - can be set to <code>false</code> to disable all features of htmx that rely on eval:
+<ul>
+<li>event filters</li>
+<li><code>hx-on:</code> attributes</li>
+<li><code>hx-vals</code> with the <code>js:</code> prefix</li>
+<li><code>hx-headers</code> with the <code>js:</code> prefix</li>
+</ul>
+</li>
+</ul>
+<p>Note that all features removed by disabling <code>eval()</code> can be reimplemented using your own custom javascript and the
+htmx event model.</p>
+<h4 id="events-1"><a class="zola-anchor" href="#events-1" aria-label="Anchor link for: events-1">#</a>Events</h4>
+<p>If you want to allow requests to some domains beyond the current host, but not leave things totally open, you can
+use the <code>htmx:validateUrl</code> event.  This event will have the request URL available in the <code>detail.url</code> slot, as well
+as a <code>sameHost</code> property.</p>
+<p>You can inspect these values and, if the request is not valid, invoke <code>preventDefault()</code> on the event to prevent the
+request from being issued.</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:validateUrl&#39;</span><span>, </span><span style="color:#c678dd;">function </span><span>(</span><span style="color:#e06c75;">evt</span><span>) {
+</span><span>  </span><span style="font-style:italic;color:#848da1;">// only allow requests to the current server as well as myserver.com
+</span><span>  </span><span style="color:#c678dd;">if </span><span>(!</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">sameHost </span><span>&amp;&amp; </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">url</span><span>.hostname !== </span><span style="color:#98c379;">&#34;myserver.com&#34;</span><span>) {
+</span><span>    </span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#56b6c2;">preventDefault</span><span>();
+</span><span>  }
+</span><span>});
+</span></code></pre>
+<h3 id="csp-options"><a class="zola-anchor" href="#csp-options" aria-label="Anchor link for: csp-options">#</a>CSP Options</h3>
+<p>Browsers also provide tools for further securing your web application.  The most powerful tool available is a 
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy</a>.  Using a CSP you can tell the
+browser to, for example, not issue requests to non-origin hosts, to not evaluate inline script tags, etc.</p>
+<p>Here is an example CSP in a <code>meta</code> tag:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>    &lt;</span><span style="color:#e06c75;">meta </span><span style="color:#d19a66;">http-equiv</span><span>=</span><span style="color:#98c379;">&#34;Content-Security-Policy&#34; </span><span style="color:#d19a66;">content</span><span>=</span><span style="color:#98c379;">&#34;default-src &#39;self&#39;;&#34;</span><span>&gt;
+</span></code></pre>
+<p>This tells the browser &ldquo;Only allow connections to the original (source) domain&rdquo;.  This would be redundant with the
+<code>htmx.config.selfRequestsOnly</code>, but a layered approach to security is warranted and, in fact, ideal, when dealing
+with application security.</p>
+<p>A full discussion of CSPs is beyond the scope of this document, but the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">MDN Article</a> provide a good jumping off point
+for exploring this topic.</p>
+<h2 id="config"><a class="zola-anchor" href="#config" aria-label="Anchor link for: config">#</a>Configuring htmx</h2>
+<p>Htmx has some configuration options that can be accessed either programmatically or declaratively.  They are
+listed below:</p>
+<div class="info-table">
+<table><thead><tr><th>Config Variable</th><th>Info</th></tr></thead><tbody>
+<tr><td><code>htmx.config.historyEnabled</code></td><td>defaults to <code>true</code>, really only useful for testing</td></tr>
+<tr><td><code>htmx.config.historyCacheSize</code></td><td>defaults to 10</td></tr>
+<tr><td><code>htmx.config.refreshOnHistoryMiss</code></td><td>defaults to <code>false</code>, if set to <code>true</code> htmx will issue a full page refresh on history misses rather than use an AJAX request</td></tr>
+<tr><td><code>htmx.config.defaultSwapStyle</code></td><td>defaults to <code>innerHTML</code></td></tr>
+<tr><td><code>htmx.config.defaultSwapDelay</code></td><td>defaults to 0</td></tr>
+<tr><td><code>htmx.config.defaultSettleDelay</code></td><td>defaults to 20</td></tr>
+<tr><td><code>htmx.config.includeIndicatorStyles</code></td><td>defaults to <code>true</code> (determines if the indicator styles are loaded)</td></tr>
+<tr><td><code>htmx.config.indicatorClass</code></td><td>defaults to <code>htmx-indicator</code></td></tr>
+<tr><td><code>htmx.config.requestClass</code></td><td>defaults to <code>htmx-request</code></td></tr>
+<tr><td><code>htmx.config.addedClass</code></td><td>defaults to <code>htmx-added</code></td></tr>
+<tr><td><code>htmx.config.settlingClass</code></td><td>defaults to <code>htmx-settling</code></td></tr>
+<tr><td><code>htmx.config.swappingClass</code></td><td>defaults to <code>htmx-swapping</code></td></tr>
+<tr><td><code>htmx.config.allowEval</code></td><td>defaults to <code>true</code>, can be used to disable htmx&rsquo;s use of eval for certain features (e.g. trigger filters)</td></tr>
+<tr><td><code>htmx.config.allowScriptTags</code></td><td>defaults to <code>true</code>, determines if htmx will process script tags found in new content</td></tr>
+<tr><td><code>htmx.config.inlineScriptNonce</code></td><td>defaults to <code>&#39;&#39;</code>, meaning that no nonce will be added to inline scripts</td></tr>
+<tr><td><code>htmx.config.attributesToSettle</code></td><td>defaults to <code>[&#34;class&#34;, &#34;style&#34;, &#34;width&#34;, &#34;height&#34;]</code>, the attributes to settle during the settling phase</td></tr>
+<tr><td><code>htmx.config.useTemplateFragments</code></td><td>defaults to <code>false</code>, HTML template tags for parsing content from the server (not IE11 compatible!)</td></tr>
+<tr><td><code>htmx.config.wsReconnectDelay</code></td><td>defaults to <code>full-jitter</code></td></tr>
+<tr><td><code>htmx.config.wsBinaryType</code></td><td>defaults to <code>blob</code>, the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/docs/Web/API/WebSocket/binaryType">the type of binary data</a> being received over the WebSocket connection</td></tr>
+<tr><td><code>htmx.config.disableSelector</code></td><td>defaults to <code>[hx-disable], [data-hx-disable]</code>, htmx will not process elements with this attribute on it or a parent</td></tr>
+<tr><td><code>htmx.config.withCredentials</code></td><td>defaults to <code>false</code>, allow cross-site Access-Control requests using credentials such as cookies, authorization headers or TLS client certificates</td></tr>
+<tr><td><code>htmx.config.timeout</code></td><td>defaults to 0, the number of milliseconds a request can take before automatically being terminated</td></tr>
+<tr><td><code>htmx.config.scrollBehavior</code></td><td>defaults to &lsquo;smooth&rsquo;, the behavior for a boosted link on page transitions. The allowed values are <code>auto</code> and <code>smooth</code>. Smooth will smoothscroll to the top of the page while auto will behave like a vanilla link.</td></tr>
+<tr><td><code>htmx.config.defaultFocusScroll</code></td><td>if the focused element should be scrolled into view, defaults to false and can be overridden using the <a href="https://htmx.org/attributes/hx-swap/#focus-scroll">focus-scroll</a> swap modifier.</td></tr>
+<tr><td><code>htmx.config.getCacheBusterParam</code></td><td>defaults to false, if set to true htmx will append the target element to the <code>GET</code> request in the format <code>org.htmx.cache-buster=targetElementId</code></td></tr>
+<tr><td><code>htmx.config.globalViewTransitions</code></td><td>if set to <code>true</code>, htmx will use the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API">View Transition</a> API when swapping in new content.</td></tr>
+<tr><td><code>htmx.config.methodsThatUseUrlParams</code></td><td>defaults to <code>[&#34;get&#34;]</code>, htmx will format requests with these methods by encoding their parameters in the URL, not the request body</td></tr>
+<tr><td><code>htmx.config.selfRequestsOnly</code></td><td>defaults to <code>false</code>, if set to <code>true</code> will only allow AJAX requests to the same domain as the current document</td></tr>
+<tr><td><code>htmx.config.ignoreTitle</code></td><td>defaults to <code>false</code>, if set to <code>true</code> htmx will not update the title of the document when a <code>title</code> tag is found in new content</td></tr>
+<tr><td><code>htmx.config.scrollIntoViewOnBoost</code></td><td>defaults to <code>true</code>, whether or not the target of a boosted element is scrolled into the viewport. If <code>hx-target</code> is omitted on a boosted element, the target defaults to <code>body</code>, causing the page to scroll to the top.</td></tr>
+<tr><td><code>htmx.config.triggerSpecsCache</code></td><td>defaults to <code>null</code>, the cache to store evaluated trigger specifications into, improving parsing performance at the cost of more memory usage. You may define a simple object to use a never-clearing cache, or implement your own system using a <a rel="noopener" target="_blank" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy">proxy object</a></td></tr>
+</tbody></table>
+</div>
+<p>You can set them directly in javascript, or you can use a <code>meta</code> tag:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">meta </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;htmx-config&#34; </span><span style="color:#d19a66;">content</span><span>=</span><span style="color:#98c379;">&#39;{&#34;defaultSwapStyle&#34;:&#34;outerHTML&#34;}&#39;</span><span>&gt;
+</span></code></pre>
+<h2 id="conclusion"><a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">#</a>Conclusion</h2>
+<p>And that&rsquo;s it!</p>
+<p>Have fun with htmx! You can accomplish <a href="https://htmx.org/examples/">quite a bit</a> without writing a lot of code!</p>
+</div>
+</div>
+
+</div>
+
+<footer>
+    <div class="c content wide-content">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

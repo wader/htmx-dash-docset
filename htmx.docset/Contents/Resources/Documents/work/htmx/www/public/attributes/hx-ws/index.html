@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ hx-ws Attribute</title>
+    <link rel="canonical" href="https://htmx.org/attributes/hx-ws/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1><a class="dashingAutolink" name="autolink-40"></a><a class="dashAnchor" name="//apple_ref/cpp/Attribute/hx-ws"></a><code>hx-ws</code></h1>
+  <p><em>Note: This attribute will be migrated to an extension in htmx 2.0, which is available now.  Please visit the 
+<a href="https://htmx.org/extensions/web-sockets/">WebSockets extension page</a> to learn about the new implementation of Web Sockets as an extension.</em></p>
+<p>The <code>hx-ws</code> allows you to work with <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications">Web Sockets</a>
+directly from HTML.  The value of the attribute can be one or more of the following, separated by commas:</p>
+<ul>
+<li><code>connect:&lt;url&gt;</code> or <code>connect:&lt;prefix&gt;:&lt;url&gt;</code> - A URL to establish an <code>WebSocket</code> connection against.</li>
+<li>Prefixes <code>ws</code> or <code>wss</code> can optionally be specified. If not specified, HTMX defaults to add the location&rsquo;s scheme-type, host and port to have browsers send cookies via websockets.</li>
+<li><code>send</code> - Sends a message to the nearest websocket based on the trigger value for the element (either the natural event
+or the event specified by [<code>hx-trigger</code>])</li>
+</ul>
+<p>Here is an example:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-ws</span><span>=</span><span style="color:#98c379;">&#34;connect:/chatroom&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;chat_room&#34;</span><span>&gt;
+</span><span>      ...
+</span><span>    &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">hx-ws</span><span>=</span><span style="color:#98c379;">&#34;send&#34;</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;chat_message&#34;</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span><span>  &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>This example establishes a WebSocket to the <code>chatroom</code> end point.  Content that is sent down from the websocket will
+be parsed as HTML and swapped in by the <code>id</code> property, using the same logic as <a href="https://htmx.org/attributes/hx-swap-oob/">Out of Band Swaps</a>.</p>
+<p>The form uses the <code>send</code> syntax to indicate that when it is submitted, the form values should be serialized as JSON
+and send to the nearest enclosing <code>WebSocket</code>.</p>
+<p>The serialized values will include a field, <code>HEADERS</code>, that includes the headers normally submitted with an htmx
+request.</p>
+<p>After an unexpected connection loss due to <code>Abnormal Closure</code>, <code>Service Restart</code> or <code>Try Again Later</code>,
+reconnecting is tried until successful.
+The default reconnection interval is implemented with the full-jitter exponential-backoff algorithm.
+Own implementations can be provided by setting <code>htmx.config.wsReconnectDelay</code> to a function with
+<code>retryCount</code> as its only parameter.</p>
+<h3 id="test-web-sockets-server">Test Web Sockets Server</h3>
+<p>Htmx includes a WebSockets test server with many more examples of how to use Server Sent Events.  Download the htmx source code from GitHub and navigate to /test/ws-sse to experiment.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><code>hx-ws</code> is not inherited</li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

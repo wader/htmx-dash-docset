@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  
+<title>&lt;/&gt; htmx ~ Examples ~ Custom Modal Dialogs</title>
+    <link rel="canonical" href="https://htmx.org/examples/modal-custom/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation"> <!-- don't boost on demo pages, sinon hijacks everything :/ -->
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  
+    
+  
+  <h1>Custom Modal Dialogs</h1>
+  <script src="https://unpkg.com/sinon@9.0.2/pkg/sinon.js"></script>
+  <script src="js/demo.js"></script>
+  <p>While htmx works great with dialogs built into CSS frameworks (like <a href="https://htmx.org/examples/modal-bootstrap/">Bootstrap</a> and <a href="https://htmx.org/examples/modal-uikit/">UIKit</a>), htmx also makes 
+it easy to build modal dialogs from scratch.  Here is a quick example of one way to build them.</p>
+<p>Click here to see a demo of the final result:</p>
+<p><button hx-get="/modal" hx-target="body" hx-swap="beforeend">Open a Modal</button></p>
+<a class="dashingAutolink" name="autolink-50"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/High%20Level%20Plan"></a><h2 id="high-level-plan"><a class="zola-anchor" href="#high-level-plan" aria-label="Anchor link for: high-level-plan">#</a>High Level Plan</h2>
+<p>We&rsquo;re going to make a button that loads remote content from the server, then displays it in a modal dialog.  The modal 
+content will be added to the end of the <code>&lt;body&gt;</code> element, in a div named <code>#modal</code>.</p>
+<p>In this demo we&rsquo;ll define some nice animations in CSS, and then use some <a rel="noopener" target="_blank" href="https://hyperscript.org">Hyperscript</a> to remove the 
+modals from the DOM when the user is done.  Hyperscript is <em>not</em> required with htmx, but the two were designed to be used
+together and it is much nicer for writing async &amp; event oriented code than JavaScript, which is why we chose it for this
+example.</p>
+<a class="dashingAutolink" name="autolink-51"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Main%20Page%20HTML"></a><h2 id="main-page-html"><a class="zola-anchor" href="#main-page-html" aria-label="Anchor link for: main-page-html">#</a>Main Page HTML</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/modal&#34; </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;body&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;beforeend&#34;</span><span>&gt;Open a Modal&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<a class="dashingAutolink" name="autolink-52"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Modal%20HTML%20Fragment"></a><h2 id="modal-html-fragment"><a class="zola-anchor" href="#modal-html-fragment" aria-label="Anchor link for: modal-html-fragment">#</a>Modal HTML Fragment</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;modal&#34; </span><span style="color:#d19a66;">_</span><span>=</span><span style="color:#98c379;">&#34;on closeModal add .closing then wait for animationend then remove me&#34;</span><span>&gt;
+</span><span>	&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;modal-underlay&#34; </span><span style="color:#d19a66;">_</span><span>=</span><span style="color:#98c379;">&#34;on click trigger closeModal&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>	&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;modal-content&#34;</span><span>&gt;
+</span><span>		&lt;</span><span style="color:#e06c75;">h1</span><span>&gt;Modal Dialog&lt;/</span><span style="color:#e06c75;">h1</span><span>&gt;
+</span><span>		This is the modal content.
+</span><span>		You can put anything here, like text, or a form, or an image.
+</span><span>		&lt;</span><span style="color:#e06c75;">br</span><span>&gt;
+</span><span>		&lt;</span><span style="color:#e06c75;">br</span><span>&gt;
+</span><span>		&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">_</span><span>=</span><span style="color:#98c379;">&#34;on click trigger closeModal&#34;</span><span>&gt;Close&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>	&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<a class="dashingAutolink" name="autolink-53"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Custom%20Stylesheet"></a><h2 id="custom-stylesheet"><a class="zola-anchor" href="#custom-stylesheet" aria-label="Anchor link for: custom-stylesheet">#</a>Custom Stylesheet</h2>
+<pre data-lang="css" style="background-color:#1f2329;color:#abb2bf;" class="language-css "><code class="language-css" data-lang="css"><span style="font-style:italic;color:#848da1;">/***** MODAL DIALOG ****/
+</span><span style="color:#d19a66;">#modal </span><span>{
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Underlay covers entire screen. */
+</span><span>	position: fixed;
+</span><span>	top:</span><span style="color:#d19a66;">0px</span><span>;
+</span><span>	bottom: </span><span style="color:#d19a66;">0px</span><span>;
+</span><span>	left:</span><span style="color:#d19a66;">0px</span><span>;
+</span><span>	right:</span><span style="color:#d19a66;">0px</span><span>;
+</span><span>	background-color:</span><span style="color:#56b6c2;">rgba</span><span>(</span><span style="color:#d19a66;">0</span><span>,</span><span style="color:#d19a66;">0</span><span>,</span><span style="color:#d19a66;">0</span><span>,</span><span style="color:#d19a66;">0.5</span><span>);
+</span><span>	z-index:</span><span style="color:#d19a66;">1000</span><span>;
+</span><span>
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Flexbox centers the .modal-content vertically and horizontally */
+</span><span>	display:flex;
+</span><span>	flex-direction:column;
+</span><span>	align-items:center;
+</span><span>
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Animate when opening */
+</span><span>	animation-name: fadeIn;
+</span><span>	animation-duration:</span><span style="color:#d19a66;">150ms</span><span>;
+</span><span>	animation-timing-function: ease;
+</span><span>}
+</span><span>
+</span><span style="color:#d19a66;">#modal </span><span style="color:#c678dd;">&gt; </span><span style="color:#d19a66;">.modal-underlay </span><span>{
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* underlay takes up the entire viewport. This is only
+</span><span style="font-style:italic;color:#848da1;">	required if you want to click to dismiss the popup */
+</span><span>	position: absolute;
+</span><span>	z-index: </span><span style="color:#d19a66;">-1</span><span>;
+</span><span>	top:</span><span style="color:#d19a66;">0px</span><span>;
+</span><span>	bottom:</span><span style="color:#d19a66;">0px</span><span>;
+</span><span>	left: </span><span style="color:#d19a66;">0px</span><span>;
+</span><span>	right: </span><span style="color:#d19a66;">0px</span><span>;
+</span><span>}
+</span><span>
+</span><span style="color:#d19a66;">#modal </span><span style="color:#c678dd;">&gt; </span><span style="color:#d19a66;">.modal-content </span><span>{
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Position visible dialog near the top of the window */
+</span><span>	margin-top:</span><span style="color:#d19a66;">10vh</span><span>;
+</span><span>
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Sizing for visible dialog */
+</span><span>	width:</span><span style="color:#d19a66;">80%</span><span>;
+</span><span>	max-width:</span><span style="color:#d19a66;">600px</span><span>;
+</span><span>
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Display properties for visible dialog*/
+</span><span>	border:solid </span><span style="color:#d19a66;">1px </span><span style="color:#56b6c2;">#999</span><span>;
+</span><span>	border-radius:</span><span style="color:#d19a66;">8px</span><span>;
+</span><span>	box-shadow: </span><span style="color:#d19a66;">0px 0px 20px 0px </span><span style="color:#56b6c2;">rgba</span><span>(</span><span style="color:#d19a66;">0</span><span>,</span><span style="color:#d19a66;">0</span><span>,</span><span style="color:#d19a66;">0</span><span>,</span><span style="color:#d19a66;">0.3</span><span>);
+</span><span>	background-color:white;
+</span><span>	padding:</span><span style="color:#d19a66;">20px</span><span>;
+</span><span>
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Animate when opening */
+</span><span>	animation-name:zoomIn;
+</span><span>	animation-duration:</span><span style="color:#d19a66;">150ms</span><span>;
+</span><span>	animation-timing-function: ease;
+</span><span>}
+</span><span>
+</span><span style="color:#d19a66;">#modal.closing </span><span>{
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Animate when closing */
+</span><span>	animation-name: fadeOut;
+</span><span>	animation-duration:</span><span style="color:#d19a66;">150ms</span><span>;
+</span><span>	animation-timing-function: ease;
+</span><span>}
+</span><span>
+</span><span style="color:#d19a66;">#modal.closing </span><span style="color:#c678dd;">&gt; </span><span style="color:#d19a66;">.modal-content </span><span>{
+</span><span>	</span><span style="font-style:italic;color:#848da1;">/* Animate when closing */
+</span><span>	animation-name: zoomOut;
+</span><span>	animation-duration:</span><span style="color:#d19a66;">150ms</span><span>;
+</span><span>	animation-timing-function: ease;
+</span><span>}
+</span><span>
+</span><span style="color:#c678dd;">@keyframes </span><span>fadeIn {
+</span><span>	</span><span style="color:#d19a66;">0% </span><span>{opacity: </span><span style="color:#d19a66;">0</span><span>;}
+</span><span>	</span><span style="color:#d19a66;">100% </span><span>{opacity: </span><span style="color:#d19a66;">1</span><span>;}
+</span><span>} 
+</span><span>
+</span><span style="color:#c678dd;">@keyframes </span><span>fadeOut {
+</span><span>	</span><span style="color:#d19a66;">0% </span><span>{opacity: </span><span style="color:#d19a66;">1</span><span>;}
+</span><span>	</span><span style="color:#d19a66;">100% </span><span>{opacity: </span><span style="color:#d19a66;">0</span><span>;}
+</span><span>} 
+</span><span>
+</span><span style="color:#c678dd;">@keyframes </span><span>zoomIn {
+</span><span>	</span><span style="color:#d19a66;">0% </span><span>{transform: </span><span style="color:#56b6c2;">scale</span><span>(</span><span style="color:#d19a66;">0.9</span><span>);}
+</span><span>	</span><span style="color:#d19a66;">100% </span><span>{transform: </span><span style="color:#56b6c2;">scale</span><span>(</span><span style="color:#d19a66;">1</span><span>);}
+</span><span>} 
+</span><span>
+</span><span style="color:#c678dd;">@keyframes </span><span>zoomOut {
+</span><span>	</span><span style="color:#d19a66;">0% </span><span>{transform: </span><span style="color:#56b6c2;">scale</span><span>(</span><span style="color:#d19a66;">1</span><span>);}
+</span><span>	</span><span style="color:#d19a66;">100% </span><span>{transform: </span><span style="color:#56b6c2;">scale</span><span>(</span><span style="color:#d19a66;">0.9</span><span>);}
+</span><span>} 
+</span></code></pre>
+<script src="https://unpkg.com/htmx.org"></script>
+<script src="https://unpkg.com/hyperscript.org"></script>
+<script type="text/javascript">
+    
+    //=========================================================================
+    // Fake Server Side Code
+    //=========================================================================
+
+    // routes
+    init("/modal", function(request){
+		return `
+		<div id="modal" _="on closeModal add .closing wait for animationend then remove me">
+			<div class="modal-underlay" _="on click trigger closeModal"></div>
+			<div class="modal-content">
+				<h1>Modal Dialog</h1>
+				This is the modal content.
+				You can put anything here, like text, or a form, or an image.
+				<br>
+				<br>
+				<button _="on click trigger closeModal">Close</button>
+			</div>
+		</div>
+		`
+      });
+</script>
+<style>
+/***** MODAL DIALOG ****/
+
+#modal {
+	/* Underlay covers entire screen. */
+	position: fixed;
+	top:0px;
+	bottom: 0px;
+	left:0px;
+	right:0px;
+	background-color:rgba(0,0,0,0.5);
+	z-index:1000;
+
+	/* Flexbox centers the .modal-content vertically and horizontally */
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+
+	/* Animate when opening */
+	animation-name: fadeIn;
+	animation-duration:150ms;
+	animation-timing-function: ease;
+}
+
+#modal > .modal-underlay {
+	/* underlay takes up the entire viewport. This is only
+	required if you want to click to dismiss the popup */
+	position: absolute;
+	z-index: -1;
+	top:0px;
+	bottom:0px;
+	left: 0px;
+	right: 0px;
+}
+
+#modal > .modal-content {
+	/* Position visible dialog near the top of the window */
+	margin-top:10vh;
+
+	/* Sizing for visible dialog */
+	width:80%;
+	max-width:600px;
+
+	/* Display properties for visible dialog*/
+	border:solid 1px #999;
+	border-radius:8px;
+	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+	background-color:white;
+	padding:20px;
+
+	/* Animate when opening */
+	animation-name:zoomIn;
+	animation-duration:150ms;
+	animation-timing-function: ease;
+}
+
+#modal.closing {
+	/* Animate when closing */
+	animation-name: fadeOut;
+	animation-duration:150ms;
+	animation-timing-function: ease;
+}
+
+#modal.closing > .modal-content {
+	/* Animate when closing */
+	animation-name: zoomOut;
+	animation-duration:150ms;
+	animation-timing-function: ease;
+}
+
+@keyframes fadeIn {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+} 
+
+@keyframes fadeOut {
+	0% {opacity: 1;}
+	100% {opacity: 0;}
+} 
+
+@keyframes zoomIn {
+	0% {transform: scale(0.9);}
+	100% {transform: scale(1);}
+} 
+
+@keyframes zoomOut {
+	0% {transform: scale(1);}
+	100% {transform: scale(0.9);}
+}
+</style>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

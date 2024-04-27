@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ Examples</title>
+    <link rel="canonical" href="https://htmx.org/examples/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>Examples</h1>
+  <a class="dashingAutolink" name="autolink-47"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Server-side%20Integration%20Examples"></a><h2 id="server-side-integration-examples"><a class="zola-anchor" href="#server-side-integration-examples" aria-label="Anchor link for: server-side-integration-examples">#</a>Server-side Integration Examples</h2>
+<p>A list of <a href="https://htmx.org/server-examples/">GitHub repositories showing examples of integration</a> with a wide variety of
+server-side languages and platforms, including JavaScript, Python, Java, and many others.</p>
+<a class="dashingAutolink" name="autolink-48"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/UI%20Examples"></a><h2 id="ui-examples"><a class="zola-anchor" href="#ui-examples" aria-label="Anchor link for: ui-examples">#</a>UI Examples</h2>
+<p>Below are a set of UX patterns implemented in htmx with minimal HTML and styling.</p>
+<p>You can copy and paste them and then adjust them for your needs.</p>
+<table><thead><tr><th>Pattern</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://htmx.org/examples/click-to-edit/">Click To Edit</a></td><td>Demonstrates inline editing of a data object</td></tr>
+<tr><td><a href="https://htmx.org/examples/bulk-update/">Bulk Update</a></td><td>Demonstrates bulk updating of multiple rows of data</td></tr>
+<tr><td><a href="https://htmx.org/examples/click-to-load/">Click To Load</a></td><td>Demonstrates clicking to load more rows in a table</td></tr>
+<tr><td><a href="https://htmx.org/examples/delete-row/">Delete Row</a></td><td>Demonstrates row deletion in a table</td></tr>
+<tr><td><a href="https://htmx.org/examples/edit-row/">Edit Row</a></td><td>Demonstrates how to edit rows in a table</td></tr>
+<tr><td><a href="https://htmx.org/examples/lazy-load/">Lazy Loading</a></td><td>Demonstrates how to lazy load content</td></tr>
+<tr><td><a href="https://htmx.org/examples/inline-validation/">Inline Validation</a></td><td>Demonstrates how to do inline field validation</td></tr>
+<tr><td><a href="https://htmx.org/examples/infinite-scroll/">Infinite Scroll</a></td><td>Demonstrates infinite scrolling of a page</td></tr>
+<tr><td><a href="https://htmx.org/examples/active-search/">Active Search</a></td><td>Demonstrates the active search box pattern</td></tr>
+<tr><td><a href="https://htmx.org/examples/progress-bar/">Progress Bar</a></td><td>Demonstrates a job-runner like progress bar</td></tr>
+<tr><td><a href="https://htmx.org/examples/value-select/">Value Select</a></td><td>Demonstrates making the values of a select dependent on another select</td></tr>
+<tr><td><a href="https://htmx.org/examples/animations/">Animations</a></td><td>Demonstrates various animation techniques</td></tr>
+<tr><td><a href="https://htmx.org/examples/file-upload/">File Upload</a></td><td>Demonstrates how to upload a file via ajax with a progress bar</td></tr>
+<tr><td><a href="https://htmx.org/examples/file-upload-input/">Preserving File Inputs after Form Errors</a></td><td>Demonstrates how to preserve file inputs after form errors</td></tr>
+<tr><td><a href="https://htmx.org/examples/dialogs/">Dialogs - Browser</a></td><td>Demonstrates the prompt and confirm dialogs</td></tr>
+<tr><td><a href="https://htmx.org/examples/modal-uikit/">Dialogs - UIKit</a></td><td>Demonstrates modal dialogs using UIKit</td></tr>
+<tr><td><a href="https://htmx.org/examples/modal-bootstrap/">Dialogs - Bootstrap</a></td><td>Demonstrates modal dialogs using Bootstrap</td></tr>
+<tr><td><a href="https://htmx.org/examples/modal-custom/">Dialogs - Custom</a></td><td>Demonstrates modal dialogs from scratch</td></tr>
+<tr><td><a href="https://htmx.org/examples/tabs-hateoas/">Tabs (Using HATEOAS)</a></td><td>Demonstrates how to display and select tabs using HATEOAS principles</td></tr>
+<tr><td><a href="https://htmx.org/examples/tabs-javascript/">Tabs (Using JavaScript)</a></td><td>Demonstrates how to display and select tabs using JavaScript</td></tr>
+<tr><td><a href="https://htmx.org/examples/keyboard-shortcuts/">Keyboard Shortcuts</a></td><td>Demonstrates how to create keyboard shortcuts for htmx enabled elements</td></tr>
+<tr><td><a href="https://htmx.org/examples/sortable/">Drag &amp; Drop / Sortable</a></td><td>Demonstrates how to use htmx with the Sortable.js plugin to implement drag-and-drop reordering</td></tr>
+<tr><td><a href="https://htmx.org/examples/update-other-content/">Updating Other Content</a></td><td>Demonstrates how to update content beyond just the target elements</td></tr>
+<tr><td><a href="https://htmx.org/examples/confirm/">Confirm</a></td><td>Demonstrates how to implement a custom confirmation dialog with htmx</td></tr>
+<tr><td><a href="https://htmx.org/examples/async-auth/">Async Authentication</a></td><td>Demonstrates how to handle async authentication tokens in htmx</td></tr>
+</tbody></table>
+<a class="dashingAutolink" name="autolink-49"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Migrating%20from%20Hotwire%20%2F%20Turbo%20%3F"></a><h2 id="migrating-from-hotwire-turbo"><a class="zola-anchor" href="#migrating-from-hotwire-turbo" aria-label="Anchor link for: migrating-from-hotwire-turbo">#</a>Migrating from Hotwire / Turbo ?</h2>
+<p>For common practices see the <a href="https://htmx.org/migration-guide-hotwire-turbo/">Hotwire / Turbo to htmx Migration Guide</a>.</p>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

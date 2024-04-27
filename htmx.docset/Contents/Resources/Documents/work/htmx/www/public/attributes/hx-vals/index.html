@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ hx-vals Attribute</title>
+    <link rel="canonical" href="https://htmx.org/attributes/hx-vals/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1><a class="dashingAutolink" name="autolink-37"></a><a class="dashAnchor" name="//apple_ref/cpp/Attribute/hx-vals"></a><code>hx-vals</code></h1>
+  <p>The <code>hx-vals</code> attribute allows you to add to the parameters that will be submitted with an AJAX request.</p>
+<p>By default, the value of this attribute is a list of name-expression values in <a rel="noopener" target="_blank" href="https://www.json.org/json-en.html">JSON (JavaScript Object Notation)</a> 
+format.</p>
+<p>If you wish for <code>hx-vals</code> to <em>evaluate</em> the values given, you can prefix the values with <code>javascript:</code> or <code>js:</code>.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-vals</span><span>=</span><span style="color:#98c379;">&#39;{&#34;myVal&#34;: &#34;My Value&#34;}&#39;</span><span>&gt;Get Some HTML, Including A Value in the Request&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>
+</span><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-vals</span><span>=</span><span style="color:#98c379;">&#39;js:{myVal: calculateValue()}&#39;</span><span>&gt;Get Some HTML, Including a Dynamic Value from Javascript in the Request&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>When using evaluated code you can access the <code>event</code> object. This example includes the value of the last typed key within the input.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;keyup&#34; </span><span style="color:#d19a66;">hx-vals</span><span>=</span><span style="color:#98c379;">&#39;js:{lastKey: event.key}&#39;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;text&#34; </span><span>/&gt;
+</span><span>  &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<a class="dashingAutolink" name="autolink-36"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Security%20Considerations"></a><h2 id="security-considerations">Security Considerations</h2>
+<ul>
+<li>By default, the value of <code>hx-vals</code> must be valid <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Glossary/JSON">JSON</a>. 
+It is <strong>not</strong> dynamically computed.  If you use the <code>javascript:</code> prefix, be aware that you are introducing
+security considerations, especially when dealing with user input such as query strings or user-generated content, 
+which could introduce a <a rel="noopener" target="_blank" href="https://owasp.org/www-community/attacks/xss/">Cross-Site Scripting (XSS)</a> vulnerability. </li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><code>hx-vals</code> is inherited and can be placed on a parent element.</li>
+<li>A child declaration of a variable overrides a parent declaration.</li>
+<li>Input values with the same name will be overridden by variable declarations.</li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

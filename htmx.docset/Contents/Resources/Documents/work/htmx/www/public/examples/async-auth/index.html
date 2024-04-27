@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  
+<title>&lt;/&gt; htmx ~ Examples ~ Async Authentication</title>
+    <link rel="canonical" href="https://htmx.org/examples/async-auth/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation"> <!-- don't boost on demo pages, sinon hijacks everything :/ -->
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  
+    
+  
+  <h1>Async Authentication</h1>
+  <script src="https://unpkg.com/sinon@9.0.2/pkg/sinon.js"></script>
+  <script src="js/demo.js"></script>
+  <p>This example shows how to implement an an async auth token flow for htmx.</p>
+<p>The technique we will use here will take advantage of the fact that you can delay requests
+using the <a href="https://htmx.org/events/#htmx:confirm"><code>htmx:confirm</code></a> event.</p>
+<p>We first have a button that should not issue a request until an auth token has been retrieved:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;next output&#34;</span><span>&gt;
+</span><span>    An htmx-Powered button
+</span><span>  &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">output</span><span>&gt;
+</span><span>    --
+</span><span>  &lt;/</span><span style="color:#e06c75;">output</span><span>&gt;
+</span></code></pre>
+<p>Next we will add some scripting to work with an <code>auth</code> promise (returned by a library):</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script</span><span>&gt;
+</span><span>  </span><span style="font-style:italic;color:#848da1;">// auth is a promise returned by our authentication system
+</span><span>
+</span><span>  </span><span style="font-style:italic;color:#848da1;">// await the auth token and store it somewhere
+</span><span>  </span><span style="color:#c678dd;">let </span><span style="color:#e06c75;">authToken </span><span>= </span><span style="color:#d19a66;">null</span><span>;
+</span><span>  </span><span style="color:#e06c75;">auth</span><span>.</span><span style="color:#e06c75;">then</span><span>((token) </span><span style="color:#c678dd;">=&gt; </span><span>{
+</span><span>    </span><span style="color:#e06c75;">authToken </span><span>= </span><span style="color:#e06c75;">token
+</span><span>  })
+</span><span>  
+</span><span>  </span><span style="font-style:italic;color:#848da1;">// gate htmx requests on the auth token
+</span><span>  </span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#e06c75;">on</span><span>(</span><span style="color:#98c379;">&#34;htmx:confirm&#34;</span><span>, (e)</span><span style="color:#c678dd;">=&gt; </span><span>{
+</span><span>    </span><span style="font-style:italic;color:#848da1;">// if there is no auth token
+</span><span>    </span><span style="color:#c678dd;">if</span><span>(</span><span style="color:#e06c75;">authToken </span><span>== </span><span style="color:#d19a66;">null</span><span>) {
+</span><span>      </span><span style="font-style:italic;color:#848da1;">// stop the regular request from being issued
+</span><span>      </span><span style="color:#e06c75;">e</span><span>.</span><span style="color:#e06c75;">preventDefault</span><span>() 
+</span><span>      </span><span style="font-style:italic;color:#848da1;">// only issue it once the auth promise has resolved
+</span><span>      </span><span style="color:#e06c75;">auth</span><span>.</span><span style="color:#e06c75;">then</span><span>(() </span><span style="color:#c678dd;">=&gt; </span><span style="color:#e06c75;">e</span><span>.detail.</span><span style="color:#e06c75;">issueRequest</span><span>()) 
+</span><span>    }
+</span><span>  })
+</span><span>
+</span><span>  </span><span style="font-style:italic;color:#848da1;">// add the auth token to the request as a header
+</span><span>  </span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#e06c75;">on</span><span>(</span><span style="color:#98c379;">&#34;htmx:configRequest&#34;</span><span>, (e)</span><span style="color:#c678dd;">=&gt; </span><span>{
+</span><span>    </span><span style="color:#e06c75;">e</span><span>.detail.headers[</span><span style="color:#98c379;">&#34;AUTH&#34;</span><span>] = </span><span style="color:#e06c75;">authToken
+</span><span>  })
+</span><span>&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<p>Here we use a global variable, but you could use <code>localStorage</code> or whatever preferred mechanism
+you want to communicate the authentication token to the <code>htmx:configRequest</code> event.</p>
+<p>With this code in place, htmx will not issue requests until the <code>auth</code> promise has been resolved.</p>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

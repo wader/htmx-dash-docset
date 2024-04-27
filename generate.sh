@@ -21,4 +21,12 @@ echo 'footer { display: none !important; }' >> work/htmx/www/themes/htmx-theme/s
 
 (cd work/htmx/www && zola build)
 
+rm -rf work/htmx/www/public/img
+rm -rf work/htmx/www/public/node_modules
+rm -rf work/htmx/www/public/essays
+rm -rf work/htmx/www/public/posts
+rm -rf work/htmx/www/public/talk
+rm -rf work/htmx/www/public/test
+rm -rf work/htmx/www/public/atom.xml
+
 dashing build --source work/htmx/www/public

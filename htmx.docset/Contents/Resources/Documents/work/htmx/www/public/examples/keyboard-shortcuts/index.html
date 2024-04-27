@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  
+<title>&lt;/&gt; htmx ~ Examples ~ Keyboard Shortcuts</title>
+    <link rel="canonical" href="https://htmx.org/examples/keyboard-shortcuts/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation"> <!-- don't boost on demo pages, sinon hijacks everything :/ -->
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  
+    
+  
+  <h1>Keyboard Shortcuts</h1>
+  <script src="https://unpkg.com/sinon@9.0.2/pkg/sinon.js"></script>
+  <script src="js/demo.js"></script>
+  <p>In this example we show how to create a keyboard shortcut for an action.</p>
+<p>We start with a simple button that loads some content from the server:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;click, keyup[altKey&amp;&amp;shiftKey&amp;&amp;key==&#39;D&#39;] from:body&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/doit&#34;</span><span>&gt;Do It! (alt-shift-D)&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>Note that the button responds to both the <code>click</code> event (as usual) and also the keyup event when <code>alt-shift-D</code> is pressed.
+The <code>from:</code> modifier is used to listen for the keyup event on the <code>body</code> element, thus making it a &ldquo;global&rdquo; keyboard
+shortcut.</p>
+<p>You can trigger the demo below by either clicking on the button, or by hitting alt-shift-D.</p>
+<p>You can find out the conditions needed for a given keyboard shortcut here:</p>
+<p><a rel="noopener" target="_blank" href="https://javascript.info/keyboard-events">https://javascript.info/keyboard-events</a></p>
+<style>
+  #demo-server-info {
+      padding: 8px;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 64px;
+      width: 100vw;
+      background-color: whitesmoke;
+      border-top: 2px solid gray;
+      overflow: hide;
+      margin: 0px;
+      z-index: 1;
+  }
+  #demo-server-info.show {
+      max-height: 45vh;
+      height: 500px;
+      overflow: scroll;
+  }
+  #demo-activity {
+      height:300px
+  }
+
+  #demo-activity div {
+      vertical-align: top
+  }
+
+  #demo-activity ol li {
+      list-style-position: inside;
+  }
+
+  #demo-canvas {
+      margin-bottom: 500px;
+      padding-top: 12px;
+  }
+
+</style>
+<script>
+  function toggleRequestInfo() {
+      var classList = document.getElementById("demo-server-info").classList;
+      classList.toggle("show");
+      if (classList.contains('show')) {
+          document.getElementById("request-info-toggler").innerHTML = "&downarrow; Hide"
+      } else {
+          document.getElementById("request-info-toggler").innerHTML = "&uparrow; Show"
+      }
+  }
+</script>
+<div id="demo-server-info">
+  <div>Server Requests<span id="request-count"></span> <a id="request-info-toggler" onclick="toggleRequestInfo()" style="cursor: pointer">&uarr; Show</a></div>
+  <div id="demo-activity" class="row">
+      <div class="3 col">
+          <ol id="demo-timeline" reversed="">
+          </ol>
+      </div>
+      <div id="demo-current-request" class="9 col">
+      </div>
+  </div>
+</div>
+
+<h2><a class="zola-anchor" href="#demo" aria-label="Anchor link for: demo">🔗</a>Demo</h2>
+<div id="demo-canvas">
+</div>
+<script>
+
+    //=========================================================================
+    // Fake Server Side Code
+    //=========================================================================
+
+    // routes
+    init("/init", function(request, params){
+        return "<button style='font-size:20pt' hx-trigger='click, keyup[altKey&&shiftKey&&key==\"D\"] from:body'" +
+                      " hx-post='/doit'>Do It! (alt-shift-D) </button>";
+    });
+    
+    onPost("/doit", function (request, params) {
+        return "Did it!";
+    });
+
+</script>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ hx-replace-url Attribute</title>
+    <link rel="canonical" href="https://htmx.org/attributes/hx-replace-url/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1><a class="dashingAutolink" name="autolink-25"></a><a class="dashAnchor" name="//apple_ref/cpp/Attribute/hx-replace-url"></a><code>hx-replace-url</code></h1>
+  <p>The <code>hx-replace-url</code> attribute allows you to replace the current url of the browser <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">location history</a>.</p>
+<p>The possible values of this attribute are:</p>
+<ol>
+<li><code>true</code>, which replaces the fetched URL in the browser navigation bar.</li>
+<li><code>false</code>, which disables replacing the fetched URL if it would otherwise be replaced due to inheritance.</li>
+<li>A URL to be replaced into the location bar.
+This may be relative or absolute, as per <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState"><code>history.replaceState()</code></a>.</li>
+</ol>
+<p>Here is an example:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/account&#34; </span><span style="color:#d19a66;">hx-replace-url</span><span>=</span><span style="color:#98c379;">&#34;true&#34;</span><span>&gt;
+</span><span>  Go to My Account
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>This will cause htmx to snapshot the current DOM to <code>localStorage</code> and replace the URL `/account&rsquo; in the browser location bar.</p>
+<p>Another example:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/account&#34; </span><span style="color:#d19a66;">hx-replace-url</span><span>=</span><span style="color:#98c379;">&#34;/account/home&#34;</span><span>&gt;
+</span><span>  Go to My Account
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>This will replace the URL `/account/home&rsquo; in the browser location bar.</p>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><code>hx-replace-url</code> is inherited and can be placed on a parent element</li>
+<li>The <a href="https://htmx.org/headers/hx-replace-url/"><code>HX-Replace-Url</code> response header</a> has similar behavior and can override this attribute.</li>
+<li>The <a href="https://htmx.org/attributes/hx-history-elt/"><code>hx-history-elt</code> attribute</a> allows changing which element is saved in the history cache.</li>
+<li>The <a href="https://htmx.org/attributes/hx-push-url/"><code>hx-push-url</code> attribute</a> is a similar and more commonly used attribute, which creates a 
+new history entry rather than replacing the current one.</li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

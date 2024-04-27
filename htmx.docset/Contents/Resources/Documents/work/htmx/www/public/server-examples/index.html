@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ Server-Side Examples</title>
+    <link rel="canonical" href="https://htmx.org/server-examples/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>Server-Side Examples</h1>
+  <p>There are many examples of integrating htmx with server-side frameworks available on GitHub. Generally speaking,
+most server-side frameworks are already pretty well set up to integrate with htmx - after all, most of them were
+rendering HTML long before JSON became popular.</p>
+<p>Different frameworks and platforms may offer alternative systems for installing htmx - for example, in the Java / JVM
+ecosystem, <a rel="noopener" target="_blank" href="https://www.webjars.org">WebJars</a> allows the use of npm packages with popular Java build tools such as
+Maven and Gradle.</p>
+<p>These examples may make it a bit easier to get started using htmx with your platform of choice.</p>
+<a class="dashingAutolink" name="autolink-188"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/General%20Resources"></a><h2 id="general-resources"><a class="zola-anchor" href="#general-resources" aria-label="Anchor link for: general-resources">#</a>General Resources</h2>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/rajasegar/awesome-htmx">https://github.com/rajasegar/awesome-htmx</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-189"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/JavaScript"></a><h2 id="javascript"><a class="zola-anchor" href="#javascript" aria-label="Anchor link for: javascript">#</a>JavaScript</h2>
+<h3 id="node-js"><a class="zola-anchor" href="#node-js" aria-label="Anchor link for: node-js">#</a>Node.js</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/rajasegar/todomvc-htmx">https://github.com/rajasegar/todomvc-htmx</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/rajasegar/htmx-twitter-clone">https://github.com/rajasegar/htmx-twitter-clone</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/rajasegar/htmx-trello">https://github.com/rajasegar/htmx-trello</a></li>
+</ul>
+<h3 id="hapi"><a class="zola-anchor" href="#hapi" aria-label="Anchor link for: hapi">#</a>hapi</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/DamianStanger/hapi-htmx">https://github.com/DamianStanger/hapi-htmx</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-190"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Python"></a><h2 id="python"><a class="zola-anchor" href="#python" aria-label="Anchor link for: python">#</a>Python</h2>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/PyHAT-stack/awesome-python-htmx">https://github.com/PyHAT-stack/awesome-python-htmx</a></li>
+</ul>
+<h3 id="django"><a class="zola-anchor" href="#django" aria-label="Anchor link for: django">#</a>Django</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/adamchainz/django-htmx">https://github.com/adamchainz/django-htmx</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/spookylukey/django-htmx-patterns/">https://github.com/spookylukey/django-htmx-patterns/</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/idlesign/django-siteajax">https://github.com/idlesign/django-siteajax</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/guettli/django-htmx-fun/">https://github.com/guettli/django-htmx-fun/</a></li>
+<li><a rel="noopener" target="_blank" href="https://www.photondesigner.com/articles/submit-async-django-form-with-htmx">https://www.photondesigner.com/articles/submit-async-django-form-with-htmx</a></li>
+</ul>
+<h3 id="fastapi"><a class="zola-anchor" href="#fastapi" aria-label="Anchor link for: fastapi">#</a>FastAPI</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/renceInbox/fastapi-todo">https://github.com/renceInbox/fastapi-todo</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/AutomationPanda/bulldoggy-reminders-app">https://github.com/AutomationPanda/bulldoggy-reminders-app</a></li>
+</ul>
+<h3 id="flask"><a class="zola-anchor" href="#flask" aria-label="Anchor link for: flask">#</a>Flask</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/edmondchuc/flask-htmx">https://github.com/edmondchuc/flask-htmx</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/cscortes/htmxflask">https://github.com/cscortes/htmxflask</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/Konfuzian/htmx-examples-with-flask/">https://github.com/Konfuzian/htmx-examples-with-flask/</a></li>
+</ul>
+<h3 id="py4web"><a class="zola-anchor" href="#py4web" aria-label="Anchor link for: py4web">#</a>py4web</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/jpsteil/py4web_htmx_demo">https://github.com/jpsteil/py4web_htmx_demo</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-191"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Java"></a><h2 id="java"><a class="zola-anchor" href="#java" aria-label="Anchor link for: java">#</a>Java</h2>
+<h3 id="spring-boot"><a class="zola-anchor" href="#spring-boot" aria-label="Anchor link for: spring-boot">#</a>Spring Boot</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/wiverson/htmx-demo">https://github.com/wiverson/htmx-demo</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/wimdeblauwe/blog-example-code/tree/master/todomvc-htmx">https://github.com/wimdeblauwe/blog-example-code/tree/master/todomvc-htmx</a></li>
+</ul>
+<h3 id="quarkus"><a class="zola-anchor" href="#quarkus" aria-label="Anchor link for: quarkus">#</a>Quarkus</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/derkoe/quarkus-htmx-todos">https://github.com/derkoe/quarkus-htmx-todos</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-192"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/ColdFusion%20%28CFML%20-%20a%20JVM%20Language%29"></a><h2 id="coldfusion-cfml-a-jvm-language"><a class="zola-anchor" href="#coldfusion-cfml-a-jvm-language" aria-label="Anchor link for: coldfusion-cfml-a-jvm-language">#</a>ColdFusion (CFML - a JVM Language)</h2>
+<h3 id="cfwheels-framework"><a class="zola-anchor" href="#cfwheels-framework" aria-label="Anchor link for: cfwheels-framework">#</a>CFWheels Framework</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/bpamiri/cfwheels-todomvc-htmx">https://github.com/bpamiri/cfwheels-todomvc-htmx</a></li>
+<li><a rel="noopener" target="_blank" href="https://www.forgebox.io/view/cfwheels-htmx-plugin">https://www.forgebox.io/view/cfwheels-htmx-plugin</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/chapmandu/cfwheels-htmx-crud">https://github.com/chapmandu/cfwheels-htmx-crud</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-193"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/C%23"></a><h2 id="c"><a class="zola-anchor" href="#c" aria-label="Anchor link for: c">#</a>C#</h2>
+<h3 id="asp-net-core"><a class="zola-anchor" href="#asp-net-core" aria-label="Anchor link for: asp-net-core">#</a>ASP.NET Core</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/jerriepelser-blog/htmx-with-aspnet-core">https://github.com/jerriepelser-blog/htmx-with-aspnet-core</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/mryderie/aspnet-core-htmx-example">https://github.com/mryderie/aspnet-core-htmx-example</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/khalidabuhakmeh/Htmx.Net">https://github.com/khalidabuhakmeh/Htmx.Net</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/khalidabuhakmeh/Htmx.Net#htmxtaghelpers">https://github.com/khalidabuhakmeh/Htmx.Net#htmxtaghelpers</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/hlaueriksson/Markupolation/tree/main/samples">https://github.com/hlaueriksson/Markupolation/tree/main/samples</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-194"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Prolog"></a><h2 id="prolog"><a class="zola-anchor" href="#prolog" aria-label="Anchor link for: prolog">#</a>Prolog</h2>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/Anniepoo/declswiplweb">https://github.com/Anniepoo/declswiplweb</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-195"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Lisp"></a><h2 id="lisp"><a class="zola-anchor" href="#lisp" aria-label="Anchor link for: lisp">#</a>Lisp</h2>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/rajasegar/ccl-demo-raja">https://github.com/rajasegar/ccl-demo-raja</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/rajasegar/cl-trello-clone">https://github.com/rajasegar/cl-trello-clone</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/rajasegar/cl-github-timeline">https://github.com/rajasegar/cl-github-timeline</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-196"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Clojure"></a><h2 id="clojure"><a class="zola-anchor" href="#clojure" aria-label="Anchor link for: clojure">#</a>Clojure</h2>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/whamtet/ctmx">https://github.com/whamtet/ctmx</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/jcpsantiago/htmx-clj-dashboard">https://github.com/jcpsantiago/htmx-clj-dashboard</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/prestancedesign/babashka-htmx-todoapp">https://github.com/prestancedesign/babashka-htmx-todoapp</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/dharrigan/startrek">https://github.com/dharrigan/startrek</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-197"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Ruby"></a><h2 id="ruby"><a class="zola-anchor" href="#ruby" aria-label="Anchor link for: ruby">#</a>Ruby</h2>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://alchemists.io/projects/htmx">https://alchemists.io/projects/htmx</a></li>
+</ul>
+<h3 id="rails"><a class="zola-anchor" href="#rails" aria-label="Anchor link for: rails">#</a>Rails</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/rootstrap/htmx-rails">https://github.com/rootstrap/htmx-rails</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/guilleiguaran/rails-htmx">https://github.com/guilleiguaran/rails-htmx</a></li>
+</ul>
+<h3 id="sinatra"><a class="zola-anchor" href="#sinatra" aria-label="Anchor link for: sinatra">#</a>Sinatra</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/libsyz/htmx-to-do-app">https://github.com/libsyz/htmx-to-do-app</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/beechnut/pokebutt-htmx">https://github.com/beechnut/pokebutt-htmx</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-198"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Scala"></a><h2 id="scala"><a class="zola-anchor" href="#scala" aria-label="Anchor link for: scala">#</a>Scala</h2>
+<h3 id="http4s"><a class="zola-anchor" href="#http4s" aria-label="Anchor link for: http4s">#</a>http4s</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/martinprobson/http4s-htmx-demo">https://github.com/martinprobson/http4s-htmx-demo</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-199"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Kotlin"></a><h2 id="kotlin"><a class="zola-anchor" href="#kotlin" aria-label="Anchor link for: kotlin">#</a>Kotlin</h2>
+<h3 id="ktor"><a class="zola-anchor" href="#ktor" aria-label="Anchor link for: ktor">#</a>Ktor</h3>
+<p><a rel="noopener" target="_blank" href="https://github.com/Rattlyy/htmx-ktor">https://github.com/Rattlyy/htmx-ktor</a></p>
+<h3 id="http4k"><a class="zola-anchor" href="#http4k" aria-label="Anchor link for: http4k">#</a>Http4k</h3>
+<p><a rel="noopener" target="_blank" href="https://github.com/corlaez/todo-hda-kt">https://github.com/corlaez/todo-hda-kt</a></p>
+<a class="dashingAutolink" name="autolink-200"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Julia"></a><h2 id="julia"><a class="zola-anchor" href="#julia" aria-label="Anchor link for: julia">#</a>Julia</h2>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/clarkevans/TodoMVC.jl">https://github.com/clarkevans/TodoMVC.jl</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-201"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/OCaml"></a><h2 id="ocaml"><a class="zola-anchor" href="#ocaml" aria-label="Anchor link for: ocaml">#</a>OCaml</h2>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://ocaml.org/p/dream-htmx">https://ocaml.org/p/dream-htmx</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/yawaramin/dream-html">https://github.com/yawaramin/dream-html</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-202"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/PHP"></a><h2 id="php"><a class="zola-anchor" href="#php" aria-label="Anchor link for: php">#</a>PHP</h2>
+<h3 id="codeigniter-4"><a class="zola-anchor" href="#codeigniter-4" aria-label="Anchor link for: codeigniter-4">#</a>CodeIgniter 4</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/michalsn/codeigniter-htmx-demo">https://github.com/michalsn/codeigniter-htmx-demo</a></li>
+</ul>
+<h3 id="laravel"><a class="zola-anchor" href="#laravel" aria-label="Anchor link for: laravel">#</a>Laravel</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://spirofloropoulos.com/laravel-htmx-hard-mode-1.html">https://spirofloropoulos.com/laravel-htmx-hard-mode-1.html</a></li>
+</ul>
+<h3 id="symfony"><a class="zola-anchor" href="#symfony" aria-label="Anchor link for: symfony">#</a>Symfony</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/tomcri/htmxfony">https://github.com/tomcri/htmxfony</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-203"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Elixir"></a><h2 id="elixir"><a class="zola-anchor" href="#elixir" aria-label="Anchor link for: elixir">#</a>Elixir</h2>
+<h3 id="phoenix"><a class="zola-anchor" href="#phoenix" aria-label="Anchor link for: phoenix">#</a>Phoenix</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/hungle00/todo-htmx">https://github.com/hungle00/todo-htmx</a></li>
+</ul>
+<h3 id="bandit-with-plug-application"><a class="zola-anchor" href="#bandit-with-plug-application" aria-label="Anchor link for: bandit-with-plug-application">#</a>Bandit with Plug Application</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/lorantkurthy/todo-htmex">https://github.com/lorantkurthy/todo-htmex</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-204"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/F%23"></a><h2 id="f"><a class="zola-anchor" href="#f" aria-label="Anchor link for: f">#</a>F#</h2>
+<h3 id="giraffe"><a class="zola-anchor" href="#giraffe" aria-label="Anchor link for: giraffe">#</a>Giraffe</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://hamy.xyz/labs/2023-12-fsharp-htmx">https://hamy.xyz/labs/2023-12-fsharp-htmx</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-205"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Go"></a><h2 id="go"><a class="zola-anchor" href="#go" aria-label="Anchor link for: go">#</a>Go</h2>
+<h3 id="templ"><a class="zola-anchor" href="#templ" aria-label="Anchor link for: templ">#</a>templ</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://templ.guide/server-side-rendering/htmx">https://templ.guide/server-side-rendering/htmx</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/jritsema/go-htmx-tailwind-example">https://github.com/jritsema/go-htmx-tailwind-example</a></li>
+</ul>
+<h3 id="elem-go"><a class="zola-anchor" href="#elem-go" aria-label="Anchor link for: elem-go">#</a>elem-go</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/chasefleming/elem-go/tree/main/examples/htmx-fiber-counter">https://github.com/chasefleming/elem-go/tree/main/examples/htmx-fiber-counter</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/chasefleming/elem-go/tree/main/examples/htmx-fiber-todo">https://github.com/chasefleming/elem-go/tree/main/examples/htmx-fiber-todo</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-206"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Delphi"></a><h2 id="delphi"><a class="zola-anchor" href="#delphi" aria-label="Anchor link for: delphi">#</a>Delphi</h2>
+<h3 id="delphimvcframework"><a class="zola-anchor" href="#delphimvcframework" aria-label="Anchor link for: delphimvcframework">#</a>DelphiMVCFramework</h3>
+<ul>
+<li><a rel="noopener" target="_blank" href="https://github.com/danieleteti/delphi-dmvcframework-htmx-todo">https://github.com/danieleteti/delphi-dmvcframework-htmx-todo</a></li>
+<li><a rel="noopener" target="_blank" href="https://github.com/danieleteti/delphimvcframework/tree/master/samples/htmx">https://github.com/danieleteti/delphimvcframework/tree/master/samples/htmx</a></li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

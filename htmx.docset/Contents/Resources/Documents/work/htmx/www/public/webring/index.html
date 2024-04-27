@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ htmx webring</title>
+    <link rel="canonical" href="https://htmx.org/webring/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>htmx webring</h1>
+  <style>
+  h1 {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+  #webring-div {
+    font-family: Times New Roman;
+  }
+
+@media only screen and (max-width: 720px) {
+  .built-with-tds {
+     display:none;
+  }
+}
+</style>
+<div id="webring-div">
+<table id="nav-table" style="border: black 4px double; text-align: center">
+<tbody><tr>
+  <td class="built-with-tds" style="border: 1px black solid">
+    <img width="200px" src="img/createdwith.jpeg"/>
+  </td>
+  <td width="70%" style="text-align: center; font-size: 20px; border: 1px black solid">
+     This Great <a href="https://htmx.org">htmx</a> Webring site is owned by <a href="https://bigsky.software">Your Name Here</a>.
+  </td>
+  <td class="built-with-tds" style="; border: 1px black solid" "="">
+    <img width="200px" src="img/createdwith.jpeg"/>
+  </td>
+</tr>
+<tr>
+<td colspan="3" style="text-align: center; ; border: 1px black solid; position: relative">
+    [<a class="nav-link" href="#" _="on click
+             set links to &lt;a/&gt; in the #ring-table
+             decrement :index
+             if :index is -1
+                get the length of the links
+                set :index to the result - 1 
+             end
+             log :index
+             get links[:index]
+             set the #webring&#39;s src to the result&#39;s @href
+             ">Prev</a>][<a href="#" class="nav-link" _="on click
+             set links to &lt;a/&gt; in the #ring-table
+             get the :index
+             repeat until the result is not :index
+                get Math.floor(Math.random() * length of the links)
+             end
+             set the :index to the result
+             get links[:index]
+             set the #webring&#39;s src to the result&#39;s @href
+             ">Random</a>][<a href="#" class="nav-link" _="on click
+             set links to &lt;a/&gt; in the #ring-table
+             increment :index
+             if :index is length of the links
+                set :index to 0
+             end
+             get links[:index]
+             set the #webring&#39;s src to the result&#39;s @href
+             ">Next</a>]<br/>
+    [<a href="#" id="show-sites" _="on click 
+             transition the #webring&#39;s opacity to 0
+             hide the #webring
+             transition #site-table&#39;s height to 100% over 300ms then 
+             hide me then
+             show #return-to-webring">List Sites</a><a id="return-to-webring" style="display: none" _="on click 
+             transition #site-table&#39;s height to 0px over 800ms then
+             show the #webring
+             transition the #webring&#39;s opacity to 100%
+             hide me then
+             show #show-sites">Return To Webring</a>]
+   <img src="img/navigator.gif" _="on click from .nav-link
+              log &#39;here&#39;
+              transition my opacity to 100%
+            on load from #webring
+              transition my opacity to 0%" style="opacity: 0; float: right; width: 38px; position:absolute; right:2px; bottom: 2px"/>
+</td>
+</tr>
+</tbody></table>
+<div id="site-table" style="height: 0px; overflow: hidden">
+<table>
+<thead>
+  <tr><th>Name</th><th>Description</th></tr>
+</thead>
+<tbody id="ring-table">
+  <tr><td><a rel="nofollow" target="_blank" href="https://www.commspace.co.za/">Commspace</a></td><td>The ultimate solution for managing, tracking, splitting and analysing Financial Adviser revenue.</td></tr>
+  <tr><td><a rel="noopener" target="_blank" href="https://zorro.management">Zorro Management</a></td><td>Manage your projects, time, and progress!</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://www.contexte.com/">Contexte</a></td><td>L&rsquo;&eacute;cosyst&egrave;me politique, au-del&agrave; des politiques publiques sectorielles : les m&eacute;tiers, les gens, les textes, les institutions</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://ocaml.org/">ocaml.org</a></td><td>An industrial-strength functional programming language with an emphasis on expressiveness and safety</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://www.nikevision.com/">Nike Vision</a></td><td>Eye-wear</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://vanillaweather.com/">Vanilla Weather</a></td><td>No ads. No tracking. Just the weather.</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://turboscribe.ai/">TurboScribe</a></td><td>TurboScribe&rsquo;s mission is to deliver world-class AI transcription at an unbeatable price.</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://xrss.infogulch.com">XRSS</a></td><td>A simple RSS reader inspired by Google Reader</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://openunited.com/">OpenUnited</a></td><td>A Digital Talent match-making platform</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://gophemeral.com">Gophemeral</a></td><td>Share secrets securely!</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://signup.casa">Signup Casa</a></td><td>Simple, convenient sign-up forms.</td></tr>
+  <tr><td><a rel="nofollow" target="_blank" href="https://recipes.musicavis.ca">Recipya</a></td><td>A clean, simple and powerful recipe manager your whole family can enjoy.</td></tr>
+  <tr><td><a rel="noopener" target="_blank" href="https://statusnook.com">Statusnook</a></td><td>Effortlessly deploy a status page and start monitoring endpoints in minutes.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<iframe id="webring" src="https://www.commspace.co.za" style="position:fixed;right:0;left:0;bottom:0;top:250px;width:100%;height:100%" name="webring"></iframe>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ hx-on Attribute</title>
+    <link rel="canonical" href="https://htmx.org/attributes/hx-on/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1><a class="dashingAutolink" name="autolink-17"></a><a class="dashAnchor" name="//apple_ref/cpp/Attribute/hx-on"></a><code>hx-on</code></h1>
+  <p>The <code>hx-on*</code> attributes allow you to embed scripts inline to respond to events directly on an element; similar to the 
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/Events/Event_handlers#using_onevent_properties"><code>onevent</code> properties</a> found in HTML, such as <code>onClick</code>.</p>
+<p>The <code>hx-on*</code> attributes improve upon <code>onevent</code> by enabling the handling of any arbitrary JavaScript event,
+for enhanced <a href="essays/locality-of-behaviour/">Locality of Behaviour (LoB)</a> even when dealing with non-standard DOM events. For example, these
+attributes allow you to handle <a href="reference#events">htmx events</a>.</p>
+<p>There are two forms of <code>hx-on</code> attributes:</p>
+<ul>
+<li>
+<p>In the primary form, you specify the event name as part of the attribute name, after a colon.  So, for example, if
+you want to respond to a <code>click</code> event, you would use the attribute <code>hx-on:click</code>.</p>
+</li>
+<li>
+<p>The second, deprecated form, uses the <code>hx-on</code> attribute directly. This latter form should only be used if IE11 support
+is required, and will be removed in htmx 2.0</p>
+</li>
+</ul>
+<h3 id="hx-on-recommended">hx-on:* (recommended)</h3>
+<p>In this form, the event name follows a colon <code>:</code> in the attribute, and the attribute value is the script to be executed:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-on:click</span><span>=</span><span style="color:#98c379;">&#34;alert(&#39;Clicked!&#39;)&#34;</span><span>&gt;Click&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>Note that, in addition to the standard DOM events, all htmx and other custom events can be captured, too! </p>
+<p>One gotcha to note is that DOM attributes do not preserve case. This means, unfortunately, an attribute like
+<code>hx-on:htmx:beforeRequest</code> <strong>will not work</strong>, because the DOM lowercases the attribute names.  Fortunately, htmx supports
+both camel case event names and also <a href="https://htmx.org/docs/#events">kebab-case event names</a>, so you can use <code>hx-on:htmx:before-request</code> instead.</p>
+<p>In order to make writing htmx-based event handlers a little easier, you can use the shorthand double-colon <code>hx-on::</code> for htmx
+events, and omit the &ldquo;htmx&rdquo; part:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span style="font-style:italic;color:#848da1;">&lt;!-- These two are equivalent --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/info&#34; </span><span style="color:#d19a66;">hx-on:htmx:before-request</span><span>=</span><span style="color:#98c379;">&#34;alert(&#39;Making a request!&#39;)&#34;</span><span>&gt;
+</span><span>    Get Info!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/info&#34; </span><span style="color:#d19a66;">hx-on::before-request</span><span>=</span><span style="color:#98c379;">&#34;alert(&#39;Making a request!&#39;)&#34;</span><span>&gt;
+</span><span>    Get Info!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>
+</span></code></pre>
+<p>If you wish to handle multiple different events, you can simply add multiple attributes to an element:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/info&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-on::before-request</span><span>=</span><span style="color:#98c379;">&#34;alert(&#39;Making a request!&#39;)&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-on::after-request</span><span>=</span><span style="color:#98c379;">&#34;alert(&#39;Done making a request!&#39;)&#34;</span><span>&gt;
+</span><span>    Get Info!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>Finally, in order to make this feature compatible with some templating languages (e.g. <a rel="noopener" target="_blank" href="https://react.dev/learn/writing-markup-with-jsx">JSX</a>) that do not like having a colon (<code>:</code>)
+in HTML attributes, you may use dashes in the place of colons for both the long form and the shorthand form:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span style="font-style:italic;color:#848da1;">&lt;!-- These two are equivalent --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/info&#34; </span><span style="color:#d19a66;">hx-on-htmx-before-request</span><span>=</span><span style="color:#98c379;">&#34;alert(&#39;Making a request!&#39;)&#34;</span><span>&gt;
+</span><span>    Get Info!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/info&#34; </span><span style="color:#d19a66;">hx-on--before-request</span><span>=</span><span style="color:#98c379;">&#34;alert(&#39;Making a request!&#39;)&#34;</span><span>&gt;
+</span><span>    Get Info!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>
+</span></code></pre>
+<h3 id="hx-on-deprecated">hx-on (deprecated)</h3>
+<p>The value is an event name, followed by a colon <code>:</code>, followed by the script:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/info&#34; </span><span style="color:#d19a66;">hx-on</span><span>=</span><span style="color:#98c379;">&#34;htmx:beforeRequest: alert(&#39;Making a request!&#39;)&#34;</span><span>&gt;
+</span><span>    Get Info!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<p>Multiple handlers can be defined by putting them on new lines:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/info&#34; </span><span style="color:#d19a66;">hx-on</span><span>=</span><span style="color:#98c379;">&#34;htmx:beforeRequest: alert(&#39;Making a request!&#39;)
+</span><span style="color:#98c379;">                              htmx:afterRequest: alert(&#39;Done making a request!&#39;)&#34;</span><span>&gt;
+</span><span>    Get Info!
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<h3 id="symbols">Symbols</h3>
+<p>Like <code>onevent</code>, two symbols are made available to event handler scripts:</p>
+<ul>
+<li><code>this</code> - The element on which the <code>hx-on</code> attribute is defined</li>
+<li><code>event</code> - The event that triggered the handler</li>
+</ul>
+<h3 id="notes">Notes</h3>
+<ul>
+<li><code>hx-on</code> is <em>not</em> inherited, however due to
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#event_bubbling_and_capture">event bubbling</a>,
+<code>hx-on</code> attributes on parent elements will typically be triggered by events on child elements</li>
+<li><code>hx-on:*</code> and <code>hx-on</code> cannot be used together on the same element; if <code>hx-on:*</code> is present, the value of an <code>hx-on</code> attribute
+on the same element will be ignored. The two forms can be mixed in the same document, however.</li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

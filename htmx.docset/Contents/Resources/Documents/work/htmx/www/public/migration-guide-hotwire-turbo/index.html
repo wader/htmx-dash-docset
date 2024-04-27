@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ Hotwire / Turbo ➡️ htmx Migration Guide</title>
+    <link rel="canonical" href="https://htmx.org/migration-guide-hotwire-turbo/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>Hotwire / Turbo ➡️ htmx Migration Guide</h1>
+  <p>The purpose of this guide is to provide common practices for &ldquo;Hotwire Equivalent&rdquo; features in htmx.</p>
+<ul>
+<li>htmx is focused on a set of transparent, highly flexible extensions of html to its logical conclusion as a hypertext.</li>
+<li>Hotwire / Turbo is focused on a smooth out of the box experience, but is more opinionated and less flexible.</li>
+</ul>
+<a class="dashingAutolink" name="autolink-80"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Turbo%20Drive"></a><h2 id="turbo-drive"><a class="zola-anchor" href="#turbo-drive" aria-label="Anchor link for: turbo-drive">#</a>Turbo Drive</h2>
+<ul>
+<li><code>&lt;body hx-boost=&#34;true&#34;&gt;</code> to enable a Turbo Drive-like experience. See: <a href="https://htmx.org/attributes/hx-boost/">hx-boost</a></li>
+<li>As with Turbo Drive, if the user has javascript disabled, <code>hx-boost</code> will continue to work. See: <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Progressive_enhancement">Progressive Enhancement</a></li>
+<li><code>hx-boost=&#34;false&#34;</code> is equivalent to <code>data-turbo=&#34;false&#34;</code> and used to disable boost on specific links or forms. See: <a rel="noopener" target="_blank" href="https://turbo.hotwired.dev/handbook/drive#disabling-turbo-drive-on-specific-links-or-forms">Handbook</a></li>
+<li>Redirect after form submission (302, 303, 307, 3xx) <code>hx-target=&#34;body&#34; hx-swap=&#34;outerHTML&#34; hx-push-url=&#34;true&#34;</code> See: <a rel="noopener" target="_blank" href="https://turbo.hotwired.dev/handbook/drive#redirecting-after-a-form-submission">Handbook</a></li>
+<li>Disable buttons on form submission See: <a rel="noopener" target="_blank" href="https://turbo.hotwired.dev/handbook/drive#form-submissions">Handbook</a>
+<ul>
+<li>Only disable buttons because <code>&lt;form&gt;</code> does not submit disabled fields. See: <a rel="noopener" target="_blank" href="https://developer.mozilla.org/docs/Web/HTML/Attributes/disabled">MDN: disabled</a></li>
+</ul>
+</li>
+</ul>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="color:#61afef;">addEventListener</span><span>(</span><span style="color:#98c379;">&#34;submit&#34;</span><span>, (</span><span style="color:#e06c75;">event</span><span>) </span><span style="color:#c678dd;">=&gt; </span><span>{
+</span><span>    event.target.</span><span style="color:#56b6c2;">querySelectorAll</span><span>(</span><span style="color:#98c379;">&#34;button&#34;</span><span>).</span><span style="color:#56b6c2;">forEach</span><span>(</span><span style="color:#e06c75;">node </span><span style="color:#c678dd;">=&gt; </span><span>{ </span><span style="color:#e06c75;">node</span><span>.disabled = </span><span style="color:#d19a66;">true </span><span>})
+</span><span>})
+</span><span style="color:#61afef;">addEventListener</span><span>(</span><span style="color:#98c379;">&#34;htmx:afterOnLoad&#34;</span><span>, (</span><span style="color:#e06c75;">event</span><span>) </span><span style="color:#c678dd;">=&gt; </span><span>{
+</span><span>    event.target.</span><span style="color:#56b6c2;">querySelectorAll</span><span>(</span><span style="color:#98c379;">&#34;button&#34;</span><span>).</span><span style="color:#56b6c2;">forEach</span><span>(</span><span style="color:#e06c75;">node </span><span style="color:#c678dd;">=&gt; </span><span>{ </span><span style="color:#e06c75;">node</span><span>.disabled = </span><span style="color:#d19a66;">false </span><span>})
+</span><span>})
+</span></code></pre>
+<ul>
+<li>Or, <a href="https://htmx.org/attributes/hx-on/">hx-on</a> may be used:
+<ul>
+<li><code>hx-on:submit= &#39;event.target.querySelectorAll(&#34;button&#34;).forEach(node =&gt; { node.disabled = true })&#39;</code></li>
+<li><code>hx-on:htmx:afterOnLoad= &#39;event.target.querySelectorAll(&#34;button&#34;).forEach(node =&gt; { node.disabled = false })&#39;</code></li>
+</ul>
+</li>
+<li>Or, <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript</a> may be used: <code>_=&#34;on submit toggle @disabled &lt;button/&gt; in me until htmx:afterOnLoad&#34;</code> See: <a rel="noopener" target="_blank" href="https://hyperscript.org/cookbook/">Cookbook</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-81"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Turbo%20Frames"></a><h2 id="turbo-frames"><a class="zola-anchor" href="#turbo-frames" aria-label="Anchor link for: turbo-frames">#</a>Turbo Frames</h2>
+<ul>
+<li>htmx combines all ideas of &ldquo;Turbo Frames&rdquo; into the base attributes. No <code>&lt;turbo-frame&gt;</code> required.</li>
+<li>Lazy loading: <code>hx-trigger=&#34;load, submit&#34;</code>  See: <a rel="noopener" target="_blank" href="https://turbo.hotwired.dev/reference/frames#lazy-loaded-frame">Handbook</a></li>
+</ul>
+<a class="dashingAutolink" name="autolink-82"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Turbo%20Streams"></a><h2 id="turbo-streams"><a class="zola-anchor" href="#turbo-streams" aria-label="Anchor link for: turbo-streams">#</a>Turbo Streams</h2>
+<ul>
+<li>htmx combines all ideas of &ldquo;Turbo Streams&rdquo; into the base attributes. No <code>&lt;turbo-stream&gt;</code>, no <code>&lt;template&gt;</code> required.</li>
+<li>Note: Turbo Streams can perform many actions anywhere on a page (similar to <a href="https://htmx.org/attributes/hx-select-oob/">hx-select-oob</a> and <a href="https://htmx.org/attributes/hx-swap-oob/">hx-swap-oob</a>) while Turbo Frames only update what is wrapped within <code>&lt;turbo-frame&gt; .. &lt;/turbo-frame&gt;</code></li>
+</ul>
+<a class="dashingAutolink" name="autolink-83"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Events"></a><h2 id="events"><a class="zola-anchor" href="#events" aria-label="Anchor link for: events">#</a>Events</h2>
+<ul>
+<li>Intercepting or Pausing Events. <code>htmx:config-request</code> is equivalent to <code>turbo:before-fetch-request</code> See: <a rel="noopener" target="_blank" href="https://turbo.hotwired.dev/handbook/drive#pausing-requests">Handbook</a>
+<ul>
+<li><code>htmx:config-request</code> is the same as <code>htmx:configRequest</code> See: <a href="https://htmx.org/docs/#event_naming">Event Naming</a></li>
+</ul>
+</li>
+</ul>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#39;htmx:configRequest&#39;</span><span>, (</span><span style="color:#e06c75;">event</span><span>) </span><span style="color:#c678dd;">=&gt; </span><span>{
+</span><span>    event.</span><span style="color:#e06c75;">detail</span><span>.headers[</span><span style="color:#98c379;">&#39;Authorization&#39;</span><span>] = </span><span style="color:#98c379;">`Bearer ${</span><span style="color:#e06c75;">token</span><span style="color:#98c379;">}`
+</span><span>})
+</span></code></pre>
+<ul>
+<li>Or, use an <a href="https://htmx.org/attributes/hx-trigger/">hx-trigger</a> condition: <code>hx-trigger=&#34;submit[action(target)]&#34;</code>
+<ul>
+<li>Does not currently resolve async calls. See <a rel="noopener" target="_blank" href="https://github.com/bigskysoftware/htmx/issues/912">issue</a></li>
+</ul>
+</li>
+<li>Or, use <a href="https://htmx.org/attributes/hx-on/">hx-on</a>: <code>hx-on:click=&#34;event.preventDefault(); action(this); htmx.trigger(this, &#39;ready&#39;)&#34;</code> <code>hx-trigger=&#34;ready&#34;</code></li>
+<li>Or, use <a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript</a>: <code>_=&#34;on submit halt the event action(target) trigger ready&#34;</code> <code>hx-trigger=&#34;ready&#34;</code>
+<ul>
+<li>Will resolve async calls such as <code>fetch</code>. See: <a rel="noopener" target="_blank" href="https://hyperscript.org/docs/#async">async transparency</a></li>
+</ul>
+</li>
+</ul>
+<a class="dashingAutolink" name="autolink-84"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Stimulus"></a><h2 id="stimulus"><a class="zola-anchor" href="#stimulus" aria-label="Anchor link for: stimulus">#</a>Stimulus</h2>
+<ul>
+<li><a href="https://htmx.org/attributes/hx-on/">hx-on</a> provides an inline, vanilla substitute for a wide variety of use cases.</li>
+<li><a rel="noopener" target="_blank" href="https://hyperscript.org">hyperscript</a> is a close analogue and an official companion project to htmx, but the two projects are entirely separated and can be used exclusively from each other or any other library.</li>
+<li>For other options, see: <a href="docs/#scripting">htmx: Scripting</a></li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

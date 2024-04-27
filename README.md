@@ -2,7 +2,12 @@
 
 [Dash](https://kapeli.com/dash) docset for [htmx](https://htmx.org).
 
-Very much work-in-progress.
+> [!WARNING]
+> Very much work in progress.
+
+### Install prebuilt docset
+
+Add `htmx.docset` using the dash UI or open the docset to install (`open htmx.doset` on macOS).
 
 ### Build
 ```sh

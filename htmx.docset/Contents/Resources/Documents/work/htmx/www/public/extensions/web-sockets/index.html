@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ The websockets Extension</title>
+    <link rel="canonical" href="https://htmx.org/extensions/web-sockets/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>The <code>websockets</code> Extension</h1>
+  <p>The <code>WebSockets</code> extension enables easy, bi-directional communication
+with <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications">Web Sockets</a>
+servers directly from HTML. This replaces the experimental <code>hx-ws</code> attribute built into previous versions of htmx. For
+help migrating from older versions, see the <a href="https://htmx.org/extensions/web-sockets/#migrating-from-previous-versions">Migrating</a> guide at the bottom of this page.</p>
+<p>Use the following attributes to configure how WebSockets behave:</p>
+<ul>
+<li><code>ws-connect=&#34;&lt;url&gt;&#34;</code> or <code>ws-connect=&#34;&lt;prefix&gt;:&lt;url&gt;&#34;</code> - A URL to establish an <code>WebSocket</code> connection against.</li>
+<li>Prefixes <code>ws</code> or <code>wss</code> can optionally be specified. If not specified, HTMX defaults to add the location&rsquo;s scheme-type,
+host and port to have browsers send cookies via websockets.</li>
+<li><code>ws-send</code> - Sends a message to the nearest websocket based on the trigger value for the element (either the natural
+event
+or the event specified by [<code>hx-trigger</code>])</li>
+</ul>
+<h2 id="install"><a class="zola-anchor" href="#install" aria-label="Anchor link for: install">#</a>Install</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">script </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">script</span><span>&gt;
+</span></code></pre>
+<h2 id="usage"><a class="zola-anchor" href="#usage" aria-label="Anchor link for: usage">#</a>Usage</h2>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-ext</span><span>=</span><span style="color:#98c379;">&#34;ws&#34; </span><span style="color:#d19a66;">ws-connect</span><span>=</span><span style="color:#98c379;">&#34;/chatroom&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;notifications&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;chat_room&#34;</span><span>&gt;
+</span><span>        ...
+</span><span>    &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;form&#34; </span><span style="color:#d19a66;">ws-send</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;chat_message&#34;</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<h3 id="configuration"><a class="zola-anchor" href="#configuration" aria-label="Anchor link for: configuration">#</a>Configuration</h3>
+<p>WebSockets extension support two configuration options:</p>
+<ul>
+<li><code>createWebSocket</code> - a factory function that can be used to create a custom WebSocket instances. Must be a function,
+returning <code>WebSocket</code> object</li>
+<li><code>wsBinaryType</code> - a string value, that defines
+socket&rsquo;s <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/binaryType"><code>binaryType</code></a> property. Default value
+is <code>blob</code></li>
+</ul>
+<h3 id="receiving-messages-from-a-websocket"><a class="zola-anchor" href="#receiving-messages-from-a-websocket" aria-label="Anchor link for: receiving-messages-from-a-websocket">#</a>Receiving Messages from a WebSocket</h3>
+<p>The example above establishes a WebSocket to the <code>/chatroom</code> end point. Content that is sent down from the websocket
+will
+be parsed as HTML and swapped in by the <code>id</code> property, using the same logic
+as <a href="https://htmx.org/attributes/hx-swap-oob/">Out of Band Swaps</a>.</p>
+<p>As such, if you want to change the swapping method (e.g., append content at the end of an element or delegate swapping
+to an extension),
+you need to specify that in the message body, sent by the server.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span style="font-style:italic;color:#848da1;">&lt;!-- will be interpreted as hx-swap-oob=&#34;true&#34; by default --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;form&#34;</span><span>&gt;
+</span><span>    ...
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span><span style="font-style:italic;color:#848da1;">&lt;!-- will be appended to #notifications div --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;notifications&#34; </span><span style="color:#d19a66;">hx-swap-oob</span><span>=</span><span style="color:#98c379;">&#34;beforeend&#34;</span><span>&gt;
+</span><span>    New message received
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span style="font-style:italic;color:#848da1;">&lt;!-- will be swapped using an extension --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;chat_room&#34; </span><span style="color:#d19a66;">hx-swap-oob</span><span>=</span><span style="color:#98c379;">&#34;morphdom&#34;</span><span>&gt;
+</span><span>    ....
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<h3 id="sending-messages-to-a-websocket"><a class="zola-anchor" href="#sending-messages-to-a-websocket" aria-label="Anchor link for: sending-messages-to-a-websocket">#</a>Sending Messages to a WebSocket</h3>
+<p>In the example above, the form uses the <code>ws-send</code> attribute to indicate that when it is submitted, the form values
+should be <strong>serialized as JSON</strong>
+and send to the nearest enclosing <code>WebSocket</code>, in this case the <code>/chatroom</code> endpoint.</p>
+<p>The serialized values will include a field, <code>HEADERS</code>, that includes the headers normally submitted with an htmx
+request.</p>
+<h3 id="automatic-reconnection"><a class="zola-anchor" href="#automatic-reconnection" aria-label="Anchor link for: automatic-reconnection">#</a>Automatic Reconnection</h3>
+<p>If the WebSocket is closed unexpectedly, due to <code>Abnormal Closure</code>, <code>Service Restart</code> or <code>Try Again Later</code>, this
+extension will attempt to reconnect until the connection is reestablished.</p>
+<p>By default, the extension uses a
+full-jitter <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Exponential_backoff">exponential-backoff algorithm</a> that chooses a randomized
+retry delay that grows exponentially over time. You can use a different algorithm by writing it
+into <code>htmx.config.wsReconnectDelay</code>. This function takes a single parameter, the number of retries, and returns the
+time (in milliseconds) to wait before trying again.</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="font-style:italic;color:#848da1;">// example reconnect delay that you shouldn&#39;t use because
+</span><span style="font-style:italic;color:#848da1;">// it&#39;s not as good as the algorithm that&#39;s already in place
+</span><span style="color:#e06c75;">htmx</span><span>.</span><span style="color:#e06c75;">config</span><span>.</span><span style="color:#61afef;">wsReconnectDelay </span><span>= </span><span style="color:#c678dd;">function </span><span>(</span><span style="color:#e06c75;">retryCount</span><span>) {
+</span><span>    </span><span style="color:#c678dd;">return </span><span style="color:#e06c75;">retryCount </span><span>* </span><span style="color:#d19a66;">1000 </span><span style="font-style:italic;color:#848da1;">// return value in milliseconds
+</span><span>}
+</span></code></pre>
+<p>The extension also implements a simple queuing mechanism that keeps messages in memory when the socket is not in <code>OPEN</code>
+state and sends them once the connection is restored.</p>
+<h3 id="events"><a class="zola-anchor" href="#events" aria-label="Anchor link for: events">#</a>Events</h3>
+<p>WebSockets extensions exposes a set of events that allow you to observe and customize its behavior.</p>
+<h4 id="htmx:wsConnecting"><a class="zola-anchor" href="#htmx:wsConnecting" aria-label="Anchor link for: htmx:wsConnecting">#</a>Event - <code>htmx:wsConnecting</code></h4>
+<p>This event is triggered when a connection to a WebSocket endpoint is being attempted.</p>
+<h5 id="details"><a class="zola-anchor" href="#details" aria-label="Anchor link for: details">#</a>Details</h5>
+<ul>
+<li><code>detail.event.type</code> - the type of the event (<code>&#39;connecting&#39;</code>)</li>
+</ul>
+<h4 id="htmx:wsOpen"><a class="zola-anchor" href="#htmx:wsOpen" aria-label="Anchor link for: htmx:wsOpen">#</a>Event - <code>htmx:wsOpen</code></h4>
+<p>This event is triggered when a connection to a WebSocket endpoint has been established.</p>
+<h5 id="details-1"><a class="zola-anchor" href="#details-1" aria-label="Anchor link for: details-1">#</a>Details</h5>
+<ul>
+<li><code>detail.elt</code> - the element that holds the socket (the one with <code>ws-connect</code> attribute)</li>
+<li><code>detail.event</code> - the original event from the socket</li>
+<li><code>detail.socketWrapper</code> - the wrapper around socket object</li>
+</ul>
+<h4 id="htmx:wsClose"><a class="zola-anchor" href="#htmx:wsClose" aria-label="Anchor link for: htmx:wsClose">#</a>Event - <code>htmx:wsClose</code></h4>
+<p>This event is triggered when a connection to a WebSocket endpoint has been closed normally.
+You can check if the event was caused by an error by inspecting <code>detail.event</code> property.</p>
+<h5 id="details-2"><a class="zola-anchor" href="#details-2" aria-label="Anchor link for: details-2">#</a>Details</h5>
+<ul>
+<li><code>detail.elt</code> - the element that holds the socket (the one with <code>ws-connect</code> attribute)</li>
+<li><code>detail.event</code> - the original event from the socket</li>
+<li><code>detail.socketWrapper</code> - the wrapper around socket object</li>
+</ul>
+<h4 id="htmx:wsError"><a class="zola-anchor" href="#htmx:wsError" aria-label="Anchor link for: htmx:wsError">#</a>Event - <code>htmx:wsError</code></h4>
+<p>This event is triggered when <code>onerror</code> event on a socket is raised.</p>
+<h5 id="details-3"><a class="zola-anchor" href="#details-3" aria-label="Anchor link for: details-3">#</a>Details</h5>
+<ul>
+<li><code>detail.elt</code> - the element that holds the socket (the one with <code>ws-connect</code> attribute)</li>
+<li><code>detail.error</code> - the error object</li>
+<li><code>detail.socketWrapper</code> - the wrapper around socket object</li>
+</ul>
+<h4 id="htmx:wsBeforeMessage"><a class="zola-anchor" href="#htmx:wsBeforeMessage" aria-label="Anchor link for: htmx:wsBeforeMessage">#</a>Event - <code>htmx:wsBeforeMessage</code></h4>
+<p>This event is triggered when a message has just been received by a socket, similar to <code>htmx:beforeOnLoad</code>. This event
+fires
+before any processing occurs.</p>
+<p>If the event is cancelled, no further processing will occur.</p>
+<ul>
+<li><code>detail.elt</code> - the element that holds the socket (the one with <code>ws-connect</code> attribute)</li>
+<li><code>detail.message</code> - raw message content</li>
+<li><code>detail.socketWrapper</code> - the wrapper around socket object</li>
+</ul>
+<h4 id="htmx:wsAfterMessage"><a class="zola-anchor" href="#htmx:wsAfterMessage" aria-label="Anchor link for: htmx:wsAfterMessage">#</a>Event - <code>htmx:wsAfterMessage</code></h4>
+<p>This event is triggered when a message has been completely processed by htmx and all changes have been
+settled, similar to <code>htmx:afterOnLoad</code>.</p>
+<p>Cancelling this event has no effect.</p>
+<ul>
+<li><code>detail.elt</code> - the element that holds the socket (the one with <code>ws-connect</code> attribute)</li>
+<li><code>detail.message</code> - raw message content</li>
+<li><code>detail.socketWrapper</code> - the wrapper around socket object</li>
+</ul>
+<h4 id="htmx:wsConfigSend"><a class="zola-anchor" href="#htmx:wsConfigSend" aria-label="Anchor link for: htmx:wsConfigSend">#</a>Event - <code>htmx:wsConfigSend</code></h4>
+<p>This event is triggered when preparing to send a message from <code>ws-send</code> element.
+Similarly to <a href="https://htmx.org/events/#htmx:configRequest"><code>htmx:configRequest</code></a>, it allows you to modify the message
+before sending.</p>
+<p>If the event is cancelled, no further processing will occur and no messages will be sent.</p>
+<h5 id="details-4"><a class="zola-anchor" href="#details-4" aria-label="Anchor link for: details-4">#</a>Details</h5>
+<ul>
+<li><code>detail.parameters</code> - the parameters that will be submitted in the request</li>
+<li><code>detail.unfilteredParameters</code> - the parameters that were found before filtering
+by <a href="https://htmx.org/attributes/hx-select/"><code>hx-select</code></a></li>
+<li><code>detail.headers</code> - the request headers. Will be attached to the body in <code>HEADERS</code> property, if not falsy</li>
+<li><code>detail.errors</code> - validation errors. Will prevent sending and
+trigger <a href="https://htmx.org/events/#htmx:validation:halted"><code>htmx:validation:halted</code></a> event if not empty</li>
+<li><code>detail.triggeringEvent</code> - the event that triggered sending</li>
+<li><code>detail.messageBody</code> - raw message body that will be sent to the socket. Undefined, can be set to value of any type,
+supported by WebSockets. If set, will override
+default JSON serialization. Useful, if you want to use some other format, like XML or MessagePack</li>
+<li><code>detail.elt</code> - the element that dispatched the sending (the one with <code>ws-send</code> attribute)</li>
+<li><code>detail.socketWrapper</code> - the wrapper around socket object</li>
+</ul>
+<h4 id="htmx:wsBeforeSend"><a class="zola-anchor" href="#htmx:wsBeforeSend" aria-label="Anchor link for: htmx:wsBeforeSend">#</a>Event - <code>htmx:wsBeforeSend</code></h4>
+<p>This event is triggered just before sending a message. This includes messages from the queue.
+Message can not be modified at this point.</p>
+<p>If the event is cancelled, the message will be discarded from the queue and not sent.</p>
+<h5 id="details-5"><a class="zola-anchor" href="#details-5" aria-label="Anchor link for: details-5">#</a>Details</h5>
+<ul>
+<li><code>detail.elt</code> - the element that dispatched the request (the one with <code>ws-connect</code> attribute)</li>
+<li><code>detail.message</code> - the raw message content</li>
+<li><code>detail.socketWrapper</code> - the wrapper around socket object</li>
+</ul>
+<h4 id="htmx:wsAfterSend"><a class="zola-anchor" href="#htmx:wsAfterSend" aria-label="Anchor link for: htmx:wsAfterSend">#</a>Event - <code>htmx:wsAfterSend</code></h4>
+<p>This event is triggered just after sending a message. This includes messages from the queue.</p>
+<p>Cancelling the event has no effect.</p>
+<h5 id="details-6"><a class="zola-anchor" href="#details-6" aria-label="Anchor link for: details-6">#</a>Details</h5>
+<ul>
+<li><code>detail.elt</code> - the element that dispatched the request (the one with <code>ws-connect</code> attribute)</li>
+<li><code>detail.message</code> - the raw message content</li>
+<li><code>detail.socketWrapper</code> - the wrapper around socket object</li>
+</ul>
+<h4 id="socket-wrapper"><a class="zola-anchor" href="#socket-wrapper" aria-label="Anchor link for: socket-wrapper">#</a>Socket wrapper</h4>
+<p>You may notice that all events expose <code>detail.socketWrapper</code> property. This wrapper holds the socket
+object itself and the message queue. It also encapsulates reconnection algorithm. It exposes a few members:</p>
+<ul>
+<li><code>send(message, fromElt)</code> - sends a message safely. If the socket is not open, the message will be persisted in the
+queue
+instead and sent when the socket is ready.</li>
+<li><code>sendImmediately(message, fromElt)</code> - attempts to send a message regardless of socket state, bypassing the queue. May
+fail</li>
+<li><code>queue</code> - an array of messages, awaiting in the queue.</li>
+</ul>
+<p>This wrapper can be used in your event handlers to monitor and manipulate the queue (e.g., you can reset the queue when
+reconnecting), and to send additional messages (e.g., if you want to send data in batches).
+The <code>fromElt</code> parameter is optional and, when specified, will trigger corresponding websocket events from
+specified element, namely <code>htmx:wsBeforeSend</code> and <code>htmx:wsAfterSend</code> events when sending your messages.</p>
+<h3 id="testing-with-the-demo-server"><a class="zola-anchor" href="#testing-with-the-demo-server" aria-label="Anchor link for: testing-with-the-demo-server">#</a>Testing with the Demo Server</h3>
+<p>Htmx includes a demo WebSockets server written in Node.js that will help you to see WebSockets in action, and begin
+bootstrapping your own WebSockets code. It is located in the /test/ws-sse folder of the htmx distribution. Look at
+/test/ws-sse/README.md for instructions on running and using the test server.</p>
+<h3 id="migrating-from-previous-versions"><a class="zola-anchor" href="#migrating-from-previous-versions" aria-label="Anchor link for: migrating-from-previous-versions">#</a>Migrating from Previous Versions</h3>
+<p>Previous versions of htmx used a built-in tag <code>hx-ws</code> to implement WebSockets. This code has been migrated into an
+extension instead. Here are the steps you need to take to migrate to this version:</p>
+<table><thead><tr><th>Old Attribute</th><th>New Attribute</th><th>Comments</th></tr></thead><tbody>
+<tr><td><code>hx-ws=&#34;&#34;</code></td><td><code>hx-ext=&#34;ws&#34;</code></td><td>Use the <code>hx-ext=&#34;ws&#34;</code> attribute to install the WebSockets extension into any HTML element.</td></tr>
+<tr><td><code>hx-ws=&#34;connect:&lt;url&gt;&#34;</code></td><td><code>ws-connect=&#34;&lt;url&gt;&#34;</code></td><td>Add a new attribute <code>ws-connect</code> to the tag that defines the extension to specify the URL of the WebSockets server you&rsquo;re using.</td></tr>
+<tr><td><code>hx-ws=&#34;send&#34;</code></td><td><code>ws-send=&#34;&#34;</code></td><td>Add a new attribute <code>ws-send</code> to mark any child forms that should send data to your WebSocket server</td></tr>
+</tbody></table>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

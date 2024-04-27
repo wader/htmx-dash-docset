@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  
+<title>&lt;/&gt; htmx ~ Examples ~ Active Search</title>
+    <link rel="canonical" href="https://htmx.org/examples/active-search/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation"> <!-- don't boost on demo pages, sinon hijacks everything :/ -->
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  
+    
+  
+  <h1>Active Search</h1>
+  <script src="https://unpkg.com/sinon@9.0.2/pkg/sinon.js"></script>
+  <script src="js/demo.js"></script>
+  <p>This example actively searches a contacts database as the user enters text.</p>
+<p>We start with a search input and an empty table:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">h3</span><span>&gt; 
+</span><span>  Search Contacts 
+</span><span>  &lt;</span><span style="color:#e06c75;">span </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;htmx-indicator&#34;</span><span>&gt; 
+</span><span>    &lt;</span><span style="color:#e06c75;">img </span><span style="color:#d19a66;">src</span><span>=</span><span style="color:#98c379;">&#34;/img/bars.svg&#34;</span><span>/&gt; Searching... 
+</span><span>   &lt;/</span><span style="color:#e06c75;">span</span><span>&gt; 
+</span><span>&lt;/</span><span style="color:#e06c75;">h3</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;form-control&#34; </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;search&#34; 
+</span><span>       </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;search&#34; </span><span style="color:#d19a66;">placeholder</span><span>=</span><span style="color:#98c379;">&#34;Begin Typing To Search Users...&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/search&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;input changed delay:500ms, search&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#search-results&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-indicator</span><span>=</span><span style="color:#98c379;">&#34;.htmx-indicator&#34;</span><span>&gt;
+</span><span>
+</span><span>&lt;</span><span style="color:#e06c75;">table </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;table&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">thead</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">tr</span><span>&gt;
+</span><span>      &lt;</span><span style="color:#e06c75;">th</span><span>&gt;First Name&lt;/</span><span style="color:#e06c75;">th</span><span>&gt;
+</span><span>      &lt;</span><span style="color:#e06c75;">th</span><span>&gt;Last Name&lt;/</span><span style="color:#e06c75;">th</span><span>&gt;
+</span><span>      &lt;</span><span style="color:#e06c75;">th</span><span>&gt;Email&lt;/</span><span style="color:#e06c75;">th</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">tr</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">thead</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">tbody </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;search-results&#34;</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#e06c75;">tbody</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">table</span><span>&gt;
+</span></code></pre>
+<p>The input issues a <code>POST</code> to <code>/search</code> on the <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event"><code>input</code></a> event and sets the body of the table to be the resulting content. Note that the <code>keyup</code> event could be used as well, but would not fire if the user pasted text with their mouse (or any other non-keyboard method).</p>
+<p>We add the <code>delay:500ms</code> modifier to the trigger to delay sending the query until the user stops typing.  Additionally,
+we add the <code>changed</code> modifier to the trigger to ensure we don&rsquo;t send new queries when the user doesn&rsquo;t change the
+value of the input (e.g. they hit an arrow key, or pasted the same value).</p>
+<p>Since we use a <code>search</code> type input we will get an <code>x</code> in the input field to clear the input. 
+To make this trigger a new <code>POST</code> we have to specify another trigger. We specify another trigger by using a comma to 
+separate them. The <code>search</code> trigger will be run when the field is cleared but it also makes it possible to override 
+the 500 ms <code>input</code> event delay by just pressing enter.</p>
+<p>Finally, we show an indicator when the search is in flight with the <code>hx-indicator</code> attribute. </p>
+<style>
+  #demo-server-info {
+      padding: 8px;
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 64px;
+      width: 100vw;
+      background-color: whitesmoke;
+      border-top: 2px solid gray;
+      overflow: hide;
+      margin: 0px;
+      z-index: 1;
+  }
+  #demo-server-info.show {
+      max-height: 45vh;
+      height: 500px;
+      overflow: scroll;
+  }
+  #demo-activity {
+      height:300px
+  }
+
+  #demo-activity div {
+      vertical-align: top
+  }
+
+  #demo-activity ol li {
+      list-style-position: inside;
+  }
+
+  #demo-canvas {
+      margin-bottom: 500px;
+      padding-top: 12px;
+  }
+
+</style>
+<script>
+  function toggleRequestInfo() {
+      var classList = document.getElementById("demo-server-info").classList;
+      classList.toggle("show");
+      if (classList.contains('show')) {
+          document.getElementById("request-info-toggler").innerHTML = "&downarrow; Hide"
+      } else {
+          document.getElementById("request-info-toggler").innerHTML = "&uparrow; Show"
+      }
+  }
+</script>
+<div id="demo-server-info">
+  <div>Server Requests<span id="request-count"></span> <a id="request-info-toggler" onclick="toggleRequestInfo()" style="cursor: pointer">&uarr; Show</a></div>
+  <div id="demo-activity" class="row">
+      <div class="3 col">
+          <ol id="demo-timeline" reversed="">
+          </ol>
+      </div>
+      <div id="demo-current-request" class="9 col">
+      </div>
+  </div>
+</div>
+
+<h2><a class="zola-anchor" href="#demo" aria-label="Anchor link for: demo">🔗</a>Demo</h2>
+<div id="demo-canvas">
+</div>
+<script>
+    
+    //=========================================================================
+    // Fake Server Side Code
+    //=========================================================================
+
+    // routes
+    init("/init", function(request, params){
+      return searchUI();
+    });
+    
+    onPost(/\/search.*/, function(request, params){
+        var search = params['search'];
+        var contacts = dataStore.findContactsMatching(search);
+        return resultsUI(contacts);
+      });
+      
+    // templates
+    function searchUI() {
+      return `  <h3>
+Search Contacts
+<span class="htmx-indicator">
+<img src="/img/bars.svg"/> Searching...
+</span>
+</h3>
+
+<input class="form-control" type="search" 
+       name="search" placeholder="Begin Typing To Search Users..." 
+       hx-post="/search" 
+       hx-trigger="input changed delay:500ms, search" 
+       hx-target="#search-results" 
+       hx-indicator=".htmx-indicator">
+
+<table class="table">
+<thead>
+<tr>
+  <th>First Name</th>
+  <th>Last Name</th>
+  <th>Email</th>
+</tr>
+</thead>
+<tbody id="search-results">
+</tbody>
+</table>`;
+    }
+    
+    function resultsUI(contacts){
+        var txt = "";
+        for (var i = 0; i < contacts.length; i++) {
+          var c = contacts[i];
+          txt += "<tr><td>" + c.FirstName + "</td><td>" + c.LastName + "</td><td>" + c.Email + "</td></tr>\n";
+        }
+        return txt;  
+    }
+    
+    //datastore
+    
+     var dataStore = function(){
+          var data = [
+            { "FirstName": "Venus", "LastName": "Grimes", "Email": "lectus.rutrum@Duisa.edu", "City": "Ankara" },
+            { "FirstName": "Fletcher", "LastName": "Owen", "Email": "metus@Aenean.org", "City": "Niort" },
+            { "FirstName": "William", "LastName": "Hale", "Email": "eu.dolor@risusodio.edu", "City": "Te Awamutu" },
+            { "FirstName": "TaShya", "LastName": "Cash", "Email": "tincidunt.orci.quis@nuncnullavulputate.co.uk", "City": "Titagarh" },
+            { "FirstName": "Kevyn", "LastName": "Hoover", "Email": "tristique.pellentesque.tellus@Cumsociis.co.uk", "City": "Cuenca" },
+            { "FirstName": "Jakeem", "LastName": "Walker", "Email": "Morbi.vehicula.Pellentesque@faucibusorci.org", "City": "St. Andr&Atilde;&curren;" },
+            { "FirstName": "Malcolm", "LastName": "Trujillo", "Email": "sagittis@velit.edu", "City": "Fort Resolution" },
+            { "FirstName": "Wynne", "LastName": "Rice", "Email": "augue.id@felisorciadipiscing.edu", "City": "Kinross" },
+            { "FirstName": "Evangeline", "LastName": "Klein", "Email": "adipiscing.lobortis@sem.org", "City": "San Giovanni in Galdo" },
+            { "FirstName": "Jennifer", "LastName": "Russell", "Email": "sapien.Aenean.massa@risus.com", "City": "Laives/Leifers" },
+            { "FirstName": "Rama", "LastName": "Freeman", "Email": "Proin@quamPellentesquehabitant.net", "City": "Flin Flon" },
+            { "FirstName": "Jena", "LastName": "Mathis", "Email": "non.cursus.non@Phaselluselit.com", "City": "Fort Simpson" },
+            { "FirstName": "Alexandra", "LastName": "Maynard", "Email": "porta.elit.a@anequeNullam.ca", "City": "Nazilli" },
+            { "FirstName": "Tallulah", "LastName": "Haley", "Email": "ligula@id.net", "City": "Bay Roberts" },
+            { "FirstName": "Timon", "LastName": "Small", "Email": "velit.Quisque.varius@gravidaPraesent.org", "City": "Girona" },
+            { "FirstName": "Randall", "LastName": "Pena", "Email": "facilisis@Donecconsectetuer.edu", "City": "Edam" },
+            { "FirstName": "Conan", "LastName": "Vaughan", "Email": "luctus.sit@Classaptenttaciti.edu", "City": "Nadiad" },
+            { "FirstName": "Dora", "LastName": "Allen", "Email": "est.arcu.ac@Vestibulumante.co.uk", "City": "Renfrew" },
+            { "FirstName": "Aiko", "LastName": "Little", "Email": "quam.dignissim@convallisest.net", "City": "Delitzsch" },
+            { "FirstName": "Jessamine", "LastName": "Bauer", "Email": "taciti.sociosqu@nibhvulputatemauris.co.uk", "City": "Offida" },
+            { "FirstName": "Gillian", "LastName": "Livingston", "Email": "justo@atiaculisquis.com", "City": "Saskatoon" },
+            { "FirstName": "Laith", "LastName": "Nicholson", "Email": "elit.pellentesque.a@diam.org", "City": "Tallahassee" },
+            { "FirstName": "Paloma", "LastName": "Alston", "Email": "cursus@metus.org", "City": "Cache Creek" },
+            { "FirstName": "Freya", "LastName": "Dunn", "Email": "Vestibulum.accumsan@metus.co.uk", "City": "Heist-aan-Zee" },
+            { "FirstName": "Griffin", "LastName": "Rice", "Email": "justo@tortordictumeu.net", "City": "Montpelier" },
+            { "FirstName": "Catherine", "LastName": "West", "Email": "malesuada.augue@elementum.com", "City": "Tarn&Atilde;&sup3;w" },
+            { "FirstName": "Jena", "LastName": "Chambers", "Email": "erat.Etiam.vestibulum@quamelementumat.net", "City": "Konya" },
+            { "FirstName": "Neil", "LastName": "Rodriguez", "Email": "enim@facilisis.com", "City": "Krak&Atilde;&sup3;w" },
+            { "FirstName": "Freya", "LastName": "Charles", "Email": "metus@nec.net", "City": "Arzano" },
+            { "FirstName": "Anastasia", "LastName": "Strong", "Email": "sit@vitae.edu", "City": "Polpenazze del Garda" },
+            { "FirstName": "Bell", "LastName": "Simon", "Email": "mollis.nec.cursus@disparturientmontes.ca", "City": "Caxias do Sul" },
+            { "FirstName": "Minerva", "LastName": "Allison", "Email": "Donec@nequeIn.edu", "City": "Rio de Janeiro" },
+            { "FirstName": "Yoko", "LastName": "Dawson", "Email": "neque.sed@semper.net", "City": "Saint-Remy-Geest" },
+            { "FirstName": "Nadine", "LastName": "Justice", "Email": "netus@et.edu", "City": "Calgary" },
+            { "FirstName": "Hoyt", "LastName": "Rosa", "Email": "Nullam.ut.nisi@Aliquam.co.uk", "City": "Mold" },
+            { "FirstName": "Shafira", "LastName": "Noel", "Email": "tincidunt.nunc@non.edu", "City": "Kitzb&Atilde;&frac14;hel" },
+            { "FirstName": "Jin", "LastName": "Nunez", "Email": "porttitor.tellus.non@venenatisamagna.net", "City": "Dreieich" },
+            { "FirstName": "Barbara", "LastName": "Gay", "Email": "est.congue.a@elit.com", "City": "Overland Park" },
+            { "FirstName": "Riley", "LastName": "Hammond", "Email": "tempor.diam@sodalesnisi.net", "City": "Smoky Lake" },
+            { "FirstName": "Molly", "LastName": "Fulton", "Email": "semper@Naminterdumenim.net", "City": "Montese" },
+            { "FirstName": "Dexter", "LastName": "Owen", "Email": "non.ante@odiosagittissemper.ca", "City": "Bousval" },
+            { "FirstName": "Kuame", "LastName": "Merritt", "Email": "ornare.placerat.orci@nisinibh.ca", "City": "Solingen" },
+            { "FirstName": "Maggie", "LastName": "Delgado", "Email": "Nam.ligula.elit@Cum.org", "City": "Tredegar" },
+            { "FirstName": "Hanae", "LastName": "Washington", "Email": "nec.euismod@adipiscingelit.org", "City": "Amersfoort" },
+            { "FirstName": "Jonah", "LastName": "Cherry", "Email": "ridiculus.mus.Proin@quispede.edu", "City": "Acciano" },
+            { "FirstName": "Cheyenne", "LastName": "Munoz", "Email": "at@molestiesodalesMauris.edu", "City": "Saint-L?onard" },
+            { "FirstName": "India", "LastName": "Mack", "Email": "sem.mollis@Inmi.co.uk", "City": "Maryborough" },
+            { "FirstName": "Lael", "LastName": "Mcneil", "Email": "porttitor@risusDonecegestas.com", "City": "Livorno" },
+            { "FirstName": "Jillian", "LastName": "Mckay", "Email": "vulputate.eu.odio@amagnaLorem.co.uk", "City": "Salvador" },
+            { "FirstName": "Shaine", "LastName": "Wright", "Email": "malesuada@pharetraQuisqueac.org", "City": "Newton Abbot" },
+            { "FirstName": "Keane", "LastName": "Richmond", "Email": "nostra.per.inceptos@euismodurna.org", "City": "Canterano" },
+            { "FirstName": "Samuel", "LastName": "Davis", "Email": "felis@euenim.com", "City": "Peterhead" },
+            { "FirstName": "Zelenia", "LastName": "Sheppard", "Email": "Quisque.nonummy@antelectusconvallis.org", "City": "Motta Visconti" },
+            { "FirstName": "Giacomo", "LastName": "Cole", "Email": "aliquet.libero@urnaUttincidunt.ca", "City": "Donnas" },
+            { "FirstName": "Mason", "LastName": "Hinton", "Email": "est@Nunc.co.uk", "City": "St. Asaph" },
+            { "FirstName": "Katelyn", "LastName": "Koch", "Email": "velit.Aliquam@Suspendisse.edu", "City": "Cleveland" },
+            { "FirstName": "Olga", "LastName": "Spencer", "Email": "faucibus@Praesenteudui.net", "City": "Karap&Auml;&plusmn;nar" },
+            { "FirstName": "Erasmus", "LastName": "Strong", "Email": "dignissim.lacus@euarcu.net", "City": "Passau" },
+            { "FirstName": "Regan", "LastName": "Cline", "Email": "vitae.erat.vel@lacusEtiambibendum.co.uk", "City": "Pergola" },
+            { "FirstName": "Stone", "LastName": "Holt", "Email": "eget.mollis.lectus@Aeneanegestas.ca", "City": "Houston" },
+            { "FirstName": "Deanna", "LastName": "Branch", "Email": "turpis@estMauris.net", "City": "Olcenengo" },
+            { "FirstName": "Rana", "LastName": "Green", "Email": "metus@conguea.edu", "City": "Onze-Lieve-Vrouw-Lombeek" },
+            { "FirstName": "Caryn", "LastName": "Henson", "Email": "Donec.sollicitudin.adipiscing@sed.net", "City": "Kington" },
+            { "FirstName": "Clarke", "LastName": "Stein", "Email": "nec@mollis.co.uk", "City": "Tenali" },
+            { "FirstName": "Kelsie", "LastName": "Porter", "Email": "Cum@gravidaAliquam.com", "City": "&Auml;&deg;skenderun" },
+            { "FirstName": "Cooper", "LastName": "Pugh", "Email": "Quisque.ornare.tortor@dictum.co.uk", "City": "Delhi" },
+            { "FirstName": "Paul", "LastName": "Spencer", "Email": "ac@InfaucibusMorbi.com", "City": "Biez" },
+            { "FirstName": "Cassady", "LastName": "Farrell", "Email": "Suspendisse.non@venenatisa.net", "City": "New Maryland" },
+            { "FirstName": "Sydnee", "LastName": "Velazquez", "Email": "mollis@loremfringillaornare.com", "City": "Str&iuml;&iquest;&frac12;e" },
+            { "FirstName": "Felix", "LastName": "Boyle", "Email": "id.libero.Donec@aauctor.org", "City": "Edinburgh" },
+            { "FirstName": "Ryder", "LastName": "House", "Email": "molestie@natoquepenatibus.org", "City": "Copertino" },
+            { "FirstName": "Hadley", "LastName": "Holcomb", "Email": "penatibus@nisi.ca", "City": "Avadi" },
+            { "FirstName": "Marsden", "LastName": "Nunez", "Email": "Nulla.eget.metus@facilisisvitaeorci.org", "City": "New Galloway" },
+            { "FirstName": "Alana", "LastName": "Powell", "Email": "non.lobortis.quis@interdumfeugiatSed.net", "City": "Pitt Meadows" },
+            { "FirstName": "Dennis", "LastName": "Wyatt", "Email": "Morbi.non@nibhQuisquenonummy.ca", "City": "Wrexham" },
+            { "FirstName": "Karleigh", "LastName": "Walton", "Email": "nascetur.ridiculus@quamdignissimpharetra.com", "City": "Diksmuide" },
+            { "FirstName": "Brielle", "LastName": "Donovan", "Email": "placerat@at.edu", "City": "Kolmont" },
+            { "FirstName": "Donna", "LastName": "Dickerson", "Email": "lacus.pede.sagittis@lacusvestibulum.com", "City": "Vallepietra" },
+            { "FirstName": "Eagan", "LastName": "Pate", "Email": "est.Nunc@cursusNunc.ca", "City": "Durness" },
+            { "FirstName": "Carlos", "LastName": "Ramsey", "Email": "est.ac.facilisis@duinec.co.uk", "City": "Tiruvottiyur" },
+            { "FirstName": "Regan", "LastName": "Murphy", "Email": "lectus.Cum@aptent.com", "City": "Candidoni" },
+            { "FirstName": "Claudia", "LastName": "Spence", "Email": "Nunc.lectus.pede@aceleifend.co.uk", "City": "Augusta" },
+            { "FirstName": "Genevieve", "LastName": "Parker", "Email": "ultrices@inaliquetlobortis.net", "City": "Forbach" },
+            { "FirstName": "Marshall", "LastName": "Allison", "Email": "erat.semper.rutrum@odio.org", "City": "Landau" },
+            { "FirstName": "Reuben", "LastName": "Davis", "Email": "Donec@auctorodio.edu", "City": "Sch&iuml;&iquest;&frac12;nebeck" },
+            { "FirstName": "Ralph", "LastName": "Doyle", "Email": "pede.Suspendisse.dui@Curabitur.org", "City": "Linkebeek" },
+            { "FirstName": "Constance", "LastName": "Gilliam", "Email": "mollis@Nulla.edu", "City": "Enterprise" },
+            { "FirstName": "Serina", "LastName": "Jacobson", "Email": "dictum.augue@ipsum.net", "City": "H&Atilde;&copy;rouville-Saint-Clair" },
+            { "FirstName": "Charity", "LastName": "Byrd", "Email": "convallis.ante.lectus@scelerisquemollisPhasellus.co.uk", "City": "Brussegem" },
+            { "FirstName": "Hyatt", "LastName": "Bird", "Email": "enim.Nunc.ut@nonmagnaNam.com", "City": "Gdynia" },
+            { "FirstName": "Brent", "LastName": "Dunn", "Email": "ac.sem@nuncid.com", "City": "Hay-on-Wye" },
+            { "FirstName": "Casey", "LastName": "Bonner", "Email": "id@ornareelitelit.edu", "City": "Kearny" },
+            { "FirstName": "Hakeem", "LastName": "Gill", "Email": "dis@nonummyipsumnon.org", "City": "Portico e San Benedetto" },
+            { "FirstName": "Stewart", "LastName": "Meadows", "Email": "Nunc.pulvinar.arcu@convallisdolorQuisque.net", "City": "Dignano" },
+            { "FirstName": "Nomlanga", "LastName": "Wooten", "Email": "inceptos@turpisegestas.ca", "City": "Troon" },
+            { "FirstName": "Sebastian", "LastName": "Watts", "Email": "Sed.diam.lorem@lorem.co.uk", "City": "Palermo" },
+            { "FirstName": "Chelsea", "LastName": "Larsen", "Email": "ligula@Nam.net", "City": "Poole" },
+            { "FirstName": "Cameron", "LastName": "Humphrey", "Email": "placerat@id.org", "City": "Manfredonia" },
+            { "FirstName": "Juliet", "LastName": "Bush", "Email": "consectetuer.euismod@vitaeeratVivamus.co.uk", "City": "Lavacherie" },
+            { "FirstName": "Caryn", "LastName": "Hooper", "Email": "eu.enim.Etiam@ridiculus.org", "City": "Amelia" }
+          ];
+          return {
+            findContactsMatching : function(str) {
+              var result = [];
+              var s = str.toLowerCase();
+              for (var i = 0; i < data.length; i++) {
+                var c = data[i];
+                if(c['FirstName'].toLowerCase().indexOf(s) >= 0 || c['LastName'].toLowerCase().indexOf(s) >= 0 || c['Email'].toLowerCase().indexOf(s) >= 0) {
+                  result.push(c)
+                }
+              }
+              return result;
+            }
+          }
+        }()
+</script>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

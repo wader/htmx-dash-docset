@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ hx-swap Attribute</title>
+    <link rel="canonical" href="https://htmx.org/attributes/hx-swap/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1><a class="dashingAutolink" name="autolink-30"></a><a class="dashAnchor" name="//apple_ref/cpp/Attribute/hx-swap"></a><code>hx-swap</code></h1>
+  <p>The <code>hx-swap</code> attribute allows you to specify how the response will be swapped in relative to the
+<a href="https://htmx.org/attributes/hx-target/">target</a> of an AJAX request. If you do not specify the option, the default is
+<code>htmx.config.defaultSwapStyle</code> (<code>innerHTML</code>).</p>
+<p>The possible values of this attribute are:</p>
+<ul>
+<li><code>innerHTML</code> - Replace the inner html of the target element</li>
+<li><code>outerHTML</code> - Replace the entire target element with the response</li>
+<li><code>beforebegin</code> - Insert the response before the target element</li>
+<li><code>afterbegin</code> - Insert the response before the first child of the target element</li>
+<li><code>beforeend</code> - Insert the response after the last child of the target element</li>
+<li><code>afterend</code> - Insert the response after the target element</li>
+<li><code>delete</code> - Deletes the target element regardless of the response</li>
+<li><code>none</code>- Does not append content from response (out of band items will still be processed).</li>
+</ul>
+<p>These options are based on standard DOM naming and the 
+<a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML"><code>Element.insertAdjacentHTML</code></a>
+specification.</p>
+<p>So in this code:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;afterend&#34;</span><span>&gt;Get Some HTML &amp; Append It&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>The <code>div</code> will issue a request to <code>/example</code> and append the returned content after the <code>div</code></p>
+<h3 id="modifiers">Modifiers</h3>
+<p>The <code>hx-swap</code> attributes supports modifiers for changing the behavior of the swap.  They are outlined below.</p>
+<h4 id="transition-transition">Transition: <code>transition</code></h4>
+<p>If you want to use the new <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API">View Transitions</a> API
+when a swap occurs, you can use the <code>transition:true</code> option for your swap.  You can also enable this feature globally by
+setting the <code>htmx.config.globalViewTransitions</code> config setting to <code>true</code>.</p>
+<h4 id="timing-swap-settle">Timing: <code>swap</code> &amp; <code>settle</code></h4>
+<p>You can modify the amount of time that htmx will wait after receiving a response to swap the content
+by including a <code>swap</code> modifier:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  </span><span style="font-style:italic;color:#848da1;">&lt;!-- this will wait 1s before doing the swap after it is received --&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;innerHTML swap:1s&#34;</span><span>&gt;Get Some HTML &amp; Append It&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>Similarly, you can modify the time between the swap and the settle logic by including a <code>settle</code>
+modifier:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  </span><span style="font-style:italic;color:#848da1;">&lt;!-- this will wait 1s before doing the swap after it is received --&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;innerHTML settle:1s&#34;</span><span>&gt;Get Some HTML &amp; Append It&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>These attributes can be used to synchronize htmx with the timing of CSS transition effects.</p>
+<h4 id="title-ignoretitle">Title: <code>ignoreTitle</code></h4>
+<p>By default, htmx will update the title of the page if it finds a <code>&lt;title&gt;</code> tag in the response content.  You can turn
+off this behavior by setting the <code>ignoreTitle</code> option to true.</p>
+<h4 id="scrolling-scroll-show">Scrolling: <code>scroll</code> &amp; <code>show</code></h4>
+<p>You can also change the scrolling behavior of the target element by using the <code>scroll</code> and <code>show</code> modifiers, both
+of which take the values <code>top</code> and <code>bottom</code>:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  </span><span style="font-style:italic;color:#848da1;">&lt;!-- this fixed-height div will scroll to the bottom of the div after content is appended --&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">style</span><span>=</span><span style="color:#98c379;">&#34;</span><span>height:</span><span style="color:#d19a66;">200px</span><span>; overflow: scroll</span><span style="color:#98c379;">&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;beforeend scroll:bottom&#34;</span><span>&gt;
+</span><span>     Get Some HTML &amp; Append It &amp; Scroll To Bottom
+</span><span>  &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  </span><span style="font-style:italic;color:#848da1;">&lt;!-- this will get some content and add it to #another-div, then ensure that the top of #another-div is visible in the 
+</span><span style="font-style:italic;color:#848da1;">       viewport --&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;innerHTML show:top&#34;
+</span><span>       </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#another-div&#34;</span><span>&gt;
+</span><span>    Get Some Content
+</span><span>  &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>If you wish to target a different element for scrolling or showing, you may place a CSS selector after the <code>scroll:</code>
+or <code>show:</code>, followed by <code>:top</code> or <code>:bottom</code>:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  </span><span style="font-style:italic;color:#848da1;">&lt;!-- this will get some content and swap it into the current div, then ensure that the top of #another-div is visible in the 
+</span><span style="font-style:italic;color:#848da1;">       viewport --&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;innerHTML show:#another-div:top&#34;</span><span>&gt;
+</span><span>    Get Some Content
+</span><span>  &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>You may also use <code>window:top</code> and <code>window:bottom</code> to scroll to the top and bottom of the current window.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  </span><span style="font-style:italic;color:#848da1;">&lt;!-- this will get some content and swap it into the current div, then ensure that the viewport is scrolled to the
+</span><span style="font-style:italic;color:#848da1;">       very top --&gt;
+</span><span>  &lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;innerHTML show:window:top&#34;</span><span>&gt;
+</span><span>    Get Some Content
+</span><span>  &lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>For boosted links and forms the default behaviour is <code>show:top</code>. You can disable it globally with
+<a href="https://htmx.org/api/#config">htmx.config.scrollIntoViewOnBoost</a> or you can use <code>hx-swap=&#34;show:none&#34;</code> on an element basis.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">action</span><span>=</span><span style="color:#98c379;">&#34;/example&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;show:none&#34;</span><span>&gt;
+</span><span>  ...
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<h4 id="focus-scroll">Focus scroll</h4>
+<p>htmx preserves focus between requests for inputs that have a defined id attribute. By default htmx prevents auto-scrolling to focused inputs between requests which can be unwanted behavior on longer requests when the user has already scrolled away. To enable focus scroll you can use <code>focus-scroll:true</code>.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;name&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/validation&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML focus-scroll:true&#34;</span><span>/&gt;
+</span></code></pre>
+<p>Alternatively, if you want the page to automatically scroll to the focused element after each request you can change the htmx global configuration value <code>htmx.config.defaultFocusScroll</code> to true. Then disable it for specific requests using <code>focus-scroll:false</code>.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>  &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;name&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/validation&#34; 
+</span><span>       </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML focus-scroll:false&#34;</span><span>/&gt;
+</span></code></pre>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><code>hx-swap</code> is inherited and can be placed on a parent element</li>
+<li>The default value of this attribute is <code>innerHTML</code></li>
+<li>Due to DOM limitations, it&rsquo;s not possible to use the <code>outerHTML</code> method on the <code>&lt;body&gt;</code> element.
+htmx will change <code>outerHTML</code> on <code>&lt;body&gt;</code> to use <code>innerHTML</code>.</li>
+<li>The default swap delay is 0ms</li>
+<li>The default settle delay is 20ms</li>
+</ul>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

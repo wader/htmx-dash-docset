@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  
+<title>&lt;/&gt; htmx ~ Examples ~ Preserving File Inputs after Form Errors</title>
+    <link rel="canonical" href="https://htmx.org/examples/file-upload-input/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation"> <!-- don't boost on demo pages, sinon hijacks everything :/ -->
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  
+    
+  
+  <h1>Preserving File Inputs after Form Errors</h1>
+  <script src="https://unpkg.com/sinon@9.0.2/pkg/sinon.js"></script>
+  <script src="js/demo.js"></script>
+  <p>When using server-side error handling and validation with forms that include both primitive values and file inputs, the file input&rsquo;s value is lost when the form returns with error messages. Consequently, users are required to re-upload the file, resulting in a less user-friendly experience.</p>
+<p>To overcome the problem of losing file input value in simple cases, you can adopt the following approach:</p>
+<p>Before:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">method</span><span>=</span><span style="color:#98c379;">&#34;POST&#34; </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;binaryForm&#34; </span><span style="color:#d19a66;">enctype</span><span>=</span><span style="color:#98c379;">&#34;multipart/form-data&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML&#34; </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#binaryForm&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;file&#34; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;binaryFile&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;submit&#34;</span><span>&gt;Submit&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<p>After:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">form</span><span>=</span><span style="color:#98c379;">&#34;binaryForm&#34; </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;file&#34; </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;binaryFile&#34;</span><span>&gt;
+</span><span>
+</span><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">method</span><span>=</span><span style="color:#98c379;">&#34;POST&#34; </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;binaryForm&#34; </span><span style="color:#d19a66;">enctype</span><span>=</span><span style="color:#98c379;">&#34;multipart/form-data&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML&#34; </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;#binaryForm&#34;</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">type</span><span>=</span><span style="color:#98c379;">&#34;submit&#34;</span><span>&gt;Submit&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<ol>
+<li>
+<p>Form Restructuring: Move the binary file input outside the main form element in the HTML structure.</p>
+</li>
+<li>
+<p>Using the form Attribute: Enhance the binary file input by adding the form attribute and setting its value to the ID of the main form. This linkage associates the binary file input with the form, even when it resides outside the form element.</p>
+</li>
+</ol>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

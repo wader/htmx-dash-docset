@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  <title>&lt;/&gt; htmx ~ HX-Trigger Response Headers</title>
+    <link rel="canonical" href="https://htmx.org/headers/hx-trigger/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation" hx-boost="true">
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  <h1>HX-Trigger Response Headers</h1>
+  <p>These response headers can be used to trigger client side actions on the target element within a response to htmx.  You
+can trigger a single event or as many uniquely named events as you would like.</p>
+<p>The headers are:</p>
+<ul>
+<li><code>HX-Trigger</code> - trigger events as soon as the response is received.</li>
+<li><code>HX-Trigger-After-Settle</code> - trigger events after the <a href="https://htmx.org/docs/#request-operations">settling step</a>.</li>
+<li><code>HX-Trigger-After-Swap</code> - trigger events after the <a href="https://htmx.org/docs/#request-operations">swap step</a>.</li>
+</ul>
+<p>To trigger a single event with no additional details you can simply send the event name in a header like so:</p>
+<p><code>HX-Trigger: myEvent</code></p>
+<p>This will trigger <code>myEvent</code> on the triggering element and will bubble up to the body.  As an example you could
+listen for this event like this:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#34;myEvent&#34;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>){
+</span><span>    </span><span style="color:#61afef;">alert</span><span>(</span><span style="color:#98c379;">&#34;myEvent was triggered!&#34;</span><span>);
+</span><span>})
+</span></code></pre>
+<p>&hellip; or like this, if you&rsquo;re trying to trigger some element without using JS code:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span style="font-style:italic;color:#848da1;">&lt;!-- Since it bubbles up to the &lt;body&gt;, we must use the `from:body` modifier below --&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;myEvent from:body&#34; </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/example&#34;</span><span>&gt;&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>If you want to pass details along with the event, you can move to JSON for the value of the trigger:</p>
+<p><code>HX-Trigger: {&#34;showMessage&#34;:&#34;Here Is A Message&#34;}</code></p>
+<p>To handle this event you would write the following code:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#34;showMessage&#34;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>){
+</span><span>    </span><span style="color:#61afef;">alert</span><span>(</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.value);
+</span><span>})
+</span></code></pre>
+<p>Note that the value of the message was put into the <code>detail.value</code> slot.  If you wish to pass multiple pieces of data
+you can use a nested JSON object on the right hand side of the JSON object:</p>
+<p><code>HX-Trigger: {&#34;showMessage&#34;:{&#34;level&#34; : &#34;info&#34;, &#34;message&#34; : &#34;Here Is A Message&#34;}}</code></p>
+<p>And handle this event like so:</p>
+<pre data-lang="javascript" style="background-color:#1f2329;color:#abb2bf;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span>document.body.</span><span style="color:#56b6c2;">addEventListener</span><span>(</span><span style="color:#98c379;">&#34;showMessage&#34;</span><span>, </span><span style="color:#c678dd;">function</span><span>(</span><span style="color:#e06c75;">evt</span><span>){
+</span><span>   </span><span style="color:#c678dd;">if</span><span>(</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">level </span><span>=== </span><span style="color:#98c379;">&#34;info&#34;</span><span>){
+</span><span>     </span><span style="color:#61afef;">alert</span><span>(</span><span style="color:#e06c75;">evt</span><span>.</span><span style="color:#e06c75;">detail</span><span>.</span><span style="color:#e06c75;">message</span><span>);   
+</span><span>   }
+</span><span>})
+</span></code></pre>
+<p>Each property of the JSON object on the right hand side will be copied onto the details object for the event.</p>
+<h3 id="multiple-triggers">Multiple Triggers</h3>
+<p>If you wish to invoke multiple events, you can simply add additional properties to the top level JSON
+object:</p>
+<p><code>HX-Trigger: {&#34;event1&#34;:&#34;A message&#34;, &#34;event2&#34;:&#34;Another message&#34;}</code></p>
+<p>You may also trigger multiple events with no additional details by sending event names separated by commas, like so:</p>
+<p><code>HX-Trigger: event1, event2</code></p>
+<p>Using events gives you a lot of flexibility to add functionality to normal htmx responses.</p>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

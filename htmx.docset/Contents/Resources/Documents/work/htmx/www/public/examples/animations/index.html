@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+    htmx is small (~14k min.gz&rsquo;d), dependency-free, extendable, IE11 compatible &amp; has reduced code base sizes by 67% when compared with react"/>
+    
+  
+<title>&lt;/&gt; htmx ~ Examples ~ Animations</title>
+    <link rel="canonical" href="https://htmx.org/examples/animations/"/>
+    
+    <link rel="alternate" type="application/atom+xml" title="Sitewide Atom feed" href="atom.xml"/>
+    <link rel="stylesheet" href="css/site.css"/><link rel="stylesheet" href="../css/site.css"/><link rel="stylesheet" href="../../css/site.css"/>
+    <!--script src="/js/htmx.js"></script -->
+    <!--script src="/js/class-tools.js"></script -->
+    <!--script src="/js/preload.js"></script -->
+    <!--script src="/js/_hyperscript.js"></script -->
+    <meta name="generator" content="Zola v.TODO"/>
+</head>
+<body hx-ext="class-tools, preload">
+
+<div class="top-nav">
+    <div class="c">
+        <div class="menu">
+            <div class="logo-wrapper">
+                <a href="" class="logo light">&lt;<b>/</b>&gt; htm<b>x</b></a>
+                <svg _="on click toggle .show on #nav" class="hamburger" viewBox="0 0 100 80" width="25" height="25" style="margin-bottom:-5px">
+                    <rect width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="30" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                    <rect y="60" width="100" height="20" style="fill:rgb(52, 101, 164)" rx="10"></rect>
+                </svg>
+            </div>
+            
+            <div id="nav" class="navigation"> <!-- don't boost on demo pages, sinon hijacks everything :/ -->
+            
+                <div class="navigation-items" preload="mouseover">
+                    <div><a href="docs/">docs</a></div>
+                    <div><a href="reference/">reference</a></div>
+                    <div><a href="examples/">examples</a></div>
+                    <div><a href="talk/">talk</a></div>
+                    <div><a href="essays/">essays</a></div>
+                    <div hx-disable="">
+                        <form action="https://google.com/search">
+                            <input type="hidden" name="q" value="site:htmx.org"/>
+                            <label>
+                                <span style="display:none;">Search</span>
+                                <input type="text" name="q" placeholder="🔍️" class="search-box"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="github-stars">
+                    <iframe style="margin:auto;" src="https://ghbtns.com/github-btn.html?user=bigskysoftware&amp;repo=htmx&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="150" height="20" title="Star htmx on GitHub"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+<div class="c content ">
+    
+  
+    
+  
+  <h1>Animations</h1>
+  <script src="https://unpkg.com/sinon@9.0.2/pkg/sinon.js"></script>
+  <script src="js/demo.js"></script>
+  <p>htmx is designed to allow you to use <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions">CSS transitions</a>
+to add smooth animations and transitions to your web page using only CSS and HTML.  Below are a few examples of
+various animation techniques.</p>
+<p>htmx also allows you to use the new <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API">View Transitions API</a>
+for creating animations.</p>
+<h3 id="basic"><a class="zola-anchor" href="#basic" aria-label="Anchor link for: basic">#</a>Basic CSS Animations</h3>
+<h3 id="color-throb"><a class="zola-anchor" href="#color-throb" aria-label="Anchor link for: color-throb">#</a>Color Throb</h3>
+<p>The simplest animation technique in htmx is to keep the <code>id</code> of an element stable across a content swap.  If the
+<code>id</code> of an element is kept stable, htmx will swap it in such a way that CSS transitions can be written between
+the old version of the element and the new one.</p>
+<p>Consider this div:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span style="color:#d19a66;">.smooth </span><span>{
+</span><span>  transition: all </span><span style="color:#d19a66;">1s </span><span>ease-in;
+</span><span>}
+</span><span>&lt;/</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;color-demo&#34; </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;smooth&#34; </span><span style="color:#d19a66;">style</span><span>=</span><span style="color:#98c379;">&#34;</span><span>color:red</span><span style="color:#98c379;">&#34;
+</span><span>      </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/colors&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;every 1s&#34;</span><span>&gt;
+</span><span>  Color Swap Demo
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span><span>
+</span></code></pre>
+<p>This div will poll every second and will get replaced with new content which changes the <code>color</code> style to a new value
+(e.g. <code>blue</code>):</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;color-demo&#34; </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;smooth&#34; </span><span style="color:#d19a66;">style</span><span>=</span><span style="color:#98c379;">&#34;</span><span>color:blue</span><span style="color:#98c379;">&#34;
+</span><span>      </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/colors&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML&#34; </span><span style="color:#d19a66;">hx-trigger</span><span>=</span><span style="color:#98c379;">&#34;every 1s&#34;</span><span>&gt;
+</span><span>  Color Swap Demo
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<p>Because the div has a stable id, <code>color-demo</code>, htmx will structure the swap such that a CSS transition, defined on the
+<code>.smooth</code> class, applies to the style update from <code>red</code> to <code>blue</code>, and smoothly transitions between them.</p>
+<h4 id="throb-demo"><a class="zola-anchor" href="#throb-demo" aria-label="Anchor link for: throb-demo">#</a>Demo</h4>
+<style>
+.smooth {
+  transition: all 1s ease-in;
+}
+</style>
+<div id="color-demo" class="smooth" style="color:red" hx-get="/colors" hx-swap="outerHTML" hx-trigger="every 1s">
+  Color Swap Demo
+</div>
+<script>
+    var colors = ['blue', 'green', 'orange', 'red'];
+    onGet("/colors", function () {
+      var color = colors.shift();
+      colors.push(color);
+      return '<div id="color-demo" hx-get="/colors" hx-swap="outerHTML" class="smooth" hx-trigger="every 1s" style="color:' + color + '">\n'+
+             '  Color Swap Demo\n'+
+             '</div>\n'
+    });
+</script>
+<h3 id="smooth-progress-bar"><a class="zola-anchor" href="#smooth-progress-bar" aria-label="Anchor link for: smooth-progress-bar">#</a>Smooth Progress Bar</h3>
+<p>The <a href="https://htmx.org/examples/progress-bar/">Progress Bar</a> demo uses this basic CSS animation technique as well, by updating the <code>length</code>
+property of a progress bar element, allowing for a smooth animation.</p>
+<a class="dashingAutolink" name="autolink-41"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Swap%20Transitions"></a><h2 id="swapping"><a class="zola-anchor" href="#swapping" aria-label="Anchor link for: swapping">#</a>Swap Transitions</h2>
+<h3 id="fade-out-on-swap"><a class="zola-anchor" href="#fade-out-on-swap" aria-label="Anchor link for: fade-out-on-swap">#</a>Fade Out On Swap</h3>
+<p>If you want to fade out an element that is going to be removed when the request ends, you want to take advantage
+of the <code>htmx-swapping</code> class with some CSS and extend the swap phase to be long enough for your animation to
+complete.  This can be done like so:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span style="color:#d19a66;">.fade-me-out.htmx-swapping </span><span>{
+</span><span>  opacity: </span><span style="color:#d19a66;">0</span><span>;
+</span><span>  transition: opacity </span><span style="color:#d19a66;">1s </span><span>ease-out;
+</span><span>}
+</span><span>&lt;/</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;fade-me-out&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-delete</span><span>=</span><span style="color:#98c379;">&#34;/fade_out_demo&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML swap:1s&#34;</span><span>&gt;
+</span><span>        Fade Me Out
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<h4 id="fade-swap-demo"><a class="zola-anchor" href="#fade-swap-demo" aria-label="Anchor link for: fade-swap-demo">#</a>Demo</h4>
+<style>
+.fade-me-out.htmx-swapping {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+</style>
+<p><button class="fade-me-out" hx-delete="/fade_out_demo" hx-swap="outerHTML swap:1s">
+Delete Me
+</button></p>
+<script>
+    onDelete("/fade_out_demo", function () {return ""});
+</script>
+<a class="dashingAutolink" name="autolink-42"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Settling%20Transitions"></a><h2 id="settling"><a class="zola-anchor" href="#settling" aria-label="Anchor link for: settling">#</a>Settling Transitions</h2>
+<h3 id="fade-in-on-addition"><a class="zola-anchor" href="#fade-in-on-addition" aria-label="Anchor link for: fade-in-on-addition">#</a>Fade In On Addition</h3>
+<p>Building on the last example, we can fade in the new content by using the <code>htmx-added</code> class during the settle
+phase.  You can also write CSS transitions against the target, rather than the new content, by using the <code>htmx-settling</code>
+class.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span style="color:#d19a66;">#fade-me-in.htmx-added </span><span>{
+</span><span>  opacity: </span><span style="color:#d19a66;">0</span><span>;
+</span><span>}
+</span><span style="color:#d19a66;">#fade-me-in </span><span>{
+</span><span>  opacity: </span><span style="color:#d19a66;">1</span><span>;
+</span><span>  transition: opacity </span><span style="color:#d19a66;">1s </span><span>ease-out;
+</span><span>}
+</span><span>&lt;/</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">id</span><span>=</span><span style="color:#98c379;">&#34;fade-me-in&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/fade_in_demo&#34;
+</span><span>        </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML settle:1s&#34;</span><span>&gt;
+</span><span>        Fade Me In
+</span><span>&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span></code></pre>
+<h4 id="fade-settle-demo"><a class="zola-anchor" href="#fade-settle-demo" aria-label="Anchor link for: fade-settle-demo">#</a>Demo</h4>
+<style>
+#fade-me-in.htmx-added {
+  opacity: 0;
+}
+#fade-me-in {
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+</style>
+<p><button id="fade-me-in" hx-post="/fade_me_in" hx-swap="outerHTML settle:1s">
+Fade Me In
+</button></p>
+<script>
+    onPost("/fade_me_in", function () {return "<button id=\"fade-me-in\"\n"+
+                                               "        hx-post=\"/fade_me_in\"\n"+
+                                               "        hx-swap=\"outerHTML settle:1s\">\n"+
+                                               "        Fade Me In\n"+
+                                               "</button>"});
+</script>
+<a class="dashingAutolink" name="autolink-43"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Request%20In%20Flight%20Animation"></a><h2 id="request"><a class="zola-anchor" href="#request" aria-label="Anchor link for: request">#</a>Request In Flight Animation</h2>
+<p>You can also take advantage of the <code>htmx-request</code> class, which is applied to the element that triggers a request.  Below
+is a form that on submit will change its look to indicate that a request is being processed:</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span>  </span><span style="color:#e06c75;">form</span><span style="color:#d19a66;">.htmx-request </span><span>{
+</span><span>    opacity: </span><span style="color:#d19a66;">.5</span><span>;
+</span><span>    transition: opacity </span><span style="color:#d19a66;">300ms </span><span>linear;
+</span><span>  }
+</span><span>&lt;/</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">form </span><span style="color:#d19a66;">hx-post</span><span>=</span><span style="color:#98c379;">&#34;/name&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;outerHTML&#34;</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">label</span><span>&gt;Name:&lt;/</span><span style="color:#e06c75;">label</span><span>&gt;&lt;</span><span style="color:#e06c75;">input </span><span style="color:#d19a66;">name</span><span>=</span><span style="color:#98c379;">&#34;name&#34;</span><span>&gt;&lt;</span><span style="color:#e06c75;">br</span><span>/&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">button</span><span>&gt;Submit&lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">form</span><span>&gt;
+</span></code></pre>
+<h4 id="request-demo"><a class="zola-anchor" href="#request-demo" aria-label="Anchor link for: request-demo">#</a>Demo</h4>
+<style>
+  form.htmx-request {
+    opacity: .5;
+    transition: opacity 300ms linear;
+  }
+</style>
+<div aria-live="polite">
+<form hx-post="/name" hx-swap="outerHTML">
+<label>Name:</label><input name="name"/><br/>
+<button>Submit</button>
+</form>
+</div>
+<script>
+  onPost("/name", function(){ return "Submitted!"; });
+</script>
+<a class="dashingAutolink" name="autolink-44"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Using%20the%20htmx%20class-tools%20Extension"></a><h2 id="using-the-htmx-class-tools-extension"><a class="zola-anchor" href="#using-the-htmx-class-tools-extension" aria-label="Anchor link for: using-the-htmx-class-tools-extension">#</a>Using the htmx <code>class-tools</code> Extension</h2>
+<p>Many interesting animations can be created by using the <a href="https://htmx.org/extensions/class-tools/"><code>class-tools</code></a> extension.</p>
+<p>Here is an example that toggles the opacity of a div.  Note that we set the toggle time to be a bit longer than
+the transition time.  This avoids flickering that can happen if the transition is interrupted by a class change.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span style="color:#d19a66;">.demo.faded </span><span>{
+</span><span>  opacity:</span><span style="color:#d19a66;">.3</span><span>;
+</span><span>}
+</span><span style="color:#d19a66;">.demo </span><span>{
+</span><span>  opacity:</span><span style="color:#d19a66;">1</span><span>;
+</span><span>  transition: opacity ease-in </span><span style="color:#d19a66;">900ms</span><span>;
+</span><span>}
+</span><span>&lt;/</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;demo&#34; </span><span style="color:#d19a66;">classes</span><span>=</span><span style="color:#98c379;">&#34;toggle faded:1s&#34;</span><span>&gt;Toggle Demo&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<h4 id="class-tools-demo"><a class="zola-anchor" href="#class-tools-demo" aria-label="Anchor link for: class-tools-demo">#</a>Demo</h4>
+<style>
+.demo.faded {
+  opacity:.3;
+}
+.demo {
+  opacity:1;
+  transition: opacity ease-in 900ms;
+}
+</style>
+<div class="demo" classes="toggle faded:1s">Toggle Demo</div>
+<h3 id="view-transitions"><a class="zola-anchor" href="#view-transitions" aria-label="Anchor link for: view-transitions">#</a>Using the View Transition API</h3>
+<p>htmx provides access to the new  <a rel="noopener" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API">View Transitions API</a>
+via the <code>transition</code> option of the <a href="attributes/hx-swap"><code>hx-swap</code></a> attribute.</p>
+<p>Below is an example of a swap that uses a view transition.  The transition is tied to the outer div via a
+<code>view-transition-name</code> property in CSS, and that transition is defined in terms of <code>::view-transition-old</code>
+and <code>::view-transition-new</code>, using <code>@keyframes</code> to define the animation.  (Fuller details on the View Transition
+API can be found on the <a rel="noopener" target="_blank" href="https://developer.chrome.com/docs/web-platform/view-transitions/">Chrome Developer Page</a> on them.)</p>
+<p>The old content of this transition should slide out to the left and the new content should slide in from the right.</p>
+<p>Note that, as of this writing, the visual transition will only occur on Chrome 111+, but more browsers are expected to
+implement this feature in the near future.</p>
+<pre data-lang="html" style="background-color:#1f2329;color:#abb2bf;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span>   </span><span style="color:#c678dd;">@keyframes </span><span>fade-in {
+</span><span>     </span><span style="color:#c678dd;">from </span><span>{ opacity: </span><span style="color:#d19a66;">0</span><span>; }
+</span><span>   }
+</span><span>
+</span><span>   </span><span style="color:#c678dd;">@keyframes </span><span>fade-out {
+</span><span>     </span><span style="color:#c678dd;">to </span><span>{ opacity: </span><span style="color:#d19a66;">0</span><span>; }
+</span><span>   }
+</span><span>
+</span><span>   </span><span style="color:#c678dd;">@keyframes </span><span>slide-from-right {
+</span><span>     </span><span style="color:#c678dd;">from </span><span>{ transform: </span><span style="color:#56b6c2;">translateX</span><span>(</span><span style="color:#d19a66;">90px</span><span>); }
+</span><span>   }
+</span><span>
+</span><span>   </span><span style="color:#c678dd;">@keyframes </span><span>slide-to-left {
+</span><span>     </span><span style="color:#c678dd;">to </span><span>{ transform: </span><span style="color:#56b6c2;">translateX</span><span>(</span><span style="color:#d19a66;">-90px</span><span>); }
+</span><span>   }
+</span><span>
+</span><span>   </span><span style="color:#d19a66;">.slide-it </span><span>{
+</span><span>     view-transition-name: slide-it;
+</span><span>   }
+</span><span>
+</span><span>   </span><span style="color:#d19a66;">::</span><span style="color:#c678dd;">view-transition-old(</span><span style="color:#e06c75;">slide-it</span><span>) {
+</span><span>     animation: </span><span style="color:#d19a66;">180ms </span><span style="color:#56b6c2;">cubic-bezier</span><span>(</span><span style="color:#d19a66;">0.4</span><span>, </span><span style="color:#d19a66;">0</span><span>, </span><span style="color:#d19a66;">1</span><span>, </span><span style="color:#d19a66;">1</span><span>) both fade-out,
+</span><span>     </span><span style="color:#d19a66;">600ms </span><span style="color:#56b6c2;">cubic-bezier</span><span>(</span><span style="color:#d19a66;">0.4</span><span>, </span><span style="color:#d19a66;">0</span><span>, </span><span style="color:#d19a66;">0.2</span><span>, </span><span style="color:#d19a66;">1</span><span>) both slide-to-left;
+</span><span>   }
+</span><span>   </span><span style="color:#d19a66;">::</span><span style="color:#c678dd;">view-transition-new(</span><span style="color:#e06c75;">slide-it</span><span>) {
+</span><span>     animation: </span><span style="color:#d19a66;">420ms </span><span style="color:#56b6c2;">cubic-bezier</span><span>(</span><span style="color:#d19a66;">0</span><span>, </span><span style="color:#d19a66;">0</span><span>, </span><span style="color:#d19a66;">0.2</span><span>, </span><span style="color:#d19a66;">1</span><span>) </span><span style="color:#d19a66;">90ms </span><span>both fade-in,
+</span><span>     </span><span style="color:#d19a66;">600ms </span><span style="color:#56b6c2;">cubic-bezier</span><span>(</span><span style="color:#d19a66;">0.4</span><span>, </span><span style="color:#d19a66;">0</span><span>, </span><span style="color:#d19a66;">0.2</span><span>, </span><span style="color:#d19a66;">1</span><span>) both slide-from-right;
+</span><span>   }
+</span><span>&lt;/</span><span style="color:#e06c75;">style</span><span>&gt;
+</span><span>
+</span><span>
+</span><span>&lt;</span><span style="color:#e06c75;">div </span><span style="color:#d19a66;">class</span><span>=</span><span style="color:#98c379;">&#34;slide-it&#34;</span><span>&gt;
+</span><span>   &lt;</span><span style="color:#e06c75;">h1</span><span>&gt;Initial Content&lt;/</span><span style="color:#e06c75;">h1</span><span>&gt;
+</span><span>   &lt;</span><span style="color:#e06c75;">button </span><span style="color:#d19a66;">hx-get</span><span>=</span><span style="color:#98c379;">&#34;/new-content&#34; </span><span style="color:#d19a66;">hx-swap</span><span>=</span><span style="color:#98c379;">&#34;innerHTML transition:true&#34; </span><span style="color:#d19a66;">hx-target</span><span>=</span><span style="color:#98c379;">&#34;closest div&#34;</span><span>&gt;
+</span><span>     Swap It!
+</span><span>   &lt;/</span><span style="color:#e06c75;">button</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#e06c75;">div</span><span>&gt;
+</span></code></pre>
+<h4 id="demo"><a class="zola-anchor" href="#demo" aria-label="Anchor link for: demo">#</a>Demo</h4>
+<style>
+   @keyframes fade-in {
+     from { opacity: 0; }
+   }
+
+   @keyframes fade-out {
+     to { opacity: 0; }
+   }
+
+   @keyframes slide-from-right {
+     from { transform: translateX(90px); }
+   }
+
+   @keyframes slide-to-left {
+     to { transform: translateX(-90px); }
+   }
+
+   .slide-it {
+     view-transition-name: slide-it;
+   }
+
+   ::view-transition-old(slide-it) {
+     animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+     600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+   }
+   ::view-transition-new(slide-it) {
+     animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+     600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+   }
+</style>
+<div class="slide-it">
+   <h1>Initial Content</h1>
+   <button hx-get="/new-content" hx-swap="innerHTML transition:true" hx-target="closest div">
+     Swap It!
+   </button>
+</div>
+<script>
+    var originalContent = htmx.find(".slide-it").innerHTML;
+
+    this.server.respondWith("GET", "/new-content", function(xhr){
+        xhr.respond(200,  {}, "<h1>New Content</h1> <button hx-get='/original-content' hx-swap='innerHTML transition:true' hx-target='closest div'>Restore It! </button>")
+    });
+
+    this.server.respondWith("GET", "/original-content", function(xhr){
+        xhr.respond(200,  {}, originalContent)
+    });
+</script>
+<h2 id="conclusion"><a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">#</a>Conclusion</h2>
+<p>You can use the techniques above to create quite a few interesting and pleasing effects with plain old HTML while using htmx.</p>
+
+</div>
+
+<footer>
+    <div class="c content ">
+        <div class="row">
+            <div class="6 col footer-haiku">
+                <h2>haiku</h2>
+                <p><em>
+                    javascript fatigue:<br/>
+                    longing for a hypertext<br/>
+                    already in hand
+                </em></p>
+            </div>
+            <div class="6 col footer-menu">
+                <div><a href="docs/">docs</a></div>
+                <div><a href="reference/">reference</a></div>
+                <div><a href="examples/">examples</a></div>
+                <div><a href="talk/">talk</a></div>
+                <div><a href="essays/">essays</a></div>
+                <div><a href="https://twitter.com/htmx_org">@htmx_org</a></div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="col">
+                <img src="img/bss_bars.png" alt="" style="max-width: 30px; margin-top: 3em;"/>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>
